@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class OI {
 
-    private XboxController gamepad1;
+    private static XboxController gamepad1;
 
-    public OI() {
+    static {
         gamepad1 = new XboxController(0);
     }
 }
