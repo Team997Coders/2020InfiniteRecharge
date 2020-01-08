@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
+import frc.robot.subsystems.DriveTrain;
+
+import org.team997coders.spartanlib.limelight.LimeLight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +26,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static OI m_oi;
+  public static LimeLight m_limelight;
+  public static DriveTrain m_driveTrain;
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -38,6 +43,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
 
+    m_limelight = new LimeLight();
+    m_driveTrain = new DriveTrain();
     m_oi = new OI();
   }
 
