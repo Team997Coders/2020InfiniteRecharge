@@ -10,10 +10,12 @@ package frc.robot.subsystems;
 import java.util.prefs.BackingStoreException;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ArcadeDrive;
 
 public class DriveTrain extends SubsystemBase {
   
@@ -30,6 +32,8 @@ public class DriveTrain extends SubsystemBase {
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
+
+    setDefaultCommand(new ArcadeDrive());
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
