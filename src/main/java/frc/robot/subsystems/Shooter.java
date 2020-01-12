@@ -27,8 +27,8 @@ public class Shooter implements Subsystem {
 
     motor2.follow(motor1);
 
-    motor1.setSmartCurrentLimit(30, 50);
-    motor2.setSmartCurrentLimit(30, 50);
+    motor1.setSmartCurrentLimit(60, 50);
+    motor2.setSmartCurrentLimit(60, 50);
 
     encoder = motor1.getEncoder();
     encoder.setPosition(0.0);
@@ -38,7 +38,11 @@ public class Shooter implements Subsystem {
     controller.setP(Constants.Values.SHOOTER_CONTROL_P);
     controller.setI(0.0);
     controller.setD(0.0);
-    controller.setFF(0.0);
+    // Max output divided by the max read for velocity. Idk it worked on the Talons
+    controller.setFF(1 / (5676 * Constants.Values.SHOOTER_GEARING_FACTOR)); // 5676 may need to be multiplied by Constants.Values.SHOOTER_GEARING_FACTOR
+    controller.setOutputRange(-1.0, 1.0);
+
+    register();
   }
 
   public void setRPM(double rpm) {
