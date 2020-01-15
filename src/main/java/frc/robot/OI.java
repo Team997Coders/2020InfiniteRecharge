@@ -8,6 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
+import edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
  * Add your docs here.
@@ -15,8 +17,19 @@ import edu.wpi.first.wpilibj.XboxController;
 public class OI {
 
     private static XboxController gamepad1;
+  
+     
 
-    static {
+    private OI() {
+
         gamepad1 = new XboxController(0);
+
     }
+  
+    public boolean getButtonX() { return gamepad1.getXButton(); }
+    public boolean getButtonB() { return gamepad1.getBButton(); }
+   
+    
+  private static OI instance;
+  public static OI getInstance() { return instance == null ? instance = new OI() : instance; }
 }

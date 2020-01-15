@@ -22,7 +22,7 @@ public class Hopper extends SubsystemBase {
   AnalogInput frontIRsensor, backIRsensor;
   
   
-  public Hopper() {
+  private Hopper() {
     conveyorMotor1 = new VictorSPX(Constants.Ports.hopperMotor1);
     conveyorMotor2 = new VictorSPX(Constants.Ports.hopperMotor2);  
     frontIRsensor = new AnalogInput(Constants.Ports.hopperfrontIR);
@@ -34,6 +34,7 @@ public class Hopper extends SubsystemBase {
     conveyorMotor2.set(ControlMode.PercentOutput, setSpeep);
   }
 
+
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("frontIRsensor", frontIRsensor.getVoltage());
     SmartDashboard.putNumber("backIRsensor", backIRsensor.getVoltage());
@@ -43,5 +44,11 @@ public class Hopper extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     updateSmartDashboard();
+  }
+  private static Hopper instance;
+
+  public static Hopper getInstance(){
+    if (instance == null){instance = new Hopper();}
+    return instance; 
   }
 }
