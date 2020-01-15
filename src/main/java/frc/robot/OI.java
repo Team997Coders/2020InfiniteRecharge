@@ -8,15 +8,27 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * Add your docs here.
  */
 public class OI {
 
+    
     private static XboxController gamepad1;
 
-    static {
+
+    public OI() {
         gamepad1 = new XboxController(0);
+        
+    }
+
+    public Boolean getRightBumper() {
+        return gamepad1.getBumper(Hand.kRight);
+    }
+    
+    public Boolean getLeftBumper() {
+        return gamepad1.getBumper(Hand.kLeft);
     }
 }
