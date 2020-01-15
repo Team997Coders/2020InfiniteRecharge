@@ -19,7 +19,7 @@ public class OI {
   public static double axisPos;
   private XboxController gamepad1;
 
-  public OI() {
+  private OI() {
     gamepad1 = new XboxController(0);
 
   }
@@ -32,4 +32,6 @@ public class OI {
     return axisPos;
   }
 
+  private static OI instance;
+  public static OI getInstance() { return instance == null ? instance = new OI() : instance; }
 }

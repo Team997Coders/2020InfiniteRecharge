@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
     driveTrain = DriveTrain.getInstance();
-    m_oi = new OI();
+    m_oi = OI.getInstance();
   }
 
   /**
