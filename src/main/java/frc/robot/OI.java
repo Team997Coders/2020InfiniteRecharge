@@ -22,8 +22,6 @@ public class OI {
   public OI() {
     gamepad1 = new XboxController(0);
 
-    gamepad1.getBumper(Hand.kRight);
-    gamepad1.getBumper(Hand.kLeft);
   }
 
   public double getAxis(int portNum) {
@@ -32,14 +30,6 @@ public class OI {
       axisPos = 0;
     }
     return axisPos;
-  }
-
-  public boolean intakeIn() {
-    return gamepad1.getBumper(Hand.kRight);
-  }
-
-  public boolean intakeOut() {
-    return gamepad1.getBumper(Hand.kLeft);
   }
 
 }

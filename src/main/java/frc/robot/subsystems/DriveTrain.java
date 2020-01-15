@@ -16,7 +16,7 @@ public class DriveTrain extends SubsystemBase {
   TalonFX backRight;
   SupplyCurrentLimitConfiguration currentLimitConfig;
   
-  public DriveTrain() {
+  private DriveTrain() {
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
@@ -51,6 +51,8 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  private static DriveTrain instance;
+  public static DriveTrain getInstance() { return instance == null ? instance = new DriveTrain() : instance; }
+  
 }
-
-
