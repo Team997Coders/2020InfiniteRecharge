@@ -16,7 +16,10 @@ public class OI {
 
     private static XboxController gamepad1;
 
-    static {
+    private OI() {
         gamepad1 = new XboxController(0);
     }
+
+    public static OI instance;
+    public static OI getInstance() { return (instance == null ? instance = new OI():instance); }
 }
