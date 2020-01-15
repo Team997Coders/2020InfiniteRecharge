@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,12 +14,19 @@ public class DriveTrain extends SubsystemBase {
   TalonFX frontRight;
   TalonFX backLeft;
   TalonFX backRight;
+  SupplyCurrentLimitConfiguration currentLimitConfig;
   
   public DriveTrain() {
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
+
+    currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
+    frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
+    frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
+    backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
+    backRight.configSupplyCurrentLimit(currentLimitConfig, 10);
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
@@ -44,3 +52,5 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 }
+
+
