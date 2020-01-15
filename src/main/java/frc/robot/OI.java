@@ -31,4 +31,7 @@ public class OI {
     public Boolean getLeftBumper() {
         return gamepad1.getBumper(Hand.kLeft);
     }
+
+    private static OI instance;
+    public static OI getInstance() { return instance == null ? instance = new OI() : instance; }
 }
