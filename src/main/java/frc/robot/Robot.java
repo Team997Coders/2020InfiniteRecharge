@@ -15,7 +15,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CommandScheduler.getInstance().cancelAll();
-  oi = new OI();
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
   }
 

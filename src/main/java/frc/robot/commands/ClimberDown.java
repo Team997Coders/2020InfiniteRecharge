@@ -8,16 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
-public class ClimberControls extends CommandBase {
+public class ClimberDown extends CommandBase {
   /**
-   * Creates a new ClimberControls.
+   * Creates a new ClimberDown.
    */
-  public ClimberControls() {
+  public ClimberDown() {
     addRequirements(Climber.getInstance());
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -28,11 +26,7 @@ public class ClimberControls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Robot.oi.getLeftBumper()){
-      Climber.getInstance().setSpeed(.25);
-    }else if (Robot.oi.getRightBumper()){
-      Climber.getInstance().setSpeed(-.25);
-    }
+    Climber.getInstance().setSpeed(-0.25);
   }
 
   // Called once the command ends or is interrupted.

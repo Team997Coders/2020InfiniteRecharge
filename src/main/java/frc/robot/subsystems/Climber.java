@@ -10,13 +10,22 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
- private CANSparkMax climberMotor;
+  private Solenoid climberPiston;
+  private CANSparkMax climberMotor;
   private Climber() {
-    climberMotor = new CANSparkMax(Constants.climberMotorPort, MotorType.kBrushless);
+    climberMotor = new CANSparkMax(Constants.Ports.climberMotorPort, MotorType.kBrushless);
+    climberPiston = new Solenoid(Constants.Ports.climberPistonPort);
+  }
+  public void ExtendPiston(){
+    climberPiston.set(true);
+  }
+  public void RetractPiston(){
+    climberPiston.set(false);
   }
 public void setSpeed(double speed){
   climberMotor.set(speed);
