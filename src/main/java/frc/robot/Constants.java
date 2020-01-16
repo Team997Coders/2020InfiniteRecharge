@@ -25,4 +25,9 @@ public final class Constants {
             motorBackRight = 0,
             ultraChannel = 0;
     }
+
+    public static class Values {
+        public static final int 
+            voltageToFeet = 1;
+    }
 }

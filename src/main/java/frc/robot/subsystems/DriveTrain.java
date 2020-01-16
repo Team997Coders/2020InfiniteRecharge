@@ -83,7 +83,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Drivetrain/Back Right Motor Temperature", frontLeft.getTemperature());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage());
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() * Constants.Values.voltageToFeet);
   }
 
   private static DriveTrain instance;
