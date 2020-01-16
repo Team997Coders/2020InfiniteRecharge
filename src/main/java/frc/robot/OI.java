@@ -7,25 +7,28 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.shooter.SetTargetShooterSpeed;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.shooter.StopShooting;
 
 /**
  * Add your docs here.
  */
 public class OI {
 
-  private static XboxController gamepad1;
-  private static JoystickButton buttonA, buttonB;
+  private  Joystick gamepad1, gamepad2;
+  private  JoystickButton buttonA2, buttonB2;
+  private OI() {
+    gamepad1 = new Joystick(0);
+    gamepad2 = new Joystick(3);
 
-  static {
-    gamepad1 = new XboxController(0);
+    buttonA2 = new JoystickButton(gamepad2, Constants.Ports.ButtonA);
+    buttonB2 = new JoystickButton(gamepad2, Constants.Ports.ButtonB);
 
-    buttonA = new JoystickButton(gamepad1, 1);
-    buttonB = new JoystickButton(gamepad1, 2);
-
-    buttonA.whenPressed(new SetTargetShooterSpeed(Constants.Values.SHOOTER_SPEED_PRIME));
-    buttonB.whenPressed(new SetTargetShooterSpeed(0.0));
+    buttonA2.whenPressed(new Shoot());
+    buttonB2.whenPressed(new StopShooting());
   }
+  private static OI instance;
+  public static OI getInstance() {if(instance == null) instance = new OI(); return instance;}
 }
