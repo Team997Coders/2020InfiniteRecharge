@@ -21,7 +21,7 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX backLeft;
   private TalonFX backRight;
 
-  private AHRS gyro;
+  private AHRS imu;
 
   private AnalogInput ultrasonic;
 
@@ -31,7 +31,7 @@ public class DriveTrain extends SubsystemBase {
     setDefaultCommand(new ArcadeDrive());
 
     ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
-    gyro = new AHRS();
+    imu = new AHRS();
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
@@ -66,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getGyroAngle() {
-    return gyro.getAngle();
+    return imu.getAngle();
   }
 
   @Override
