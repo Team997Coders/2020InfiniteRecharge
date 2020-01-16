@@ -22,6 +22,7 @@ public final class Constants {
             motorFrontLeft = 0,
             motorFrontRight = 0,
             motorBackLeft = 0,
-            motorBackRight = 0;
+            motorBackRight = 0,
+            ultraChannel = 0;
     }
 }

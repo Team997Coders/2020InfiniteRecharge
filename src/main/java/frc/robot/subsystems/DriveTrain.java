@@ -4,7 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,13 +21,23 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX backLeft;
   private TalonFX backRight;
 
+  private AHRS gyro;
+
+  private AnalogInput ultrasonic;
+
   private DriveTrain() {
+
+    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
+    setDefaultCommand(new ArcadeDrive());
+
+    ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
+    gyro = new AHRS();
+
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
 
-    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
     backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
@@ -34,17 +48,8 @@ public class DriveTrain extends SubsystemBase {
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
 
-
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
-
-    /**
-     * TODO:
-     * 3) Add methods to get encoder velocities (And maybe convert them to useful units)
-     * 4) Put encoder readings on SmartDashboard
-     */
-
-    setDefaultCommand(new ArcadeDrive());
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -60,14 +65,25 @@ public class DriveTrain extends SubsystemBase {
     return frontRight.getSelectedSensorPosition(0);
   }
 
+  public double getGyroAngle() {
+    return gyro.getAngle();
+  }
+
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Drivetrain/Front Right Motor Position", getRightSensor());
-    SmartDashboard.putNumber("Drivetrain/Front Left Motor Position", getLeftSensor());
+    SmartDashboard.putNumber("Drivetrain/Right Motors Position", getRightSensor());
+    SmartDashboard.putNumber("Drivetrain/Left Motors Position", getLeftSensor());
 
     SmartDashboard.putNumber("Drivetrain/Left Motor Velocity", frontLeft.getSelectedSensorVelocity(0));
     SmartDashboard.putNumber("Drivetrain/Right Motors Velocity", frontRight.getSelectedSensorVelocity(0));
     
+    SmartDashboard.putNumber("Drivetrain/Front Left Motor Temperature", frontLeft.getTemperature());
+    SmartDashboard.putNumber("Drivetrain/Front Right Motor Temperature", frontLeft.getTemperature());
+    SmartDashboard.putNumber("Drivetrain/Back Left Motor Temperature", frontLeft.getTemperature());
+    SmartDashboard.putNumber("Drivetrain/Back Right Motor Temperature", frontLeft.getTemperature());
+
+    SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage());
   }
 
   private static DriveTrain instance;
