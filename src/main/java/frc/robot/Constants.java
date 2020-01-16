@@ -9,7 +9,7 @@ public final class Constants {
       SHOOTER_MOTOR_1 = 5,
       SHOOTER_MOTOR_2 = 6,
 
-      ButtonA = 0, //TODO: replace with actual
+      ButtonA = 0,
       ButtonB = 1;
   }
 
