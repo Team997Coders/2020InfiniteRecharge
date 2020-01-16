@@ -8,17 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
 import frc.robot.subsystems.Hopper;
 
-public class HopperBelt extends CommandBase {
-  /**
-   * Creates a new HopperBelt.
-   */private Hopper hopperMotor;
+public class LowerConveyorMotor extends CommandBase {
+  double speed;
 
-  public HopperBelt() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    hopperMotor = Hopper.getInstance();
+  public LowerConveyorMotor(double setSpeep) {
+    addRequirements(Hopper.getInstance());
+    speed = setSpeep;
   }
 
   // Called when the command is initially scheduled.
@@ -29,18 +26,13 @@ public class HopperBelt extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (OI.getInstance().getButtonB()){ 
-      hopperMotor.setSpeed(0.3);
-    } else if (OI.getInstance().getButtonX()) {
-      hopperMotor.setSpeed(-0.3);
-    } else {
-      hopperMotor.setSpeed(0);
-    }
+    Hopper.getInstance().setLowerSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Hopper.getInstance().setLowerSpeed(0);
   }
 
   // Returns true when the command should end.

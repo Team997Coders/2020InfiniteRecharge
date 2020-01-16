@@ -17,22 +17,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hopper extends SubsystemBase {
-  VictorSPX conveyorMotor1;
-  VictorSPX conveyorMotor2;
+  VictorSPX upperConveyorMotor1;
+  VictorSPX upperConveyorMotor2;
+  VictorSPX lowerConveyorMotor1;
+  VictorSPX lowerConveyorMotor2;
   AnalogInput frontIRsensor, backIRsensor;
   
   
   private Hopper() {
-    conveyorMotor1 = new VictorSPX(Constants.Ports.hopperMotor1);
-    conveyorMotor2 = new VictorSPX(Constants.Ports.hopperMotor2);  
+    upperConveyorMotor1 = new VictorSPX(Constants.Ports.upperHopperMotor1);
+    upperConveyorMotor2 = new VictorSPX(Constants.Ports.upperHopperMotor2); 
+    lowerConveyorMotor1 = new VictorSPX(Constants.Ports.lowerHopperMotor1);
+    lowerConveyorMotor2 = new VictorSPX(Constants.Ports.lowerHopperMotor2);
     frontIRsensor = new AnalogInput(Constants.Ports.hopperfrontIR);
     backIRsensor = new AnalogInput(Constants.Ports.hopperbackIR);
+
+    upperConveyorMotor2.follow(upperConveyorMotor1);
+    lowerConveyorMotor2.follow(lowerConveyorMotor1);
   }
 
-  public void setSpeed(double setSpeep){
-    conveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
-    conveyorMotor2.set(ControlMode.PercentOutput, setSpeep);
+  public void setUpperSpeed(double setSpeep){
+    upperConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
   }
+
+  public void setLowerSpeed(double setSpeep){
+    lowerConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
+  }
+
 
 
   public void updateSmartDashboard(){
