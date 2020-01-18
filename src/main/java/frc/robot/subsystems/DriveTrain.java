@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;

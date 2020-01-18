@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.DriveTrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -16,9 +17,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CommandScheduler.getInstance().cancelAll();
-
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
+    m_chooser.addOption("Do Nothing", new AutoDoNothing());
     Hopper.getInstance();
-    m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
+    DriveTrain.getInstance();
+    OI.getInstance();
   }
 
   @Override

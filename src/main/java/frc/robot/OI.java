@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,13 +5,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.StopShooting;
 
-/**
- * Add your docs here.
- */
 public class OI {
-
+  private double axisPos;
   private  Joystick gamepad1, gamepad2;
   private  JoystickButton buttonA2, buttonB2;
+
   private OI() {
     gamepad1 = new Joystick(0);
     gamepad2 = new Joystick(1);
@@ -29,7 +20,17 @@ public class OI {
     buttonA2.whenPressed(new Shoot());
     buttonB2.whenPressed(new StopShooting());
   }
+
+  public double getAxis(int portNum) {
+    axisPos = gamepad1.getRawAxis(portNum);
+    if (Math.abs(axisPos) <= 0.05) {
+      axisPos = 0;
+    }
+    return axisPos;
+  }
+
   private static OI instance;
   public static OI getInstance() {if(instance == null) instance = new OI(); return instance;}
+
 }
 
