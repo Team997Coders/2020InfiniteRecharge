@@ -17,6 +17,8 @@ public class ArcadeDrive extends CommandBase {
    */
   double left, right;
   public ArcadeDrive() {
+    System.out.println("sadness");
+    addRequirements(DriveTrain.getInstance());
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,8 +30,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    left = (-1 * OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
-    right = (-1 * OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
+    left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
+    right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
     DriveTrain.getInstance().setMotors(left, right);
   }
 

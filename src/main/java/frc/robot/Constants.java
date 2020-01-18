@@ -6,23 +6,23 @@ public final class Constants {
 
     public static final int
 
-      SHOOTER_MOTOR_1 = 5,
-      SHOOTER_MOTOR_2 = 6,
+      SHOOTER_MOTOR_1 = 8,
+      SHOOTER_MOTOR_2 = 9,
 
       //Hopper things
-      upperHopperMotor1 = 0, 
-      upperHopperMotor2 = 1,
-      lowerHopperMotor1 = 0,
-      lowerHopperMotor2 = 1,
+      upperHopperMotor1 = 4, 
+      upperHopperMotor2 = 5,
+      lowerHopperMotor1 = 6,
+      lowerHopperMotor2 = 7,
       hopperfrontIR = 0,
-      hopperbackIR = 1,
+      hopperbackIR = 2,
 
       //Drivetrain things
       motorFrontLeft = 0,
-      motorFrontRight = 0,
-      motorBackLeft = 0,
-      motorBackRight = 0,
-      ultraChannel = 0,
+      motorFrontRight = 1,
+      motorBackLeft = 2,
+      motorBackRight = 3,
+      ultrasonicChannel = 1,
 
       ButtonA = 0,
       ButtonB = 1;

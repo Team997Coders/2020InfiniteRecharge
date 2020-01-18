@@ -17,11 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class Hopper implements Subsystem {
-  VictorSPX upperConveyorMotor1;
-  VictorSPX upperConveyorMotor2;
-  VictorSPX lowerConveyorMotor1;
-  VictorSPX lowerConveyorMotor2;
-  AnalogInput frontIRsensor, backIRsensor;
+  private VictorSPX 
+    upperConveyorMotor1,
+    upperConveyorMotor2,
+    lowerConveyorMotor1,
+    lowerConveyorMotor2;
+  private AnalogInput frontIRsensor, backIRsensor;
   
   
   private Hopper() {

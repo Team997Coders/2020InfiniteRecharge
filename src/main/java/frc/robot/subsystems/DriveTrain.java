@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -23,13 +24,13 @@ public class DriveTrain implements Subsystem {
 
   private AnalogInput ultrasonic;
 
-  private DriveTrain() {
+  private DriveTrain(double bepis) {
 
+    System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
-    setDefaultCommand(new ArcadeDrive());
 
-    ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
-    imu = new AHRS();
+    ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
+    imu = new AHRS(Port.kUSB);
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
@@ -48,6 +49,8 @@ public class DriveTrain implements Subsystem {
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
+
+    
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -85,6 +88,13 @@ public class DriveTrain implements Subsystem {
   }
 
   private static DriveTrain instance;
-  public static DriveTrain getInstance() { return instance == null ? instance = new DriveTrain() : instance; }
-  
+
+  public static DriveTrain getInstance() {
+    System.out.println("Thread ID: " + Thread.currentThread().getId());
+    if (instance == null) { 
+      instance = new DriveTrain(1.0);
+      System.out.println("Inited========================================================================");
+    }
+    return instance;
+  }
 }

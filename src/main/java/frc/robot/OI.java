@@ -21,7 +21,7 @@ public class OI {
     buttonB2.whenPressed(new StopShooting());
   }
 
-  public double getAxis(int portNum) {
+  public double getGamepad1Axis(int portNum) {
     axisPos = gamepad1.getRawAxis(portNum);
     if (Math.abs(axisPos) <= 0.05) {
       axisPos = 0;

@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
     Hopper.getInstance();
-    DriveTrain.getInstance();
+    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
   }
 
