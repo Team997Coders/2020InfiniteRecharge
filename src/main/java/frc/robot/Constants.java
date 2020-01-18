@@ -1,7 +1,7 @@
 package frc.robot;
 
 public final class Constants {
-  
+
   public static class Ports {
 
     public static final int
@@ -38,10 +38,16 @@ public final class Constants {
   public static class Values {
 
     public static final int 
-      voltageToFeet = 1;
+        voltageToFeet = 1;
 
     public static final double
-      shooterOutput = 1.0; // TODO: replace with actual
+        shooterOutput = 1.0, // TODO: replace with actual
+
+        visionTurningP = 0,
+        visionTurningI = 0,
+        visionTurningD = 0,
+        visionTolerance = 0.5,
+        visionTimeout = 1000; //in ms
   }
 
 }
