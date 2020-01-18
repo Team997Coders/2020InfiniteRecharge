@@ -12,6 +12,7 @@ import org.team997coders.spartanlib.limelight.LimeLight.LEDState;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
@@ -27,7 +28,7 @@ public class AutoTurnTowardsVision extends CommandBase {
   private long targetLossTimeout;
 
   public AutoTurnTowardsVision() {
-    addRequirements(Robot.m_driveTrain);
+    addRequirements(DriveTrain.getInstance());
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -47,7 +48,8 @@ public class AutoTurnTowardsVision extends CommandBase {
   public void execute() {
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
     double deltaT = currentTime - oldTime;
-    pid.WhatShouldIDo(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
+    double output = pid.WhatShouldIDo(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
+    DriveTrain.getInstance().setMotors(output, -output);
     oldTime = currentTime;
 
     targetLossTimeout = (Robot.m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
