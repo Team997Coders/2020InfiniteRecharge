@@ -21,7 +21,7 @@ public class OI {
   private  JoystickButton buttonA2, buttonB2;
   private OI() {
     gamepad1 = new Joystick(0);
-    gamepad2 = new Joystick(3);
+    gamepad2 = new Joystick(1);
 
     buttonA2 = new JoystickButton(gamepad2, Constants.Ports.ButtonA);
     buttonB2 = new JoystickButton(gamepad2, Constants.Ports.ButtonB);
@@ -32,3 +32,4 @@ public class OI {
   private static OI instance;
   public static OI getInstance() {if(instance == null) instance = new OI(); return instance;}
 }
+

@@ -9,6 +9,13 @@ public final class Constants {
       SHOOTER_MOTOR_1 = 5,
       SHOOTER_MOTOR_2 = 6,
 
+      upperHopperMotor1 = 0, 
+      upperHopperMotor2 = 1,
+      lowerHopperMotor1 = 0,
+      lowerHopperMotor2 = 1,
+      hopperfrontIR = 0,
+      hopperbackIR = 1,
+
       ButtonA = 0,
       ButtonB = 1;
   }
