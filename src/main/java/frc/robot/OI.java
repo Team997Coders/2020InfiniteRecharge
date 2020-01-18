@@ -7,29 +7,27 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.StopSucc;
+import frc.robot.commands.Succ;
 
 /**
  * Add your docs here.
  */
 public class OI {
-
     
-    private static XboxController gamepad1;
-
+    private Joystick gamepad2;
+    private JoystickButton rightBumper2, leftBumper2;
 
     public OI() {
-        gamepad1 = new XboxController(0);
+        gamepad2 = new Joystick(4);
         
-    }
+        rightBumper2 = new JoystickButton(gamepad2, 5);
+        leftBumper2 = new JoystickButton(gamepad2, 6);
 
-    public Boolean getRightBumper() {
-        return gamepad1.getBumper(Hand.kRight);
-    }
-    
-    public Boolean getLeftBumper() {
-        return gamepad1.getBumper(Hand.kLeft);
+        rightBumper2.whenPressed(new Succ());
+        leftBumper2.whenPressed(new StopSucc());
     }
 
     private static OI instance;
