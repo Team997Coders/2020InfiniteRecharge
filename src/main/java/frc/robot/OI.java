@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ClimberUp;
+import frc.robot.commands.ClimberDown;
 
 /**
  * Add your docs here.
@@ -26,6 +28,11 @@ public class OI {
      buttonA = new JoystickButton(gamepad1, Constants.Ports.buttonA);
      buttonX = new JoystickButton(gamepad1, Constants.Ports.buttonX);
      buttonY = new JoystickButton(gamepad1, Constants.Ports.buttonY);
+
+     buttonA.whenPressed(new ClimberUp());
+     buttonX.whenPressed(new ClimberDown());
+
+     
     }
   
    
