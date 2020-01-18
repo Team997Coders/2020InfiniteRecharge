@@ -16,4 +16,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public class Values {
+        public final static double
+            visionTurningP = 0,
+            visionTurningI = 0,
+            visionTurningD = 0,
+            visionTolerance = 0.5,
+            visionTimeout = 1000; //in ms
+    }
 }

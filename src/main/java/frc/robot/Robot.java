@@ -29,6 +29,8 @@ public class Robot extends TimedRobot {
   public static LimeLight m_limelight;
   public static DriveTrain m_driveTrain;
 
+  public boolean verbose = true;
+
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -126,5 +128,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public void updateSmartDashboard() {
+    SmartDashboard.putNumber("Limelight/hasTarget", m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0));
+    SmartDashboard.putNumber("Limelight/targetX", m_limelight.getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putNumber("Limelight/targetY", m_limelight.getDouble(LimeLight.TARGET_Y, 0));
   }
 }
