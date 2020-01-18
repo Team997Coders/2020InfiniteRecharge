@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static OI m_oi;
-  public static DriveTrain driveTrain;
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -39,7 +38,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
-    driveTrain = DriveTrain.getInstance();
+    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     m_oi = OI.getInstance();
   }
 

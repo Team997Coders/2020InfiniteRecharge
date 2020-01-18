@@ -28,7 +28,6 @@ public class DriveTrain extends SubsystemBase {
   private DriveTrain() {
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
-    setDefaultCommand(new ArcadeDrive());
 
     ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
     imu = new AHRS();

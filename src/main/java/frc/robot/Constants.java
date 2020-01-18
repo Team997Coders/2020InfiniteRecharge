@@ -19,10 +19,10 @@ public final class Constants {
 
     public static class Ports {
         public static final int
-            motorFrontLeft = 0,
-            motorFrontRight = 0,
-            motorBackLeft = 0,
-            motorBackRight = 0,
+            motorFrontLeft = 3,
+            motorFrontRight = 1,
+            motorBackLeft = 4,
+            motorBackRight = 2,
             ultraChannel = 0;
     }
 
