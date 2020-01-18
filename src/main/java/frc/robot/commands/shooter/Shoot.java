@@ -25,7 +25,7 @@ public class Shoot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Shooter.getInstance().SetYeeter(Constants.Values.shooterOutput);
+    Shooter.getInstance().SetYeeterRPM(Constants.Values.shooterOutput);
   }
 
   // Make this return true when this Command no longer needs to run execute()

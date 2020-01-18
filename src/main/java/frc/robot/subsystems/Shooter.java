@@ -7,7 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,10 +23,15 @@ public class Shooter extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private CANSparkMax yeeter1, yeeter2;
-
+  private CANEncoder yeeterEncoder;
+  private CANPIDController yeeterPIDController;
   private Shooter() {
     yeeter1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
     yeeter2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
+
+    yeeterEncoder = yeeter1.getEncoder(EncoderType.kHallSensor, 42);
+
+    yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
 
     yeeter1.restoreFactoryDefaults();
     yeeter2.restoreFactoryDefaults();
@@ -34,9 +42,14 @@ public class Shooter extends Subsystem {
   private static Shooter instance;
   public static Shooter getInstance() {if(instance == null) instance = new Shooter(); return instance;}
 
-  public void SetYeeter(double yeeterOutput) {
-    yeeter1.set(yeeterOutput);
+  public void SetYeeterRPM(double yeeterRPMs) {
+    yeeterPIDController.setSmartMotionMaxVelocity(yeeterRPMs, 0);
   }
+
+  public double getRPMs() {
+    return yeeterEncoder.getVelocity();
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
