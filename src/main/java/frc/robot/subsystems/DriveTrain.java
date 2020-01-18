@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-import frc.robot.commands.ArcadeDrive;
 
 public class DriveTrain implements Subsystem {
   
@@ -24,7 +23,7 @@ public class DriveTrain implements Subsystem {
 
   private AnalogInput ultrasonic;
 
-  private DriveTrain(double bepis) {
+  private DriveTrain() {
 
     System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
@@ -92,7 +91,7 @@ public class DriveTrain implements Subsystem {
   public static DriveTrain getInstance() {
     System.out.println("Thread ID: " + Thread.currentThread().getId());
     if (instance == null) { 
-      instance = new DriveTrain(1.0);
+      instance = new DriveTrain();
       System.out.println("Inited========================================================================");
     }
     return instance;

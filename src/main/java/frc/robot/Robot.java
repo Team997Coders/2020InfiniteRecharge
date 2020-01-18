@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  public static OI oi;
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -23,6 +24,8 @@ public class Robot extends TimedRobot {
     Hopper.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
+    Climber.getInstance();
+
   }
 
   @Override

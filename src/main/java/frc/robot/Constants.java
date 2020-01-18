@@ -24,8 +24,15 @@ public final class Constants {
       motorBackRight = 3,
       ultrasonicChannel = 1,
 
-      ButtonA = 0,
-      ButtonB = 1;
+      //climber things
+      climberMotorPort = 10,
+      climberPistonPort = 0,
+
+      buttonA = 1,
+      ButtonB = 2,
+      buttonX = 3,
+      buttonY = 4;
+      
   }
 
   public static class Values {
