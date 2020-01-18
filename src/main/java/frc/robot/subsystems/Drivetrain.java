@@ -8,11 +8,11 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.commands.ArcadeDrive;
 
-public class DriveTrain extends SubsystemBase {
+public class Drivetrain implements Subsystem {
   
   private TalonFX frontLeft;
   private TalonFX frontRight;
@@ -23,7 +23,7 @@ public class DriveTrain extends SubsystemBase {
 
   private AnalogInput ultrasonic;
 
-  private DriveTrain() {
+  private Drivetrain() {
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
     setDefaultCommand(new ArcadeDrive());
@@ -84,7 +84,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() * Constants.Values.voltageToFeet);
   }
 
-  private static DriveTrain instance;
-  public static DriveTrain getInstance() { return instance == null ? instance = new DriveTrain() : instance; }
+  private static Drivetrain instance;
+  public static Drivetrain getInstance() { return instance == null ? instance = new Drivetrain() : instance; }
   
 }

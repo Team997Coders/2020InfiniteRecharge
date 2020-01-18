@@ -14,9 +14,9 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
-public class Hopper extends SubsystemBase {
+public class Hopper implements Subsystem {
   VictorSPX upperConveyorMotor1;
   VictorSPX upperConveyorMotor2;
   VictorSPX lowerConveyorMotor1;
