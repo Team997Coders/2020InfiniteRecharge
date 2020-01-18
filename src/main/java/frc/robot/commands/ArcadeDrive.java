@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDrive extends CommandBase {
   /**
@@ -30,13 +30,13 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     left = (-1 * OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
     right = (-1 * OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
-    Drivetrain.getInstance().setMotors(left, right);
+    DriveTrain.getInstance().setMotors(left, right);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Drivetrain.getInstance().setMotors(0, 0);
+    DriveTrain.getInstance().setMotors(0, 0);
   }
 
   // Returns true when the command should end.
