@@ -30,13 +30,13 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     left = (-1 * OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
     right = (-1 * OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
-    DriveTrain.getInstance().setMotors(left, right);
+    Drivetrain.getInstance().setMotors(left, right);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    DriveTrain.getInstance().setMotors(0, 0);
+    Drivetrain.getInstance().setMotors(0, 0);
   }
 
   // Returns true when the command should end.
