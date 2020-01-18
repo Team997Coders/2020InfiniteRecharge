@@ -89,7 +89,6 @@ public class DriveTrain implements Subsystem {
   private static DriveTrain instance;
 
   public static DriveTrain getInstance() {
-    System.out.println("Thread ID: " + Thread.currentThread().getId());
     if (instance == null) { 
       instance = new DriveTrain();
       System.out.println("Inited========================================================================");
