@@ -68,7 +68,36 @@ public class DriveTrain extends SubsystemBase {
   public double getGyroAngle() {
     return imu.getAngle();
   }
+  public void resetGyroAngle(){
+    imu.reset();
+  }
 
+  
+  public void resetEncoders(){
+    frontLeft.setSelectedSensorPosition(0);
+    frontRight.setSelectedSensorPosition(0);
+  }
+  public void setAngle(double targetAngle){
+    double current = getGyroAngle();
+    double error = targetAngle-current;
+    double positionAdjustment = error*0.00277; //100 divided by 360 divided by 100
+    double currentLeftPosition = getLeftSensor();
+    double currentRightPosition = getRightSensor();
+    
+    setPosition(currentLeftPosition - positionAdjustment, currentRightPosition + positionAdjustment); // +/- may need to be reversed see when testing
+
+  }
+
+  public void setPosition(double leftPostion, double rightPosition){
+    frontLeft.set(ControlMode.Position, leftPostion);
+    frontRight.set(ControlMode.Position, rightPosition);
+  }
+  public double calcualteEncoderTicksFromInches(double inches){
+
+    double ticks = (inches*5*Math.PI)/(2048);
+    return ticks;
+  }
+  
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Drivetrain/Right Motors Position", getRightSensor());
