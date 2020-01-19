@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
+import frc.robot.commands.auto.FollowPath;
+import frc.robot.pathfollower.PathManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -31,7 +32,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_chooser.addOption("Do Nothing", new AutoDoNothing());
+    m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
+    m_chooser.addOption("Auto One", new FollowPath(PathManager.getSupplier("GoToPickup"), false));
 
     m_limelight = new LimeLight();
 

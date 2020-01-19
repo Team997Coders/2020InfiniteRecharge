@@ -66,6 +66,13 @@ public class PathManager {
     }
   }
 
+  public static TrajectorySupplier getSupplier(String name) {
+    for (TrajectorySupplier t : suppliers) {
+      if (name.equals(t.name)) return t;
+    }
+    return null;
+  }
+
   public static DifferentialDriveWheelSpeeds getDriveSpeeds(Trajectory.State currentState) {
     return diffDriveKin.toWheelSpeeds(new ChassisSpeeds(currentState.velocityMetersPerSecond, 0,
         currentState.curvatureRadPerMeter * currentState.velocityMetersPerSecond));

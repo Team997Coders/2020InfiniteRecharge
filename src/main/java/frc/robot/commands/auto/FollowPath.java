@@ -16,32 +16,38 @@ public class FollowPath extends CommandBase {
 
   private double startTime = 0.0;
   private double currentTime = 0.0;
+  private boolean reverse = false;
 
-  public FollowPath(TrajectorySupplier supplier) {
+  public FollowPath(TrajectorySupplier supplier, boolean reverse) {
     this.supplier = supplier;
+    this.reverse = reverse;
 
     addRequirements(DriveTrain.getInstance());
   }
 
   @Override
   public void initialize() {
-    startTime = (double)System.currentTimeMillis() / (double)1000;
+    startTime = (double) System.currentTimeMillis() / (double) 1000;
 
     trajectory = supplier.GetTrajectory();
-    if (trajectory == null) this.cancel();
+    if (trajectory == null)
+      this.cancel();
   }
 
   @Override
   public void execute() {
-    currentTime = (System.currentTimeMillis() / (double)1000) - startTime;
+    currentTime = (System.currentTimeMillis() / (double) 1000) - startTime;
 
     Trajectory.State currentState = trajectory.sample(currentTime);
     DifferentialDriveWheelSpeeds speeds = PathManager.getDriveSpeeds(currentState);
 
-    DriveTrain.getInstance().setVelocity(
-      speeds.leftMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET,
-      speeds.rightMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET
-    );
+    if (!reverse) {
+      DriveTrain.getInstance().setVelocity(speeds.leftMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET,
+          speeds.rightMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+    } else {
+      DriveTrain.getInstance().setVelocity(-speeds.rightMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET,
+          -speeds.leftMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+    }
   }
 
   @Override
@@ -54,8 +60,10 @@ public class FollowPath extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    if (interrupted) System.out.println("Path '" + supplier.name + "' was interrupted");
-    else System.out.println("Path '" + supplier.name + "' has finished");
+    if (interrupted)
+      System.out.println("Path '" + supplier.name + "' was interrupted");
+    else
+      System.out.println("Path '" + supplier.name + "' has finished");
   }
 
 }
