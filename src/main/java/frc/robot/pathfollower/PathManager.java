@@ -19,7 +19,8 @@ public class PathManager {
     suppliers = new TrajectorySupplier[] {
       new TrajectorySupplier("GoToPickup"),
       new TrajectorySupplier("GoToShootPos"),
-      new TrajectorySupplier("Pickup3")
+      new TrajectorySupplier("Pickup3"),
+      new TrajectorySupplier("TrenchPivot")
     };
 
     runner = new Thread(() -> LoadAllPaths());
