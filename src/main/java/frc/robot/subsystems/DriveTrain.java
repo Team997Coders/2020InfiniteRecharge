@@ -28,10 +28,10 @@ public class DriveTrain extends SubsystemBase {
   private DriveTrain() {
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
-    setDefaultCommand(new ArcadeDrive());
+    
 
     ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
-    imu = new AHRS();
+    imu = new AHRS();//TODO: but something in here 
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
@@ -77,20 +77,10 @@ public class DriveTrain extends SubsystemBase {
     frontLeft.setSelectedSensorPosition(0);
     frontRight.setSelectedSensorPosition(0);
   }
-  public void setAngle(double targetAngle){
-    double current = getGyroAngle();
-    double error = targetAngle-current;
-    double positionAdjustment = error*0.00277; //100 divided by 360 divided by 100
-    double currentLeftPosition = getLeftSensor();
-    double currentRightPosition = getRightSensor();
-    
-    setPosition(currentLeftPosition - positionAdjustment, currentRightPosition + positionAdjustment); // +/- may need to be reversed see when testing
-
-  }
-
-  public void setPosition(double leftPostion, double rightPosition){
-    frontLeft.set(ControlMode.Position, leftPostion);
-    frontRight.set(ControlMode.Position, rightPosition);
+ 
+  public void setPosition(double leftPostion, double rightPosition, double angle){
+    frontLeft.set(ControlMode.Position, leftPosition);
+    frontRight.set(ControlMode.Position, rightPosition;
   }
   public double calcualteEncoderTicksFromInches(double inches){
 

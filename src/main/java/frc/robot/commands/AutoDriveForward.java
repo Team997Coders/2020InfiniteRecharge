@@ -42,8 +42,15 @@ public double calculateError(double current, double target){
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      DriveTrain.getInstance().setPosition(calculateError(DriveTrain.getInstance().getLeftSensor(),leftEcncoderTarget), calculateError(DriveTrain.getInstance().getRightSensor(),rightEncoderTarget));
-			DriveTrain.getInstance().setAngle(0);
+    double current = getGyroAngle();
+    double error = targetAngle-current;
+    double positionAdjustment = error*0.00277; //100 divided by 360 divided by 100
+    double currentLeftPosition = getLeftSensor();
+    double currentRightPosition = getRightSensor();
+
+    double leftPosition = currentLeftPosition- positionAdjustment)
+    double rightPosition = currentRightPosition + positionAdjustment)
+    DriveTrain.getInstance().setPosition(leftPosition, rightPosition, 0)
 		}
   
   

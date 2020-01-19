@@ -23,8 +23,7 @@ import frc.robot.commands.AutoDriveForward;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  public static OI m_oi;
-  public static DriveTrain driveTrain;
+  
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,8 +39,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
     m_chooser.addOption("Go Forward", new AutoDriveForward(driveTrain.calcualteEncoderTicksFromInches(36), driveTrain.calcualteEncoderTicksFromInches(36), 0.5));
-    driveTrain = DriveTrain.getInstance();
-    m_oi = OI.getInstance();
+    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    OI.getInstance();
   }
 
   /**
