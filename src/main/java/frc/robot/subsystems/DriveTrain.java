@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -49,12 +50,20 @@ public class DriveTrain implements Subsystem {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    
+    frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY.kP);
+    frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY.kI);
+    frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
+    frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
     frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
+  }
+
+  public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
+    frontLeft.set(ControlMode.Velocity, leftFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+    frontRight.set(ControlMode.Velocity, rightFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
   }
 
   public double getLeftSensor() {

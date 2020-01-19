@@ -1,8 +1,8 @@
 {
   "lengthUnit": "Meter",
-  "maxVelocity": 5.0,
-  "maxAcceleration": 3.0,
-  "wheelBase": 0.5,
+  "maxVelocity": 3.048,
+  "maxAcceleration": 1.2192,
+  "wheelBase": 0.64,
   "gameName": "2020 Infinite Recharge",
-  "outputDir": "../src/main/deploy"
+  "outputDir": "../src/main/deploy/paths"
 }
