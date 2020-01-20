@@ -29,5 +29,12 @@ public final class Constants {
     public static class Values {
         public static final int 
             voltageToFeet = 1;
+        public static final double
+            autoDriveForwardp = 420,
+            autoDriveForwardi = 69,
+            autoDriveForwardd = 42.0,
+            autoGyrop = 420,
+            autoGyroi = 69,
+            autoGyrod = 32.98;
     }
 }

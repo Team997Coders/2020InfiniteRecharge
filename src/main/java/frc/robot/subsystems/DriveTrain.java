@@ -38,6 +38,9 @@ public class DriveTrain extends SubsystemBase {
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
 
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
     backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
@@ -53,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
-    frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
+    frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
@@ -80,7 +83,7 @@ public class DriveTrain extends SubsystemBase {
  
   public void setPosition(double leftPostion, double rightPosition, double angle){
     frontLeft.set(ControlMode.Position, leftPosition);
-    frontRight.set(ControlMode.Position, rightPosition;
+    frontRight.set(ControlMode.Position, rightPosition);
   }
   public double calcualteEncoderTicksFromInches(double inches){
 

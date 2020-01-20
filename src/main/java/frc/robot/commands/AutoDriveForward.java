@@ -7,52 +7,54 @@
 
 package frc.robot.commands;
 
-import java.lang.module.ModuleDescriptor.Requires;
+import java.security.GeneralSecurityException;
+
+import org.team997coders.spartanlib.controllers.SpartanPID;
+import org.team997coders.spartanlib.helpers.PIDConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class AutoDriveForward extends CommandBase {
   /**
-   * Creates a new AutoDoNothing.
+   * Creates a new AutoDriveForward2.
    */
-    private double rightEncoderTarget = 0;
-    private double leftEcncoderTarget = 0;
-    private double errorMargin = 0;
-public AutoDriveForward(double leftEncoderTarget, double rightEncoderTarget, double errorMargin) {
-    // Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(DriveTrain.getInstance());
-		this.leftEcncoderTarget = leftEncoderTarget;
-		this.rightEncoderTarget = rightEncoderTarget;
-		this.errorMargin = errorMargin;
-  }
-public double calculateError(double current, double target){
-    return (current - target);
-}
+  double ticks;
+  SpartanPID podLoop, gyroPodLoop;
+  PIDConstants podstuff, gyroPodStuff;
+  long tiempo;
+  
+  
 
+  public AutoDriveForward(double inches) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.ticks = DriveTrain.getInstance().calcualteEncoderTicksFromInches(inches);
+    
+  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DriveTrain.getInstance().resetEncoders();
-		DriveTrain.getInstance().resetGyroAngle();
+    podstuff = new PIDConstants(Constants.Values.autoDriveForwardp, Constants.Values.autoDriveForwardi, Constants.Values.autoDriveForwardd);
+    podLoop = new SpartanPID(podstuff);
+    podLoop.setSetpoint(ticks);
+    tiempo = System.nanoTime();
+    gyroPodStuff = new PIDConstants(Constants.Values.autoGyrop, Constants.Values.autoGyroi, Constants.Values.autoGyrod);
+    gyroPodLoop = new SpartanPID(gyroPodStuff);
+    gyroPodLoop.setSetpoint(DriveTrain.getInstance().getGyroAngle());;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double current = getGyroAngle();
-    double error = targetAngle-current;
-    double positionAdjustment = error*0.00277; //100 divided by 360 divided by 100
-    double currentLeftPosition = getLeftSensor();
-    double currentRightPosition = getRightSensor();
-
-    double leftPosition = currentLeftPosition- positionAdjustment)
-    double rightPosition = currentRightPosition + positionAdjustment)
-    DriveTrain.getInstance().setPosition(leftPosition, rightPosition, 0)
-		}
-  
+    double podLoopNum = podLoop.WhatShouldIDo((DriveTrain.getInstance().getLeftSensor() + DriveTrain.getInstance().getRightSensor()) / 2, System.nanoTime() - tiempo);
+    double gyroPodLoopNum = gyroPodLoop.WhatShouldIDo(DriveTrain.getInstance().getGyroAngle(), System.nanoTime() - tiempo);
+    tiempo = System.nanoTime();
+    DriveTrain.getInstance().setMotors(podLoopNum - gyroPodLoopNum, podLoopNum + gyroPodLoopNum);
+    
+    
+  }
   
 
   // Called once the command ends or is interrupted.
@@ -63,9 +65,12 @@ public double calculateError(double current, double target){
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean onLeftTarget = (Math.abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget))) < errorMargin;
-    boolean onRightTarget = (Math.abs(calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget))) < errorMargin;
-		boolean onAngleTarget = (Math.abs(calculateError(DriveTrain.getInstance().getGyroAngle(), 0))) < errorMargin;
-    return (onLeftTarget && onRightTarget && onAngleTarget);
+    if (Math.abs(ticks - (DriveTrain.getInstance().getLeftSensor() + DriveTrain.getInstance().getRightSensor()) / 2) <= 69) {
+      return true;
+    } else {
+      return false;
+    }
+
+    
   }
 }
