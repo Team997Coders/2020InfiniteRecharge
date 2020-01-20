@@ -5,17 +5,21 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
+import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
+  
   @Override
   public void robotInit() {
     CommandScheduler.getInstance().cancelAll();
 
+    Shooter.getInstance();
+    Hopper.getInstance();
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
   }
 
