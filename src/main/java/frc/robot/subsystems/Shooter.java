@@ -8,6 +8,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,32 +25,31 @@ import frc.robot.Constants;
 public class Shooter implements Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private CANSparkMax yeeter1, yeeter2;
-  private CANEncoder yeeterEncoder;
-  private CANPIDController yeeterPIDController;
+  private TalonSRX yeeter;
   private Shooter() {
-    yeeter1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
-    yeeter2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
+    yeeter = new TalonSRX(Constants.Ports.SHOOTER_MOTOR_1);
+    yeeter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-    yeeterEncoder = yeeter1.getEncoder(EncoderType.kHallSensor, 42);
+    //yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
 
-    yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
+    //yeeter1.restoreFactoryDefaults();
+    //yeeter2.restoreFactoryDefaults();
 
-    yeeter1.restoreFactoryDefaults();
-    yeeter2.restoreFactoryDefaults();
-
-    yeeter2.follow(yeeter1);
+    //yeeter2.follow(yeeter1);
   }
 
   private static Shooter instance;
   public static Shooter getInstance() {if(instance == null) instance = new Shooter(); return instance;}
 
   public void SetYeeterRPM(double yeeterRPMs) {
-    yeeterPIDController.setSmartMotionMaxVelocity(yeeterRPMs, 0);
+    double rpmToInternal = 1 / 0.1465;
+    yeeter.set(ControlMode.Velocity, yeeterRPMs * rpmToInternal);
   }
 
   public double getRPMs() {
-    return yeeterEncoder.getVelocity();
+    double internalCountToRpm = 0.1465;
+    double revsPerSecondMotorSide = internalCountToRpm * yeeter.getSelectedSensorVelocity();// / (1024 * 4); //(motor.getSelectedSensorVelocity(0) / (1024 * 4)) * 10;
+    return revsPerSecondMotorSide;
   }
 
 }
