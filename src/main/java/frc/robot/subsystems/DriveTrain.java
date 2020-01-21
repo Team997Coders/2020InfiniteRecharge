@@ -68,6 +68,10 @@ public class DriveTrain extends SubsystemBase {
     return frontRight.getSelectedSensorPosition(0);
   }
 
+  public double getSensorAverage() {
+    return (frontRight.getSelectedSensorPosition(0) + frontLeft.getSelectedSensorPosition(0)) / 2;
+  }
+
   public double getGyroAngle() {
     return imu.getAngle();
   }
@@ -81,10 +85,7 @@ public class DriveTrain extends SubsystemBase {
     frontRight.setSelectedSensorPosition(0);
   }
  
-  public void setPosition(double leftPostion, double rightPosition, double angle){
-    frontLeft.set(ControlMode.Position, leftPosition);
-    frontRight.set(ControlMode.Position, rightPosition);
-  }
+  
   public double calcualteEncoderTicksFromInches(double inches){
 
     double ticks = (inches*5*Math.PI)/(2048);

@@ -14,46 +14,41 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class AutoDriveForward extends CommandBase {
+public class TurnAngle extends CommandBase {
   /**
-   * Creates a new AutoDriveForward2.
+   * Creates a new TurnToAngle.
    */
-  double ticks;
-  SpartanPID pidLoop, gyroPidLoop;
-  PIDConstants pidstuff, gyroPidStuff;
-  long tiempo;
-  
-  
 
-  public AutoDriveForward(double inches) {
+  //yaw (-180, 180)
+  double startAngle;
+  SpartanPID gyroPidLoop;
+  PIDConstants gyroPidStuff;
+  double tiempo;
+  double degrees;
+
+
+  public TurnAngle(double degrees) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.ticks = DriveTrain.getInstance().calcualteEncoderTicksFromInches(inches);
-    
+    this.degrees = degrees;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidstuff = new PIDConstants(Constants.Values.autoDriveForwardp, Constants.Values.autoDriveForwardi, Constants.Values.autoDriveForwardd);
-    pidLoop = new SpartanPID(pidstuff);
-    pidLoop.setSetpoint(ticks);
-    tiempo = System.nanoTime();
+    startAngle = 0;
     gyroPidStuff = new PIDConstants(Constants.Values.autoGyrop, Constants.Values.autoGyroi, Constants.Values.autoGyrod);
     gyroPidLoop = new SpartanPID(gyroPidStuff);
-    gyroPidLoop.setSetpoint(DriveTrain.getInstance().getGyroAngle());;
+    gyroPidLoop.setSetpoint(degrees);
+    tiempo = System.nanoTime();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pidLoopNum = pidLoop.WhatShouldIDo(DriveTrain.getInstance().getSensorAverage(), System.nanoTime() - tiempo);
-    double gyroPidLoopNum = gyroPidLoop.WhatShouldIDo(DriveTrain.getInstance().getGyroAngle(), System.nanoTime() - tiempo);
+    double gyroPidLoopNum = gyroPidLoop.WhatShouldIDo(DriveTrain.getInstance().getSensorAverage(), System.nanoTime() - tiempo);
     tiempo = System.nanoTime();
-    DriveTrain.getInstance().setMotors(pidLoopNum - gyroPidLoopNum, pidLoopNum + gyroPidLoopNum);
-    
-    
+    DriveTrain.getInstance().setMotors(gyroPidLoopNum, -gyroPidLoopNum);
   }
-  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -63,12 +58,6 @@ public class AutoDriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(ticks - DriveTrain.getInstance().getSensorAverage()) <= 69) {
-      return true;
-    } else {
-      return false;
-    }
-
-    
+    return false;
   }
 }

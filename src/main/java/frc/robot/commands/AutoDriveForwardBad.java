@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.DriveTrain;
 
-public class AutoDriveForward extends CommandBase {
+public class AutoDriveForwardBad extends CommandBase {
   /**
    * Creates a new AutoDoNothing.
    */
@@ -22,7 +22,7 @@ public class AutoDriveForward extends CommandBase {
     private double leftEcncoderTarget = 0;
     private double errorMargin = 0;
 
-public AutoDriveForward(double leftEncoderTarget, double rightEncoderTarget, double errorMargin) {
+public AutoDriveForwardBad(double leftEncoderTarget, double rightEncoderTarget, double errorMargin) {
     // Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(DriveTrain.getInstance());
 		this.leftEcncoderTarget = leftEncoderTarget;
