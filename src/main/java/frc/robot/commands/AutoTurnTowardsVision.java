@@ -36,7 +36,8 @@ public class AutoTurnTowardsVision extends CommandBase {
   @Override
   public void initialize() {
     Robot.m_limelight.setLED(LEDState.ForceOn);
-    pidConstants = new PIDConstants(Constants.Values.visionTurningP, Constants.Values.visionTurningI, Constants.Values.visionTurningD);
+    DriveTrain driveTrain = DriveTrain.getInstance();
+    pidConstants = new PIDConstants(driveTrain.P, driveTrain.I, driveTrain.D);
     pid = new SpartanPID(pidConstants);
     pid.setSetpoint(0);
 

@@ -42,7 +42,7 @@ public final class Constants {
 
         shooterOutput = 1.0, // TODO: replace with actual
 
-        visionTurningP = 0,
+        visionTurningP = 0.0001,
         visionTurningI = 0,
         visionTurningD = 0,
         visionTolerance = 0.5,

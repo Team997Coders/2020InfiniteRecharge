@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 
 public class DriveTrain implements Subsystem {
+
+  public double P;
+  public double I;
+  public double D;
   
   private TalonFX frontLeft;
   private TalonFX frontRight;
@@ -24,6 +28,10 @@ public class DriveTrain implements Subsystem {
   private AnalogInput ultrasonic;
 
   private DriveTrain() {
+
+    P = Constants.Values.visionTurningP;
+    I = Constants.Values.visionTurningI;
+    D = Constants.Values.visionTurningD;
 
     System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
@@ -49,11 +57,30 @@ public class DriveTrain implements Subsystem {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+
     
   }
 
+  public void updatePID() {
+    P = SmartDashboard.getNumber("DriveTrain/P", 0);
+    I = SmartDashboard.getNumber("DriveTrain/I", 0);
+    D = SmartDashboard.getNumber("DriveTrain/D", 0);
+  }
+
+  public void putCurrentPID() {
+    SmartDashboard.putNumber("DriveTrain/P", Constants.Values.visionTurningP);
+    SmartDashboard.putNumber("DriveTrain/I", Constants.Values.visionTurningI);
+    SmartDashboard.putNumber("DriveTrain/D", Constants.Values.visionTurningD);
+
+    SmartDashboard.setPersistent("DriveTrain/P");
+    SmartDashboard.setPersistent("DriveTrain/I");
+    SmartDashboard.setPersistent("DriveTrain/D");
+  }
+
   public void setMotors(double leftSpeed, double rightSpeed) {
-    frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
+    frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 

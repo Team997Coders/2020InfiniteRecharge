@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
 
   public long cycles = 0;
   public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
+  public static final boolean isTuning = true;
 
   public static LimeLight m_limelight;
 
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
 
     Hopper.getInstance().register();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    DriveTrain.getInstance().putCurrentPID();
     OI.getInstance();
     Climber.getInstance();
 
@@ -64,7 +66,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+
     CommandScheduler.getInstance().run();
+
+    if (isTuning) {
+      DriveTrain.getInstance().updatePID();
+    }
   }
 
   @Override
