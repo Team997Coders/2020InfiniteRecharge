@@ -29,7 +29,7 @@ public final class Constants {
       climberPistonPort = 0,
 
       buttonA = 1,
-      ButtonB = 2,
+      buttonB = 2,
       buttonX = 3,
       buttonY = 4;
       
