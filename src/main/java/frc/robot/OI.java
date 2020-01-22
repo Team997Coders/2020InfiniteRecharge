@@ -22,7 +22,8 @@ public class OI {
   
   private  Joystick gamepad1, gamepad2;
   private  JoystickButton buttonA2, buttonB2, buttonY2, buttonX2;
-  private OI() {
+    private OI() {
+    //public OI() {
     gamepad1 = new Joystick(0);
     gamepad2 = new Joystick(1);
 
@@ -31,7 +32,7 @@ public class OI {
     buttonX2 = new JoystickButton(gamepad2, Constants.Ports.ButtonX);
     buttonY2 = new JoystickButton(gamepad2, Constants.Ports.ButtonY);
 
-    buttonA2.whenPressed(new Shoot());
+    buttonA2.whileHeld(new Shoot());
     buttonB2.whenPressed(new StopShooting());
     buttonX2.whileHeld(new LowerConveyorMotor(0.3));
     buttonY2.whileHeld(new UpperConveyorMotor(0.3));

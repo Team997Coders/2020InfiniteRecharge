@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     CommandScheduler.getInstance().cancelAll();
 
+    OI.getInstance();
     Shooter.getInstance();
     Hopper.getInstance();
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());

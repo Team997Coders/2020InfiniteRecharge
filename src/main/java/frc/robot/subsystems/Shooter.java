@@ -16,6 +16,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 
@@ -46,6 +47,9 @@ public class Shooter implements Subsystem {
     yeeter.set(ControlMode.Velocity, yeeterRPMs * rpmToInternal);
   }
 
+  public void updateSmartDashboard(){
+    SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
+  }
   public double getRPMs() {
     double internalCountToRpm = 0.1465;
     double revsPerSecondMotorSide = internalCountToRpm * yeeter.getSelectedSensorVelocity();// / (1024 * 4); //(motor.getSelectedSensorVelocity(0) / (1024 * 4)) * 10;
