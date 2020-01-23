@@ -36,6 +36,8 @@ public class Hopper extends SubsystemBase {
     lowerConveyorMotor2.follow(lowerConveyorMotor1);
 
     upperConveyorMotor2.setInverted(true);
+    lowerConveyorMotor1.setInverted(true);
+    lowerConveyorMotor2.setInverted(true);
   }
 
   public void setUpperSpeed(double setSpeep){
