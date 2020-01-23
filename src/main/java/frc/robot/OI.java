@@ -3,11 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.shooter.Shoot;
-import frc.robot.commands.shooter.StopShooting;
-import frc.robot.commands.ClimberUp;
-import frc.robot.commands.AutoTurnTowardsVision;
-import frc.robot.commands.ClimberDown;
+import frc.robot.commands.*;
+import frc.robot.commands.shooter.*;
 
 public class OI {
   private double axisPos;
@@ -31,8 +28,8 @@ public class OI {
     buttonA.whenPressed(new ClimberUp());
     buttonX.whenPressed(new ClimberDown());
 
-    buttonB.whenPressed(new AutoTurnTowardsVision());
-    
+    //buttonB.whenPressed(new AutoTurnTowardsVision());
+    buttonB.whenPressed(new AutoFaceTargetAndDrive());
   }
 
   public double getGamepad1Axis(int portNum) {

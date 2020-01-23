@@ -33,7 +33,7 @@ public class DriveTrain implements Subsystem {
     I = Constants.Values.visionTurningI;
     D = Constants.Values.visionTurningD;
 
-    System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
+    //System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
@@ -59,7 +59,6 @@ public class DriveTrain implements Subsystem {
 
     frontLeft.setInverted(true);
     backLeft.setInverted(true);
-
     
   }
 
@@ -77,6 +76,7 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.setPersistent("DriveTrain/P");
     SmartDashboard.setPersistent("DriveTrain/I");
     SmartDashboard.setPersistent("DriveTrain/D");
+
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -118,7 +118,7 @@ public class DriveTrain implements Subsystem {
   public static DriveTrain getInstance() {
     if (instance == null) { 
       instance = new DriveTrain();
-      System.out.println("Inited========================================================================");
+      //System.out.println("Inited========================================================================");
     }
     return instance;
   }

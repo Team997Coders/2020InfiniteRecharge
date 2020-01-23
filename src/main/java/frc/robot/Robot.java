@@ -16,9 +16,9 @@ import org.team997coders.spartanlib.limelight.LimeLight;
 public class Robot extends TimedRobot {
   private ArrayList<String> commandList;
 
-  public long cycles = 0;
+  public static long cycles = 0;
   public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
-  public static final boolean isTuning = true;
+  //public static final boolean isTuning = true;
 
   public static LimeLight m_limelight;
 
@@ -36,9 +36,8 @@ public class Robot extends TimedRobot {
 
     m_limelight = new LimeLight();
 
-    Hopper.getInstance().register();
+    Hopper.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
-    DriveTrain.getInstance().putCurrentPID();
     OI.getInstance();
     Climber.getInstance();
 
@@ -48,13 +47,16 @@ public class Robot extends TimedRobot {
         commandList.add(command.getName());
       });
     }
+    DriveTrain.getInstance().putCurrentPID();
   }
 
   @Override
   public void robotPeriodic() {
     if (verbose) {
-      for (String cmdName : commandList) {
-        System.out.println("Ran " + cmdName + " on cycle " + cycles);
+      if (commandList.size() > 0) {
+        for (String cmdName : commandList) {
+          //System.out.println("Ran " + cmdName + " on cycle " + cycles);
+        }
       }
     }
     commandList.clear();
@@ -69,9 +71,7 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().run();
 
-    if (isTuning) {
-      DriveTrain.getInstance().updatePID();
-    }
+    DriveTrain.getInstance().updatePID();
   }
 
   @Override

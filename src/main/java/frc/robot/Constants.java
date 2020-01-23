@@ -18,10 +18,10 @@ public final class Constants {
       hopperbackIR = 1,
 
       //Drivetrain things
-      motorFrontLeft = 0,
-      motorFrontRight = 1,
+      motorFrontLeft = 1,
       motorBackLeft = 2,
-      motorBackRight = 3,
+      motorFrontRight = 3,
+      motorBackRight = 4,
       ultrasonicChannel = 0,
 
       //climber things
@@ -42,11 +42,11 @@ public final class Constants {
 
         shooterOutput = 1.0, // TODO: replace with actual
 
-        visionTurningP = 0.0001,
-        visionTurningI = 0,
-        visionTurningD = 0,
-        visionTolerance = 0.5,
-        visionTimeout = 1000; //in ms
+        visionTurningP = 0.028,
+        visionTurningI = 0.01,
+        visionTurningD = 0.06,
+        visionTolerance = 1,
+        visionTimeout = 2000; //in ms
   }
 
 }
