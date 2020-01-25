@@ -14,6 +14,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
+/*TODO:
+
+1a. Auto ShootLocationPath -> 2
+1b. Auto AltStartPositionPath -> 2
+2. Auto Shoot3Balls -> 3
+3. Auto PickupPath -> 4
+4. Auto Pickup3Balls 
+
+*/
+
 public class AutoDriveForward extends CommandBase {
   /**
    * Creates a new AutoDriveForward2.
