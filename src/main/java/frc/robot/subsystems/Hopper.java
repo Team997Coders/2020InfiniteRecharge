@@ -36,8 +36,8 @@ public class Hopper extends SubsystemBase {
     upperConveyorMotor2.follow(upperConveyorMotor1);
     lowerConveyorMotor2.follow(lowerConveyorMotor1);
 
-    upperConveyorMotor2.setInverted(true);
-    lowerConveyorMotor1.setInverted(true);
+    //upperConveyorMotor2.setInverted(true);
+    //lowerConveyorMotor1.setInverted(true);
     lowerConveyorMotor2.setInverted(true);
 
     upperConveyorMotor1.setNeutralMode(NeutralMode.Brake);
