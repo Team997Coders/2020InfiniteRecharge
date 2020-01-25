@@ -6,11 +6,14 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.team997coders.spartanlib.limelight.LimeLight;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class DriveTrain implements Subsystem {
 
@@ -111,6 +114,8 @@ public class DriveTrain implements Subsystem {
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
     SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
+  
+    SmartDashboard.putNumber("DriveTrain/Target Distance (in)", 98.25 / (Math.tan(Constants.Values.visionLimelightAngle + Robot.m_limelight.getDouble(LimeLight.TARGET_Y, 0))));
   }
 
   private static DriveTrain instance;

@@ -46,7 +46,9 @@ public final class Constants {
         visionTurningI = 0.01,
         visionTurningD = 0.06,
         visionTolerance = 1,
-        visionTimeout = 2000; //in ms
+        visionTimeout = 2000, //in ms
+
+        visionLimelightAngle = 10; //angle the limelight is tilted at. In degrees up from the floor.
   }
 
 }
