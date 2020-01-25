@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -30,6 +31,7 @@ public class Shooter implements Subsystem {
   private Shooter() {
     yeeter = new TalonSRX(Constants.Ports.SHOOTER_MOTOR_1);
     yeeter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    yeeter.setNeutralMode(NeutralMode.Coast);
 
     //yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
 
@@ -37,6 +39,8 @@ public class Shooter implements Subsystem {
     //yeeter2.restoreFactoryDefaults();
 
     //yeeter2.follow(yeeter1);
+
+    register();
   }
 
   private static Shooter instance;
@@ -47,13 +51,27 @@ public class Shooter implements Subsystem {
     yeeter.set(ControlMode.Velocity, yeeterRPMs * rpmToInternal);
   }
 
+  public void SetYeeterPercent(double perc) {
+    yeeter.set(ControlMode.PercentOutput, perc);
+  }
+
+  public void GoodStop() {
+    yeeter.set(ControlMode.Disabled, 0);
+  }
+
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
+    System.out.println("Shooter Sped: " + getRPMs());
   }
   public double getRPMs() {
     double internalCountToRpm = 0.1465;
     double revsPerSecondMotorSide = internalCountToRpm * yeeter.getSelectedSensorVelocity();// / (1024 * 4); //(motor.getSelectedSensorVelocity(0) / (1024 * 4)) * 10;
     return revsPerSecondMotorSide;
+  }
+
+  @Override
+  public void periodic() {
+    updateSmartDashboard();
   }
 
 }

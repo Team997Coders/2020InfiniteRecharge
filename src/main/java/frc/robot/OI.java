@@ -33,9 +33,10 @@ public class OI {
     buttonY2 = new JoystickButton(gamepad2, Constants.Ports.ButtonY);
 
     buttonA2.whileHeld(new Shoot());
-    buttonB2.whenPressed(new StopShooting());
-    buttonX2.whileHeld(new LowerConveyorMotor(0.3));
-    buttonY2.whileHeld(new UpperConveyorMotor(0.3));
+    //buttonB2.whenPressed(new StopShooting());
+    buttonB2.whileHeld(new UpperConveyorMotor(-Constants.Values.shooterBeltSpeed));
+    buttonX2.whileHeld(new LowerConveyorMotor(Constants.Values.shooterBeltSpeed));
+    buttonY2.whileHeld(new UpperConveyorMotor(Constants.Values.shooterBeltSpeed));
   }
   private static OI instance;
   public static OI getInstance() {if(instance == null) instance = new OI(); return instance;}

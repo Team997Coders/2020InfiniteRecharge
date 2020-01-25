@@ -14,7 +14,7 @@ public class UpperConveyorMotor extends CommandBase {
   double speed;
 
   public UpperConveyorMotor(double setSpeep) {
-    addRequirements(Hopper.getInstance());
+    //addRequirements(Hopper.getInstance());
     speed = setSpeep;
   }
 

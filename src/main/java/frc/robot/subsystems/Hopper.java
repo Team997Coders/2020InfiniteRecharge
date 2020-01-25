@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -38,6 +39,9 @@ public class Hopper extends SubsystemBase {
     upperConveyorMotor2.setInverted(true);
     lowerConveyorMotor1.setInverted(true);
     lowerConveyorMotor2.setInverted(true);
+
+    upperConveyorMotor1.setNeutralMode(NeutralMode.Brake);
+    upperConveyorMotor2.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setUpperSpeed(double setSpeep){

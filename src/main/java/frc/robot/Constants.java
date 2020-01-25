@@ -25,7 +25,8 @@ public final class Constants {
   public static class Values {
 
     public static final double
-      shooterOutput = 1300.0; // TODO: replace with actual
+      shooterOutput = 1300.0, // TODO: replace with actual
+      shooterBeltSpeed = 0.8;
   }
 
 }

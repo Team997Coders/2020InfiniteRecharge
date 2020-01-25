@@ -25,8 +25,11 @@ public class Shoot extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    Shooter.getInstance().SetYeeterRPM(Constants.Values.shooterOutput);
+    //Shooter.getInstance().SetYeeterPercent(1);
+    Shooter.getInstance().SetYeeterRPM((double)4500);
+
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -37,6 +40,7 @@ public class Shoot extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
+    Shooter.getInstance().GoodStop();
   }
 
 }
