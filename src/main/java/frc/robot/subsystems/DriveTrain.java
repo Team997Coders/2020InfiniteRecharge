@@ -57,6 +57,10 @@ public class DriveTrain implements Subsystem {
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
+  public void accelerateMotors(double leftSpeed, double rightSpeed){
+    frontLeft.getMotorOutputPercent();
+  }
+
   public double getLeftSensor() {
     return frontLeft.getSelectedSensorPosition(0);
   }
