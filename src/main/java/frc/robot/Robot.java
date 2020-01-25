@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
-    m_chooser.addOption("Go Forward", new AutoDriveForward(driveTrain.calcualteEncoderTicksFromInches(36), driveTrain.calcualteEncoderTicksFromInches(36), 0.5));
+    //m_chooser.addOption("Go Forward", new AutoDriveForward(DriveTrain.getInstance().calcualteEncoderTicksFromInches(36), DriveTrain.getInstance().calcualteEncoderTicksFromInches(36), 0.5));
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
   }

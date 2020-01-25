@@ -23,7 +23,8 @@ public final class Constants {
             motorFrontRight = 0,
             motorBackLeft = 0,
             motorBackRight = 0,
-            ultraChannel = 0;
+            ultraChannel = 0,
+            rohanAutoTest = 1;
     }
 
     public static class Values {

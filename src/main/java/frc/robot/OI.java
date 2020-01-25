@@ -9,8 +9,11 @@ package frc.robot;
 
 import com.fasterxml.jackson.databind.ext.DOMDeserializer.DocumentDeserializer;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoDriveForward;
 
 /**
  * Add your docs here.
@@ -18,10 +21,11 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class OI {
   public static double axisPos;
   private XboxController gamepad1;
-
+  private JoystickButton rohanTest;
   private OI() {
     gamepad1 = new XboxController(0);
-
+    rohanTest = new JoystickButton(gamepad1, XboxController.Button.kA.value);
+    rohanTest.whenPressed(new AutoDriveForward(36, 36, 0.5));
   }
 
   public double getAxis(int portNum) {

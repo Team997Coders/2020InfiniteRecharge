@@ -79,12 +79,12 @@ public class DriveTrain extends SubsystemBase {
   }
  
   public void setPosition(double leftPostion, double rightPosition, double angle){
-    frontLeft.set(ControlMode.Position, leftPosition);
-    frontRight.set(ControlMode.Position, rightPosition;
+    frontLeft.set(ControlMode.Position, leftPostion);
+    frontRight.set(ControlMode.Position, rightPosition);
   }
   public double calcualteEncoderTicksFromInches(double inches){
 
-    double ticks = (inches*5*Math.PI)/(2048);
+    double ticks = (inches*5*Math.PI)/(2048.0 * (70.0 / 9.0));
     return ticks;
   }
   
