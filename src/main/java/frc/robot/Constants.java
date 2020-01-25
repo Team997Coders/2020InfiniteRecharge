@@ -21,32 +21,31 @@ public final class Constants {
       lowerHopperMotor1 = 6,
       lowerHopperMotor2 = 7,
       hopperfrontIR = 0,
-      hopperbackIR = 2,
+      hopperbackIR = 1,
 
       //Drivetrain things
       motorFrontLeft = 0,
       motorFrontRight = 1,
       motorBackLeft = 2,
       motorBackRight = 3,
-      ultrasonicChannel = 1,
+      ultrasonicChannel = 0,
 
       //climber things
       climberMotorPort = 10,
       climberPistonPort = 0,
 
       buttonA = 1,
-      ButtonB = 2,
+      buttonB = 2,
       buttonX = 3,
       buttonY = 4;
       
   }
 
-  public static class Values {
-
-    public static final int 
-        voltageToFeet = 1;
+  public static class Values {     
 
     public static final double
+        voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
+
         shooterOutput = 1.0, // TODO: replace with actual
 
         visionTurningP = 0,

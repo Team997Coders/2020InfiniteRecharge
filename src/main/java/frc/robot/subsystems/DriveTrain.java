@@ -92,7 +92,7 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Back Right Motor Temperature", frontLeft.getTemperature());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() * Constants.Values.voltageToFeet);
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
   }
 
   private static DriveTrain instance;
