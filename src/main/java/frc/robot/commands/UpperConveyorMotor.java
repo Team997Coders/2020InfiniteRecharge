@@ -7,19 +7,15 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hopper;
 
-public class ArcadeDrive extends CommandBase {
-  /**
-   * Creates a new ArcadeDrive.
-   */
-  double left, right;
-  public ArcadeDrive() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(DriveTrain.getInstance());
+public class UpperConveyorMotor extends CommandBase {
+  double speed;
+
+  public UpperConveyorMotor(double setSpeep) {
+    //addRequirements(Hopper.getInstance());
+    speed = setSpeep;
   }
 
   // Called when the command is initially scheduled.
@@ -30,15 +26,13 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    left = (-1 * OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
-    right = (-1 * OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
-    DriveTrain.getInstance().setMotors(left, right);
+    Hopper.getInstance().setUpperSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    DriveTrain.getInstance().setMotors(0, 0);
+    Hopper.getInstance().setUpperSpeed(0);
   }
 
   // Returns true when the command should end.

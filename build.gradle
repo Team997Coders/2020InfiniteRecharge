@@ -17,7 +17,7 @@ deploy {
             // or from command line. If not found an exception will be thrown.
             // You can use getTeamOrDefault(team) instead of getTeamNumber if you
             // want to store a team number in this file.
-            team = frc.getTeamNumber()
+            team = frc.getTeamOrDefault(997)
         }
     }
     artifacts {
@@ -59,6 +59,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.team997coders:SpartanLib:master-SNAPSHOT'
+
+    //compile fileTree(dir: '/Paths', include: '*.path')
 
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging

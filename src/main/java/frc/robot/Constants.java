@@ -1,21 +1,7 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
+
 
     public static class Ports {
         public static final int
@@ -23,18 +9,41 @@ public final class Constants {
             motorFrontRight = 0,
             motorBackLeft = 0,
             motorBackRight = 0,
-            ultraChannel = 0;
+            ultraChannel = 0,
+
+
+            SHOOTER_MOTOR_1 = 4,
+            //SHOOTER_MOTOR_2 = 6,
+
+            upperHopperMotor1 = 2, 
+            upperHopperMotor2 = 3,
+            lowerHopperMotor1 = 5,
+            lowerHopperMotor2 = 6,
+            hopperfrontIR = 0,
+            hopperbackIR = 1,
+
+            ButtonA = 1,
+            ButtonB = 2,
+            ButtonX = 3,
+            ButtonY = 4;
     }
 
     public static class Values {
         public static final int 
             voltageToFeet = 1;
+
+
         public static final double
             autoDriveForwardp = 420,
             autoDriveForwardi = 69,
             autoDriveForwardd = 42.0,
             autoGyrop = 420,
             autoGyroi = 69,
-            autoGyrod = 32.98;
+            autoGyrod = 32.98,
+
+            shooterOutput = 1300.0, // TODO: replace with actual
+            shooterBeltSpeed = 0.8;
+
     }
 }
+
