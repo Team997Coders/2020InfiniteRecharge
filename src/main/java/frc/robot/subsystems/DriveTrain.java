@@ -58,8 +58,24 @@ public class DriveTrain implements Subsystem {
   }
 
   public void accelerateMotors(double leftSpeed, double rightSpeed){
-    frontLeft.getMotorOutputPercent();
+    if (leftSpeed-frontLeft.getMotorOutputPercent()>Constants.Values.acceleration){
+      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent()+Constants.Values.acceleration);
+    }else if (leftSpeed-frontLeft.getMotorOutputPercent()<-Constants.Values.acceleration){
+      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent()-Constants.Values.acceleration);
+    }else{
+      frontLeft.set(ControlMode.PercentOutput, leftSpeed );
+    }
+
+    if (rightSpeed-frontRight.getMotorOutputPercent()>Constants.Values.acceleration){
+      frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent()+Constants.Values.acceleration);
+    }else if (rightSpeed-frontRight.getMotorOutputPercent()<-Constants.Values.acceleration){
+      frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent()-Constants.Values.acceleration);
+    }else{
+      frontRight.set(ControlMode.PercentOutput, rightSpeed);
+    }
+
   }
+
 
   public double getLeftSensor() {
     return frontLeft.getSelectedSensorPosition(0);
