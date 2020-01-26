@@ -11,8 +11,7 @@ public final class Constants {
 
       upperHopperMotor1 = 5, 
       upperHopperMotor2 = 6,
-      lowerHopperMotor1 = 2,
-      lowerHopperMotor2 = 3,
+      intakeMotor = 2,
       hopperfrontIR = 0,
       hopperbackIR = 1,
 
@@ -26,7 +25,7 @@ public final class Constants {
 
     public static final double
       shooterOutput = 1300.0, // TODO: replace with actual
-      shooterBeltSpeed = 0.8;
+      shooterBeltSpeed = 1; // 0.4
   }
 
 }

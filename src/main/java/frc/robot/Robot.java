@@ -5,11 +5,14 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
+import frc.robot.commands.hopper.MoveHopperTimed;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
+  public static boolean autoLoadHopper = false;
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -58,6 +61,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+
+    boolean intakeBall = !Hopper.getInstance().frontIRsensor.get();
+    boolean shooterBall = !Hopper.getInstance().shooterIRsensor.get();
+
+    SmartDashboard.putBoolean("Hopper/Used", Hopper.used);
+
+    if ((!shooterBall && Robot.autoLoadHopper) && (intakeBall && !Hopper.used)) {
+      
+      SmartDashboard.putBoolean("Hopper/Really?", true);
+      CommandScheduler.getInstance().schedule(new MoveHopperTimed(0.2));
+      // Hopper.getInstance().mBallCount++;
+    }
+
+    
+    SmartDashboard.putBoolean("Hopper/Really?", false);
+
     CommandScheduler.getInstance().run();
   }
 

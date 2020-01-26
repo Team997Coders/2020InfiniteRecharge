@@ -18,45 +18,37 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hopper extends SubsystemBase {
+
+  public static boolean used = false;
+
+  public int mBallCount = 0;
+
   VictorSPX upperConveyorMotor1;
   VictorSPX upperConveyorMotor2;
-  VictorSPX lowerConveyorMotor1;
-  VictorSPX lowerConveyorMotor2;
-  DigitalInput frontIRsensor, backIRsensor;
-  
+  public DigitalInput frontIRsensor, shooterIRsensor;
   
   private Hopper() {
     upperConveyorMotor1 = new VictorSPX(Constants.Ports.upperHopperMotor1);
-    upperConveyorMotor2 = new VictorSPX(Constants.Ports.upperHopperMotor2); 
-    lowerConveyorMotor1 = new VictorSPX(Constants.Ports.lowerHopperMotor1);
-    lowerConveyorMotor2 = new VictorSPX(Constants.Ports.lowerHopperMotor2);
+    upperConveyorMotor2 = new VictorSPX(Constants.Ports.upperHopperMotor2);
     frontIRsensor = new DigitalInput(Constants.Ports.hopperfrontIR);
-    backIRsensor = new DigitalInput(Constants.Ports.hopperbackIR);
+    shooterIRsensor = new DigitalInput(Constants.Ports.hopperbackIR);
 
     upperConveyorMotor2.follow(upperConveyorMotor1);
-    lowerConveyorMotor2.follow(lowerConveyorMotor1);
-
-    //upperConveyorMotor2.setInverted(true);
-    //lowerConveyorMotor1.setInverted(true);
-    lowerConveyorMotor2.setInverted(true);
 
     upperConveyorMotor1.setNeutralMode(NeutralMode.Brake);
     upperConveyorMotor2.setNeutralMode(NeutralMode.Brake);
+
+    register();
   }
 
   public void setUpperSpeed(double setSpeep){
     upperConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
   }
 
-  public void setLowerSpeed(double setSpeep){
-    lowerConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
-  }
-
-
-
   public void updateSmartDashboard(){
-    SmartDashboard.putBoolean("frontIRsensor", frontIRsensor.get());
-    SmartDashboard.putBoolean("backIRsensor", backIRsensor.get());
+    SmartDashboard.putBoolean("Hopper/Intake IR Sensor", !frontIRsensor.get());
+    SmartDashboard.putBoolean("Hopper/Shooter IR Sensor", !shooterIRsensor.get());
+    SmartDashboard.putNumber("Hopper/Ball Count", mBallCount);
   }
 
   @Override

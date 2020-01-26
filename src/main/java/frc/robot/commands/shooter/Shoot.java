@@ -26,7 +26,7 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     //Shooter.getInstance().SetYeeterPercent(1);
-    Shooter.getInstance().SetYeeterRPM((double)3600);
+    Shooter.getInstance().SetYeeterRPM((double)500);
 
   }
 
