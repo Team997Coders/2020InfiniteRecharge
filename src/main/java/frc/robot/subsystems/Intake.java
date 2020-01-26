@@ -14,16 +14,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-  /**
-   * Creates a new Intake.
-   */
-  private CANSparkMax destromos;
+  
+  private CANSparkMax mMotor;
+
   private Intake() {
-    destromos = new CANSparkMax(Constants.Ports.destromos, MotorType.kBrushless);
+    mMotor = new CANSparkMax(Constants.Ports.INTAKE_SPARKMAX, MotorType.kBrushless);
   }
 
-  public void IntakePercent(double percent) {
-    destromos.set(percent);
+  public void setPercent(double percent) {
+    mMotor.set(percent);
   }
 
   @Override
@@ -32,5 +31,5 @@ public class Intake extends SubsystemBase {
   }
 
   private static Intake instance;
-  public static Intake getInstance() { return instance == null ? instance = new Intake() : instance; }
+  public static Intake getInstance() { if (instance == null) instance = new Intake(); return instance; }
 }

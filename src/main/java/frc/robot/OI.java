@@ -7,29 +7,31 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.StopSucc;
-import frc.robot.commands.Succ;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.intake.IntakeMove;
 
 /**
  * Add your docs here.
  */
 public class OI {
-    
-    private Joystick gamepad2;
-    private JoystickButton rightBumper2, leftBumper2;
 
-    public OI() {
-        gamepad2 = new Joystick(4);
-        
-        rightBumper2 = new JoystickButton(gamepad2, 5);
-        leftBumper2 = new JoystickButton(gamepad2, 6);
+  private XboxController gamepad2;
+  private JoystickButton rightBumper2, leftBumper2;
 
-        rightBumper2.whenPressed(new Succ());
-        leftBumper2.whenPressed(new StopSucc());
-    }
+  public OI() {
+    gamepad2 = new XboxController(1);
 
-    private static OI instance;
-    public static OI getInstance() { return instance == null ? instance = new OI() : instance; }
+    rightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
+    leftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
+
+    rightBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN));
+    leftBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT));
+  }
+
+  private static OI instance;
+
+  public static OI getInstance() {
+    return instance == null ? instance = new OI() : instance;
+  }
 }
