@@ -36,21 +36,25 @@ public double calculateError(double current, double target){
   @Override
   public void initialize() {
     DriveTrain.getInstance().resetEncoders();
-		DriveTrain.getInstance().resetGyroAngle();
+		//DriveTrain.getInstance().resetGyroAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("executing thing");
     double current = DriveTrain.getInstance().getGyroAngle();
-    double error = 0-DriveTrain.getInstance().getGyroAngle();
+    System.out.println("666666666666666666666666"+current);
+    double error = 0-current;
     double positionAdjustment = error*0.00277; //100 divided by 360 divided by 100
     double currentLeftPosition = DriveTrain.getInstance().getLeftSensor();
     double currentRightPosition = DriveTrain.getInstance().getRightSensor();
 
-    double leftPosition = currentLeftPosition- positionAdjustment;
-    double rightPosition = currentRightPosition + positionAdjustment;
-    DriveTrain.getInstance().setPosition(leftPosition, rightPosition, 0);
+    System.out.println("000000000000000000"+currentLeftPosition+" "+currentRightPosition);
+    
+    double leftPosition = leftEcncoderTarget;
+    double rightPosition = rightEncoderTarget;
+    DriveTrain.getInstance().setPosition(leftPosition,rightPosition);
 		}
   
   

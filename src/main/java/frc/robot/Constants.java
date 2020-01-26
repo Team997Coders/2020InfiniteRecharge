@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
+
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -19,16 +22,21 @@ public final class Constants {
 
     public static class Ports {
         public static final int
-            motorFrontLeft = 0,
-            motorFrontRight = 0,
-            motorBackLeft = 0,
-            motorBackRight = 0,
-            ultraChannel = 0,
-            rohanAutoTest = 1;
+            motorFrontLeft = 4,
+            motorFrontRight = 2,
+            motorBackLeft = 3,
+            motorBackRight = 1,
+            ultraChannel = 0;
+            //rohanAutoTest = 1;
     }
 
     public static class Values {
         public static final int 
             voltageToFeet = 1;
+        
+            
+     
+            
+    
     }
 }

@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,12 +32,23 @@ public class DriveTrain extends SubsystemBase {
     
 
     ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
-    imu = new AHRS();//TODO: but something in here 
+    imu = new AHRS(Port.kUSB);//TODO: but something in here 
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
+
+    
+    
+    //frontLeft.config_kP(0, .01);
+    //frontLeft.config_kI(0, );
+    //frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
+    //frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
+    //frontRight.config_kP(0, 0.01);
+    //frontRight.config_kI(0, Constants.Values.DRIVE_VELOCITY.kI);
+    //frontRight.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
+    //frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
 
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
@@ -78,14 +90,17 @@ public class DriveTrain extends SubsystemBase {
     frontRight.setSelectedSensorPosition(0);
   }
  
-  public void setPosition(double leftPostion, double rightPosition, double angle){
+  public void setPosition(double leftPostion, double rightPosition){
+    System.out.println("Doing the other thing-----------------------------"+ leftPostion+""+ rightPosition);
     frontLeft.set(ControlMode.Position, leftPostion);
     frontRight.set(ControlMode.Position, rightPosition);
   }
   public double calcualteEncoderTicksFromInches(double inches){
-
-    double ticks = (inches*5*Math.PI)/(2048.0 * (70.0 / 9.0));
+    System.out.println("22222");
+    double ticks = ((inches*(5*Math.PI))*(70.0 / 9.0));
+    System.out.println("1111111: " + ticks);
     return ticks;
+    
   }
   
   @Override

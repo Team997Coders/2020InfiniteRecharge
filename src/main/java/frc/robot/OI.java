@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoDriveForward;
-
+import frc.robot.subsystems.DriveTrain;
 /**
  * Add your docs here.
  */
@@ -25,7 +25,7 @@ public class OI {
   private OI() {
     gamepad1 = new XboxController(0);
     rohanTest = new JoystickButton(gamepad1, XboxController.Button.kA.value);
-    rohanTest.whenPressed(new AutoDriveForward(36, 36, 0.5));
+    rohanTest.whenPressed(new AutoDriveForward(DriveTrain.getInstance().calcualteEncoderTicksFromInches(36.0), DriveTrain.getInstance().calcualteEncoderTicksFromInches(36.0), 0.5));
   }
 
   public double getAxis(int portNum) {
