@@ -14,12 +14,11 @@ public final class Constants {
       INTAKE_MOTOR = 10,
 
       //Hopper things
-      upperHopperMotor1 = 4, 
-      upperHopperMotor2 = 5,
-      lowerHopperMotor1 = 6,
-      lowerHopperMotor2 = 7,
-      hopperfrontIR = 0,
-      hopperbackIR = 1,
+      HOPPER_MOTOR_TOP = 4,
+      HOPPER_MOTOR_BOTTOM = 5,
+
+      INTAKE_IR = 0,
+      SHOOTER_IR = 1,
 
       //Drivetrain things
       motorFrontLeft = 1,
@@ -50,13 +49,19 @@ public final class Constants {
         INTAKE_IN = 0.4,
         INTAKE_EJECT = -0.6,
 
+        HOPPER_HANDOFF_DELAY = 0.25,
+        HOPPER_HANDOFF_ROLL_TIME = 0.4,
+
+        SHOOTER_GEARING = 3.0 / 4.0,
+
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * ((double)1 / (double)2048)
           * ((double)9 / (double)70) * ((double)5 * Math.PI) * ((double)1 / (double)12);
 
     public static final Gains
 
-      DRIVE_VELOCITY = new Gains(0.13, 0.0, 3.0, (double)1023 / (double)19990);
+      DRIVE_VELOCITY_GAINS = new Gains(0.13, 0.0, 3.0, (double)1023 / (double)19990),
+      SHOOTER_VELOCITY_GAINS = new Gains(0.25, 0.001, 20, 1 / 500);
 
   }
 

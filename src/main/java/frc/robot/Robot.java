@@ -13,6 +13,8 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
+import frc.robot.commands.hopper.MoveHopperTimed;
+import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
   
@@ -25,7 +27,8 @@ public class Robot extends TimedRobot {
   public static LimeLight m_limelight;
 
   private Command m_autonomousCommand;
-  public static OI oi;
+  public static boolean autoLoadHopper = false;
+
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -39,6 +42,8 @@ public class Robot extends TimedRobot {
 
     m_limelight = new LimeLight();
 
+    OI.getInstance();
+    Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
@@ -71,7 +76,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-
     CommandScheduler.getInstance().run();
 
     DriveTrain.getInstance().updatePID();
@@ -98,8 +102,33 @@ public class Robot extends TimedRobot {
     }
   }
 
+  boolean lastInShooter = false;
+
   @Override
   public void teleopPeriodic() {
+
+    //#region Auto Indexing
+
+    boolean intakeBall = Hopper.getInstance().getIntakeBall();
+    boolean shooterBall = Hopper.getInstance().getShooterBall();
+
+    SmartDashboard.putBoolean("Hopper/Used", Hopper.getInstance().autoIndexMoving);
+
+    if ((!shooterBall && Robot.autoLoadHopper) && (intakeBall && !Hopper.getInstance().autoIndexMoving)) {
+      CommandScheduler.getInstance().schedule(
+        new WaitCommand(Constants.Values.HOPPER_HANDOFF_DELAY).andThen( // 0.2
+        new MoveHopperTimed(Constants.Values.HOPPER_HANDOFF_ROLL_TIME) // 0.13
+      ));
+      Hopper.getInstance().mBallCount++;
+    }
+
+    if (Hopper.getInstance().getShooterBall() && !lastInShooter) {
+      Hopper.getInstance().mBallCount--;
+    }
+    lastInShooter = Hopper.getInstance().getShooterBall();
+
+    //#endregion
+
     CommandScheduler.getInstance().run();
   }
 
@@ -109,8 +138,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {
-  }
+  public void testPeriodic() { }
 
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Limelight/hasTarget", m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0));

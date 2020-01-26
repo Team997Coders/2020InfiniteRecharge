@@ -33,7 +33,6 @@ public class DriveTrain implements Subsystem {
     I = Constants.Values.visionTurningI;
     D = Constants.Values.visionTurningD;
 
-    //System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
@@ -60,10 +59,10 @@ public class DriveTrain implements Subsystem {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY.kP);
-    frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY.kI);
-    frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
-    frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
+    frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
+    frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
+    frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
+    frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
     
   }
 

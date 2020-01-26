@@ -10,57 +10,55 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class Hopper implements Subsystem {
-  private VictorSPX 
-    upperConveyorMotor1,
-    upperConveyorMotor2,
-    lowerConveyorMotor1,
-    lowerConveyorMotor2;
-  private DigitalInput frontIRsensor, backIRsensor;
-  
+
+  public boolean autoIndexMoving = false;
+  public int mBallCount = 0;
+
+  private DigitalInput mIntakeIR, mShooterIR;
+  private TalonSRX mMotor1, mMotor2;
   
   private Hopper() {
-    upperConveyorMotor1 = new VictorSPX(Constants.Ports.upperHopperMotor1);
-    upperConveyorMotor2 = new VictorSPX(Constants.Ports.upperHopperMotor2); 
-    lowerConveyorMotor1 = new VictorSPX(Constants.Ports.lowerHopperMotor1);
-    lowerConveyorMotor2 = new VictorSPX(Constants.Ports.lowerHopperMotor2);
-    frontIRsensor = new DigitalInput(Constants.Ports.hopperfrontIR);
-    backIRsensor = new DigitalInput(Constants.Ports.hopperbackIR);
+    mMotor1 = new TalonSRX(Constants.Ports.HOPPER_MOTOR_TOP);
+    mMotor2 = new TalonSRX(Constants.Ports.HOPPER_MOTOR_BOTTOM);
+    mIntakeIR = new DigitalInput(Constants.Ports.INTAKE_IR);
+    mShooterIR = new DigitalInput(Constants.Ports.SHOOTER_IR);
 
-    upperConveyorMotor2.follow(upperConveyorMotor1);
-    lowerConveyorMotor2.follow(lowerConveyorMotor1);
+    mMotor1.configFactoryDefault(10);
+    mMotor2.configFactoryDefault(10);
+
+    mMotor1.setNeutralMode(NeutralMode.Brake);
+    mMotor2.setNeutralMode(NeutralMode.Brake);
+
+    mMotor2.setInverted(true);
+    mMotor2.follow(mMotor1);
+
+    register();
   }
 
-  public void setUpperSpeed(double setSpeep){
-    upperConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
+  public void setSpeed(double speed){
+    mMotor1.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setLowerSpeed(double setSpeep){
-    lowerConveyorMotor1.set(ControlMode.PercentOutput, setSpeep);
-  }
-
-
+  public boolean getShooterBall() { return !mShooterIR.get(); }
+  public boolean getIntakeBall() { return !mIntakeIR.get(); }
 
   public void updateSmartDashboard(){
-    SmartDashboard.putBoolean("Hopper/frontIRsensor", frontIRsensor.get());
-    SmartDashboard.putBoolean("Hopper/backIRsensor", backIRsensor.get());
+    SmartDashboard.putBoolean("Hopper/Intake IR Sensor", getIntakeBall());
+    SmartDashboard.putBoolean("Hopper/Shooter IR Sensor", getShooterBall());
+    SmartDashboard.putNumber("Hopper/Ball Count", mBallCount);
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    updateSmartDashboard();
-  }
-  private static Hopper instance;
+  public void periodic() { updateSmartDashboard(); }
 
-  public static Hopper getInstance(){
-    if (instance == null){instance = new Hopper();}
-    return instance; 
-  }
+  private static Hopper instance;
+  public static Hopper getInstance() { if (instance == null) instance = new Hopper(); return instance; }
 }

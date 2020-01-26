@@ -8,10 +8,13 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
 public class Shoot extends CommandBase {
+
+  private double target = 3700.0;
+
   public Shoot() {
     addRequirements(Shooter.getInstance());
   }
@@ -24,7 +27,17 @@ public class Shoot extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    Shooter.getInstance().SetYeeter(Constants.Values.shooterOutput);
+    //Shooter.getInstance().SetYeeterPercent(1);
+    Shooter.getInstance().setRPM(target);
+    if (eps(Shooter.getInstance().getRPMs(), target, 80) && Hopper.getInstance().mBallCount > 0) {
+      Hopper.getInstance().setSpeed(0.75);
+    } else {
+      Hopper.getInstance().setSpeed(0.0);
+    }
+  }
+
+  public boolean eps(double a, double b, double eps) {
+    return Math.abs(a - b) < eps;
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +49,8 @@ public class Shoot extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    
+    Shooter.getInstance().GoodStop();
+    Hopper.getInstance().setSpeed(0.0);
   }
 
 }
