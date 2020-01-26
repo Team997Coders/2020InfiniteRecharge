@@ -1,4 +1,4 @@
-package frc.robot.commands.auto;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;

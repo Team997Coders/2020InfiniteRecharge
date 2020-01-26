@@ -5,17 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.OI;
+import frc.robot.subsystems.DriveTrain;
 
-public class ClimberDown extends CommandBase {
+public class ArcadeDrive extends CommandBase {
   /**
-   * Creates a new ClimberDown.
+   * Creates a new ArcadeDrive.
    */
-  public ClimberDown() {
-    addRequirements(Climber.getInstance());
+  double left, right;
+  public ArcadeDrive() {
+    //System.out.println("sadness");
+    addRequirements(DriveTrain.getInstance());
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -26,12 +30,15 @@ public class ClimberDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Climber.getInstance().setSpeed(-0.25);
+    left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
+    right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
+    DriveTrain.getInstance().setMotors(left, right);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    DriveTrain.getInstance().setMotors(0, 0);
   }
 
   // Returns true when the command should end.

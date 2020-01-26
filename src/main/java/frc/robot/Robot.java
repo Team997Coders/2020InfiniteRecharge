@@ -2,18 +2,22 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import org.team997coders.spartanlib.controllers.SpartanPID;
+import org.team997coders.spartanlib.helpers.PIDConstants;
+import org.team997coders.spartanlib.limelight.LimeLight;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import frc.robot.commands.*;
-import frc.robot.commands.auto.FollowPath;
+import frc.robot.commands.auto.AutoDoNothing;
+import frc.robot.commands.drivetrain.ArcadeDrive;
+import frc.robot.commands.drivetrain.FollowPath;
+import frc.robot.commands.hopper.HopperTimedMove;
 import frc.robot.pathfollower.PathManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
-import org.team997coders.spartanlib.limelight.LimeLight;
-import frc.robot.commands.hopper.MoveHopperTimed;
 import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
@@ -23,8 +27,6 @@ public class Robot extends TimedRobot {
   public static long cycles = 0;
   public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
   //public static final boolean isTuning = true;
-
-  public static LimeLight m_limelight;
 
   private Command m_autonomousCommand;
   public static boolean autoLoadHopper = false;
@@ -40,14 +42,18 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
     m_chooser.addOption("Auto One", new FollowPath(PathManager.getSupplier("GoToPickup"), false));
 
-    m_limelight = new LimeLight();
+    LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
+      Constants.Values.VISION_TURNING_P,
+      Constants.Values.VISION_TURNING_I,
+      Constants.Values.VISION_TURNING_D
+    ));
 
-    OI.getInstance();
     Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
-    OI.getInstance();
     Climber.getInstance();
+
+    OI.getInstance();
 
     commandList = new ArrayList<String>();
     if (verbose) {
@@ -117,7 +123,7 @@ public class Robot extends TimedRobot {
     if ((!shooterBall && Robot.autoLoadHopper) && (intakeBall && !Hopper.getInstance().autoIndexMoving)) {
       CommandScheduler.getInstance().schedule(
         new WaitCommand(Constants.Values.HOPPER_HANDOFF_DELAY).andThen( // 0.2
-        new MoveHopperTimed(Constants.Values.HOPPER_HANDOFF_ROLL_TIME) // 0.13
+        new HopperTimedMove(Constants.Values.HOPPER_HANDOFF_ROLL_TIME) // 0.13
       ));
       Hopper.getInstance().mBallCount++;
     }
@@ -141,8 +147,8 @@ public class Robot extends TimedRobot {
   public void testPeriodic() { }
 
   public void updateSmartDashboard() {
-    SmartDashboard.putNumber("Limelight/hasTarget", m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0));
-    SmartDashboard.putNumber("Limelight/targetX", m_limelight.getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putNumber("Limelight/targetY", m_limelight.getDouble(LimeLight.TARGET_Y, 0));
+    SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
+    SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
   }
 }

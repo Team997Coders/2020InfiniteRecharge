@@ -3,6 +3,10 @@ package frc.robot;
 import frc.robot.util.Gains;
 
 public final class Constants {
+
+  public static boolean eps(double a, double b, double eps) {
+    return Math.abs(a - b) < eps;
+  }
   
   public static class Ports {
 
@@ -36,23 +40,30 @@ public final class Constants {
   public static class Values {     
 
     public static final double
+
         voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
 
         shooterOutput = 1.0, // TODO: replace with actual
 
-        visionTurningP = 0,
-        visionTurningI = 0,
-        visionTurningD = 0,
-        visionTolerance = 0.5,
-        visionTimeout = 1000, //in ms
+        VISION_TURNING_P = 0.028,
+        VISION_TURNING_I = 0.01,
+        VISION_TURNING_D = 0.06,
+        VISION_TOLERANCE = 1,
+        VISION_TIMEOUT = 2000, //in ms
 
         INTAKE_IN = 0.4,
         INTAKE_EJECT = -0.6,
 
         HOPPER_HANDOFF_DELAY = 0.25,
         HOPPER_HANDOFF_ROLL_TIME = 0.4,
+        HOPPER_INTAKE_SPEED = 0.4,
+        HOPPER_STREAM_SPEED = 0.75,
+        HOPPER_EJECT_SPEED = -0.4,
 
         SHOOTER_GEARING = 3.0 / 4.0,
+
+        CLIMBER_UP = 0.75,
+        CLIMBER_DOWN = -0.6,
 
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * ((double)1 / (double)2048)

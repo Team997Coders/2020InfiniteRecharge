@@ -1,10 +1,10 @@
 package frc.robot;
 
-import frc.robot.commands.shooter.Shoot;
-import frc.robot.commands.ClimberUp;
-import frc.robot.commands.AutoFaceTargetAndDrive;
-import frc.robot.commands.AutoTurnTowardsVision;
-import frc.robot.commands.ClimberDown;
+import frc.robot.commands.shooter.ShooterStream;
+import frc.robot.commands.shooter.ShooterStreamAutoTarget;
+import frc.robot.commands.climber.ClimberMove;
+import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
+import frc.robot.commands.hopper.HopperMove;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.IntakeMove;
@@ -12,9 +12,10 @@ import frc.robot.commands.intake.IntakeMove;
 public class OI {
   private double axisPos;
   private  XboxController gamepad1, gamepad2;
-  private  JoystickButton buttonA, buttonB, buttonX,
-    buttonY, buttonA2, buttonB2;
-  private JoystickButton buttonRightBumper, buttonLeftBumper;
+  private  JoystickButton buttonA, buttonB, buttonX, buttonY,
+    buttonA2, buttonB2, buttonX2, buttonY2;
+  private JoystickButton buttonRightBumper, buttonLeftBumper,
+    buttonRightBumper2, buttonLeftBumper2;
 
   private OI() {
     gamepad1 = new XboxController(0);
@@ -22,23 +23,27 @@ public class OI {
 
     buttonA2 = new JoystickButton(gamepad2, XboxController.Button.kA.value);
     buttonB2 = new JoystickButton(gamepad2, XboxController.Button.kB.value);
+    buttonX2 = new JoystickButton(gamepad2, XboxController.Button.kX.value);
+    buttonY2 = new JoystickButton(gamepad2, XboxController.Button.kY.value);
     buttonA = new JoystickButton(gamepad1, XboxController.Button.kA.value);
     buttonX = new JoystickButton(gamepad1, XboxController.Button.kX.value);
     buttonY = new JoystickButton(gamepad1, XboxController.Button.kY.value);
     buttonB = new JoystickButton(gamepad1, XboxController.Button.kB.value);
     buttonRightBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
     buttonLeftBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
+    buttonRightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
+    buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
 
-    
-    buttonA.whenPressed(new ClimberUp());
-    buttonB.whenPressed(new AutoTurnTowardsVision());
-    buttonX.whenPressed(new ClimberDown());
-    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN));
-    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT));
-
-    buttonA2.whileHeld(new Shoot());
-    //buttonB.whenPressed(new AutoTurnTowardsVision());
     buttonB.whenPressed(new AutoFaceTargetAndDrive());
+    buttonRightBumper.whileHeld(new ShooterStream(3700));
+    buttonLeftBumper.whileHeld(new ShooterStreamAutoTarget(3700));
+
+    buttonRightBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
+    buttonLeftBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
+    buttonA2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_UP));
+    buttonB2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_DOWN));
+    buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
+    buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
   }
 
   public double getGamepad1Axis(int portNum) {

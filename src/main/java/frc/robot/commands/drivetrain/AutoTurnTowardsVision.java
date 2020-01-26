@@ -5,16 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.drivetrain;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
-import org.team997coders.spartanlib.limelight.LimeLight.LEDState;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
+import frc.robot.OI;
+
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +33,7 @@ public class AutoTurnTowardsVision extends CommandBase {
 
   public AutoTurnTowardsVision() {
     addRequirements(DriveTrain.getInstance());
-    Robot.m_limelight.setDouble(LimeLight.LED_MODE, 3.0);
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -51,19 +53,19 @@ public class AutoTurnTowardsVision extends CommandBase {
   public void execute() {
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
     double deltaT = currentTime - oldTime;
-    double output = pid.WhatShouldIDo(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
+    double output = pid.WhatShouldIDo(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
     DriveTrain.getInstance().setMotors(-output, output);
 
-    if (Math.abs(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance) {
+    if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE) {
       onTargetTime += deltaT;
     } else {
       onTargetTime = 0;
     }
 
-    SmartDashboard.putNumber("Shooter/PidError", Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance);
+    SmartDashboard.putNumber("Shooter/PidError", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE);
 
-    targetLossTimeout = (Robot.m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
+    targetLossTimeout = (LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
     oldTime = currentTime;
   }
 
@@ -71,7 +73,7 @@ public class AutoTurnTowardsVision extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted) { System.out.println("AutoTurnTowardsVision was interrupted"); }
-    if (targetLossTimeout > Constants.Values.visionTimeout) { System.out.println("AutoTurnTowardsVision lost vision target for " + targetLossTimeout + "ms"); }
+    if (targetLossTimeout > Constants.Values.VISION_TIMEOUT) { System.out.println("AutoTurnTowardsVision lost vision target for " + targetLossTimeout + "ms"); }
     else { System.out.println("AutoTurnTowardsVision ended on target."); }
     System.out.println("AutoTurnTowardsVision ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
   }
@@ -79,6 +81,6 @@ public class AutoTurnTowardsVision extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((onTargetTime >= 250) || (targetLossTimeout > Constants.Values.visionTimeout));
+    return ((onTargetTime >= 250) || (targetLossTimeout > Constants.Values.VISION_TIMEOUT));
   }
 }

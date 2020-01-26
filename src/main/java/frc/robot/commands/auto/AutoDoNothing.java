@@ -5,20 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
-import frc.robot.subsystems.DriveTrain;
 
-public class ArcadeDrive extends CommandBase {
+public class AutoDoNothing extends CommandBase {
   /**
-   * Creates a new ArcadeDrive.
+   * Creates a new AutoDoNothing.
    */
-  double left, right;
-  public ArcadeDrive() {
-    //System.out.println("sadness");
-    addRequirements(DriveTrain.getInstance());
+  public AutoDoNothing() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,20 +25,16 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
-    right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
-    DriveTrain.getInstance().setMotors(left, right);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    DriveTrain.getInstance().setMotors(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

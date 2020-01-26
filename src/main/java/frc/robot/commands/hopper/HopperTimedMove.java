@@ -3,12 +3,12 @@ package frc.robot.commands.hopper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hopper;
 
-public class MoveHopperTimed extends CommandBase {
+public class HopperTimedMove extends CommandBase {
 
   private double mTime = 0.0;
   private double mStart = 0.0;
 
-  public MoveHopperTimed(double time) {
+  public HopperTimedMove(double time) {
     mTime = time;
     Hopper.getInstance().autoIndexMoving = true;
   }

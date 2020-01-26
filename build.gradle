@@ -59,7 +59,8 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     testImplementation 'junit:junit:4.12'
-    implementation 'com.github.team997coders:SpartanLib:master-SNAPSHOT'
+    // implementation 'com.github.team997coders:SpartanLib:master-SNAPSHOT'
+    implementation files('../SpartanLib/build/libs/spartanlib-all.jar')
 
     //compile fileTree(dir: '/Paths', include: '*.path')
 

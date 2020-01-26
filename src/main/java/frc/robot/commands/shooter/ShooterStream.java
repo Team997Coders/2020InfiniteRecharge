@@ -1,21 +1,17 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
-public class Shoot extends CommandBase {
+public class ShooterStream extends CommandBase {
 
-  private double target = 3700.0;
+  private double mTarget = 3700.0;
 
-  public Shoot() {
+  public ShooterStream(double speed) {
+    mTarget = speed;
+
     addRequirements(Shooter.getInstance());
   }
 
@@ -28,9 +24,9 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     //Shooter.getInstance().SetYeeterPercent(1);
-    Shooter.getInstance().setRPM(target);
-    if (eps(Shooter.getInstance().getRPMs(), target, 80) && Hopper.getInstance().mBallCount > 0) {
-      Hopper.getInstance().setSpeed(0.75);
+    Shooter.getInstance().setRPM(mTarget);
+    if (eps(Shooter.getInstance().getRPMs(), mTarget, 80) && Hopper.getInstance().mBallCount > 0) {
+      Hopper.getInstance().setSpeed(Constants.Values.HOPPER_STREAM_SPEED);
     } else {
       Hopper.getInstance().setSpeed(0.0);
     }

@@ -29,9 +29,9 @@ public class DriveTrain implements Subsystem {
 
   private DriveTrain() {
 
-    P = Constants.Values.visionTurningP;
-    I = Constants.Values.visionTurningI;
-    D = Constants.Values.visionTurningD;
+    P = Constants.Values.VISION_TURNING_P;
+    I = Constants.Values.VISION_TURNING_I;
+    D = Constants.Values.VISION_TURNING_D;
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
 
@@ -64,6 +64,10 @@ public class DriveTrain implements Subsystem {
     frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
     frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
     
+    frontRight.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
+    frontRight.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
+    frontRight.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
+    frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
   }
 
   public void updatePID() {
@@ -73,9 +77,9 @@ public class DriveTrain implements Subsystem {
   }
 
   public void putCurrentPID() {
-    SmartDashboard.putNumber("DriveTrain/P", Constants.Values.visionTurningP);
-    SmartDashboard.putNumber("DriveTrain/I", Constants.Values.visionTurningI);
-    SmartDashboard.putNumber("DriveTrain/D", Constants.Values.visionTurningD);
+    SmartDashboard.putNumber("DriveTrain/P", Constants.Values.VISION_TURNING_P);
+    SmartDashboard.putNumber("DriveTrain/I", Constants.Values.VISION_TURNING_I);
+    SmartDashboard.putNumber("DriveTrain/D", Constants.Values.VISION_TURNING_D);
 
     SmartDashboard.setPersistent("DriveTrain/P");
     SmartDashboard.setPersistent("DriveTrain/I");
