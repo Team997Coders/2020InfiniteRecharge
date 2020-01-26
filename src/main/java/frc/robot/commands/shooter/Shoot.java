@@ -9,9 +9,13 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
 public class Shoot extends CommandBase {
+
+  private double target = 3700.0;
+
   public Shoot() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -26,10 +30,17 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     //Shooter.getInstance().SetYeeterPercent(1);
-    Shooter.getInstance().SetYeeterRPM((double)500);
-
+    Shooter.getInstance().SetYeeterRPM(target);
+    if (eps(Shooter.getInstance().getRPMs(), target, 80) && Hopper.getInstance().mBallCount > 0) {
+      Hopper.getInstance().setUpperSpeed(0.75);
+    } else {
+      Hopper.getInstance().setUpperSpeed(0.0);
+    }
   }
 
+  public boolean eps(double a, double b, double eps) {
+    return Math.abs(a - b) < eps;
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -41,6 +52,7 @@ public class Shoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Shooter.getInstance().GoodStop();
+    Hopper.getInstance().setUpperSpeed(0.0);
   }
 
 }

@@ -39,6 +39,7 @@ public class OI {
 
     bumperRight.whileHeld(new InstantCommand(() -> {
         if (Hopper.getInstance().shooterIRsensor.get()) Intake.getInstance().set(0.4);
+        else Intake.getInstance().set(0.0);
         Robot.autoLoadHopper = true;
     }, Intake.getInstance()));
     bumperRight.whenInactive(new InstantCommand(()-> {

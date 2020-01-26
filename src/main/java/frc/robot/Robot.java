@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.*;
 import frc.robot.commands.hopper.MoveHopperTimed;
@@ -59,6 +58,8 @@ public class Robot extends TimedRobot {
     }
   }
 
+  boolean lastInShooter = false;
+
   @Override
   public void teleopPeriodic() {
 
@@ -70,10 +71,17 @@ public class Robot extends TimedRobot {
     if ((!shooterBall && Robot.autoLoadHopper) && (intakeBall && !Hopper.used)) {
       
       SmartDashboard.putBoolean("Hopper/Really?", true);
-      CommandScheduler.getInstance().schedule(new MoveHopperTimed(0.2));
-      // Hopper.getInstance().mBallCount++;
+      CommandScheduler.getInstance().schedule(
+      new WaitCommand(0.25).andThen( // 0.2
+      new MoveHopperTimed(0.4))); // 0.13
+      Hopper.getInstance().mBallCount++;
     }
 
+    if (!Shooter.getInstance().inTheShooter.get() && !lastInShooter) {
+      Hopper.getInstance().mBallCount--;
+    }
+
+    lastInShooter = !Shooter.getInstance().inTheShooter.get();
     
     SmartDashboard.putBoolean("Hopper/Really?", false);
 

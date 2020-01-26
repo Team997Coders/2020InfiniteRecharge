@@ -17,6 +17,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -28,10 +29,19 @@ public class Shooter implements Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private TalonSRX yeeter;
+  public DigitalInput inTheShooter;
+
   private Shooter() {
     yeeter = new TalonSRX(Constants.Ports.SHOOTER_MOTOR_1);
     yeeter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     yeeter.setNeutralMode(NeutralMode.Coast);
+
+    yeeter.config_kP(0, 0.25/*0.05*/, 10);
+    yeeter.config_kI(0, 0.001, 10);
+    yeeter.config_kD(0, 20, 10);
+    yeeter.config_kF(0, 1 / (7200 / 4), 10);
+
+    inTheShooter = new DigitalInput(2);
 
     //yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
 
