@@ -1,19 +1,17 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
-
-import org.team997coders.spartanlib.helpers.PIDConstants;
-
 import frc.robot.util.Gains;
 
 public final class Constants {
-
+  
   public static class Ports {
 
     public static final int
 
       SHOOTER_MOTOR_1 = 8,
       SHOOTER_MOTOR_2 = 9,
+
+      INTAKE_MOTOR = 10,
 
       //Hopper things
       upperHopperMotor1 = 4, 
@@ -32,12 +30,7 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 0,
-
-      buttonA = 1,
-      buttonB = 2,
-      buttonX = 3,
-      buttonY = 4;
+      climberPistonPort = 0;
       
   }
 
@@ -53,6 +46,9 @@ public final class Constants {
         visionTurningD = 0,
         visionTolerance = 0.5,
         visionTimeout = 1000, //in ms
+
+        INTAKE_IN = 0.4,
+        INTAKE_EJECT = -0.6,
 
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * ((double)1 / (double)2048)
@@ -70,5 +66,4 @@ public final class Constants {
       TRACK_WIDTH = 2.1;
 
   }
-
 }

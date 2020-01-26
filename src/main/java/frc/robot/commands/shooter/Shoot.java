@@ -13,8 +13,7 @@ import frc.robot.subsystems.Shooter;
 
 public class Shoot extends CommandBase {
   public Shoot() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    addRequirements(Shooter.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -37,6 +36,7 @@ public class Shoot extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
+    
   }
 
 }
