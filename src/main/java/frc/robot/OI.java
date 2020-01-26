@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.ClimberUp;
+import frc.robot.commands.AutoFaceTargetAndDrive;
 import frc.robot.commands.AutoTurnTowardsVision;
 import frc.robot.commands.ClimberDown;
 import edu.wpi.first.wpilibj.XboxController;
@@ -36,6 +37,8 @@ public class OI {
     buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT));
 
     buttonA2.whileHeld(new Shoot());
+    //buttonB.whenPressed(new AutoTurnTowardsVision());
+    buttonB.whenPressed(new AutoFaceTargetAndDrive());
   }
 
   public double getGamepad1Axis(int portNum) {

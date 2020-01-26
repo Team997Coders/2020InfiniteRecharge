@@ -17,7 +17,7 @@ public class ArcadeDrive extends CommandBase {
    */
   double left, right;
   public ArcadeDrive() {
-    System.out.println("sadness");
+    //System.out.println("sadness");
     addRequirements(DriveTrain.getInstance());
     // Use addRequirements() here to declare subsystem dependencies.
   }

@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 
 public class DriveTrain implements Subsystem {
+
+  public double P;
+  public double I;
+  public double D;
   
   private TalonFX frontLeft;
   private TalonFX frontRight;
@@ -25,7 +29,11 @@ public class DriveTrain implements Subsystem {
 
   private DriveTrain() {
 
-    System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
+    P = Constants.Values.visionTurningP;
+    I = Constants.Values.visionTurningI;
+    D = Constants.Values.visionTurningD;
+
+    //System.out.println("AHAHAHAHAHAHHAHAHAHAHAHAHAHHAHAHAHAHAHAHHAAHA");
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
@@ -46,6 +54,9 @@ public class DriveTrain implements Subsystem {
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
 
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
@@ -53,10 +64,28 @@ public class DriveTrain implements Subsystem {
     frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY.kI);
     frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
     frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
+    
+  }
+
+  public void updatePID() {
+    P = SmartDashboard.getNumber("DriveTrain/P", 0);
+    I = SmartDashboard.getNumber("DriveTrain/I", 0);
+    D = SmartDashboard.getNumber("DriveTrain/D", 0);
+  }
+
+  public void putCurrentPID() {
+    SmartDashboard.putNumber("DriveTrain/P", Constants.Values.visionTurningP);
+    SmartDashboard.putNumber("DriveTrain/I", Constants.Values.visionTurningI);
+    SmartDashboard.putNumber("DriveTrain/D", Constants.Values.visionTurningD);
+
+    SmartDashboard.setPersistent("DriveTrain/P");
+    SmartDashboard.setPersistent("DriveTrain/I");
+    SmartDashboard.setPersistent("DriveTrain/D");
+
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
-    frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
+    frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
@@ -99,7 +128,7 @@ public class DriveTrain implements Subsystem {
   public static DriveTrain getInstance() {
     if (instance == null) { 
       instance = new DriveTrain();
-      System.out.println("Inited========================================================================");
+      //System.out.println("Inited========================================================================");
     }
     return instance;
   }

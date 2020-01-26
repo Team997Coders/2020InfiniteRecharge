@@ -8,18 +8,19 @@
 package frc.robot.commands;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
-import org.team997coders.spartanlib.limelight.LimeLight.LEDState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
+import frc.robot.OI;
+
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import java.util.concurrent.TimeUnit;
 
-public class AutoTurnTowardsVision extends CommandBase {
+public class AutoFaceTargetAndDrive extends CommandBase {
   
   private SpartanPID pid;
   private PIDConstants pidConstants;
@@ -29,7 +30,7 @@ public class AutoTurnTowardsVision extends CommandBase {
   private long targetLossTimeout;
   private long onTargetTime;
 
-  public AutoTurnTowardsVision() {
+  public AutoFaceTargetAndDrive() {
     addRequirements(DriveTrain.getInstance());
     Robot.m_limelight.setDouble(LimeLight.LED_MODE, 3.0);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -52,7 +53,9 @@ public class AutoTurnTowardsVision extends CommandBase {
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
     double deltaT = currentTime - oldTime;
     double output = pid.WhatShouldIDo(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
-    DriveTrain.getInstance().setMotors(-output, output);
+    double joystick = (OI.getInstance().getGamepad1Axis(1) / 2);
+
+    DriveTrain.getInstance().setMotors(-output - joystick, output - joystick);
 
     if (Math.abs(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance) {
       onTargetTime += deltaT;
@@ -79,6 +82,7 @@ public class AutoTurnTowardsVision extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((onTargetTime >= 250) || (targetLossTimeout > Constants.Values.visionTimeout));
+    return false;
+    //return ((onTargetTime >= 250) || (targetLossTimeout > Constants.Values.visionTimeout));
   }
 }

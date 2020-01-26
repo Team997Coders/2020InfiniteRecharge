@@ -22,10 +22,10 @@ public final class Constants {
       hopperbackIR = 1,
 
       //Drivetrain things
-      motorFrontLeft = 0,
-      motorFrontRight = 1,
+      motorFrontLeft = 1,
       motorBackLeft = 2,
-      motorBackRight = 3,
+      motorFrontRight = 3,
+      motorBackRight = 4,
       ultrasonicChannel = 0,
 
       //climber things
@@ -57,6 +57,7 @@ public final class Constants {
     public static final Gains
 
       DRIVE_VELOCITY = new Gains(0.13, 0.0, 3.0, (double)1023 / (double)19990);
+
   }
 
   public static class PathFollower {
