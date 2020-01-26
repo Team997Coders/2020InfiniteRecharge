@@ -32,7 +32,9 @@ public final class Constants {
       buttonA = 1,
       buttonB = 2,
       buttonX = 3,
-      buttonY = 4;
+      buttonY = 4,
+
+      destromos = 0; //TODO: replace with actual (intake motor)
       
   }
 

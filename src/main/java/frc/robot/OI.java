@@ -7,22 +7,24 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import edu.wpi.first.wpilibj.XboxController;
-
 import frc.robot.commands.*;
-import frc.robot.commands.shooter.*;
+import frc.robot.commands.shooter.Shoot;
+
 
 
 public class OI {
-
+    
 
   private double axisPos;
   private  Joystick gamepad1, gamepad2;
-  private  JoystickButton buttonA2, buttonB2, buttonY2, buttonX2, buttonX, buttonY, buttonA, buttonB;
+  private  JoystickButton buttonA2, buttonB2, buttonY2, buttonX2, buttonX, buttonY, buttonA, buttonB, rightBumper2, leftBumper2;
     private OI() {
     //public OI() {
     gamepad1 = new Joystick(0);
     gamepad2 = new Joystick(1);
-
+    
+    rightBumper2 = new JoystickButton(gamepad2, 5);
+    leftBumper2 = new JoystickButton(gamepad2, 6);
     buttonA2 = new JoystickButton(gamepad2, Constants.Ports.buttonA);
     buttonB2 = new JoystickButton(gamepad2, Constants.Ports.buttonB);
     buttonX2 = new JoystickButton(gamepad2, Constants.Ports.buttonX);
@@ -43,6 +45,9 @@ public class OI {
 
     //buttonB.whenPressed(new AutoTurnTowardsVision());
     buttonB.whenPressed(new AutoFaceTargetAndDrive());
+
+    rightBumper2.whenPressed(new Succ());
+    leftBumper2.whenPressed(new StopSucc());
   }
 
   public double getGamepad1Axis(int portNum) {
