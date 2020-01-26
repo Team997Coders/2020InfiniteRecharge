@@ -3,47 +3,62 @@ package frc.robot;
 public final class Constants {
 
 
-    public static class Ports {
-        public static final int
-            motorFrontLeft = 0,
-            motorFrontRight = 0,
-            motorBackLeft = 0,
-            motorBackRight = 0,
-            ultraChannel = 0,
+  public static class Ports {
 
+    public static final int
 
-            SHOOTER_MOTOR_1 = 4,
-            //SHOOTER_MOTOR_2 = 6,
+      SHOOTER_MOTOR_1 = 4,
+      //SHOOTER_MOTOR_2 = 6,
 
-            upperHopperMotor1 = 2, 
-            upperHopperMotor2 = 3,
-            lowerHopperMotor1 = 5,
-            lowerHopperMotor2 = 6,
-            hopperfrontIR = 0,
-            hopperbackIR = 1,
+      //Hopper things
+      upperHopperMotor1 = 4, 
+      upperHopperMotor2 = 5,
+      lowerHopperMotor1 = 6,
+      lowerHopperMotor2 = 7,
+      hopperfrontIR = 0,
+      hopperbackIR = 1,
 
-            ButtonA = 1,
-            ButtonB = 2,
-            ButtonX = 3,
-            ButtonY = 4;
-    }
+      //Drivetrain things
+      motorFrontLeft = 1,
+      motorBackLeft = 2,
+      motorFrontRight = 3,
+      motorBackRight = 4,
+      ultrasonicChannel = 0,
 
-    public static class Values {
-        public static final int 
-            voltageToFeet = 1;
+      //climber things
+      climberMotorPort = 10,
+      climberPistonPort = 0,
 
+      buttonA = 1,
+      buttonB = 2,
+      buttonX = 3,
+      buttonY = 4;
+      
+  }
 
-        public static final double
-            autoDriveForwardp = 420,
-            autoDriveForwardi = 69,
-            autoDriveForwardd = 42.0,
-            autoGyrop = 420,
-            autoGyroi = 69,
-            autoGyrod = 32.98,
+  public static class Values {     
 
-            shooterOutput = 1300.0, // TODO: replace with actual
-            shooterBeltSpeed = 0.8;
+    public static final double
+        voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
 
-    }
+        shooterOutput = 1.0, // TODO: replace with actual
+        shooterBeltSpeed = 0.8,
+
+        visionTurningP = 0.028,
+        visionTurningI = 0.01,
+        visionTurningD = 0.06,
+        visionTolerance = 1,
+        visionTimeout = 2000, //in ms
+
+        autoDriveForwardp = 420,
+        autoDriveForwardi = 69,
+        autoDriveForwardd = 42.0,
+        autoGyrop = 420,
+        autoGyroi = 69,
+        autoGyrod = 32.98;
+
+            
+  }
+
 }
 

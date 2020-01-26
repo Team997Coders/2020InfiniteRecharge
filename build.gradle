@@ -40,6 +40,9 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
+
+// Maven central needed for JUnit
+
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }

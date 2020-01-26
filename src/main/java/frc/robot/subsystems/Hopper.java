@@ -13,16 +13,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
-public class Hopper extends SubsystemBase {
-  VictorSPX upperConveyorMotor1;
-  VictorSPX upperConveyorMotor2;
-  VictorSPX lowerConveyorMotor1;
-  VictorSPX lowerConveyorMotor2;
-  DigitalInput frontIRsensor, backIRsensor;
+public class Hopper implements Subsystem {
+  private VictorSPX 
+    upperConveyorMotor1,
+    upperConveyorMotor2,
+    lowerConveyorMotor1,
+    lowerConveyorMotor2;
+  private DigitalInput frontIRsensor, backIRsensor;
   
   
   private Hopper() {
@@ -55,8 +57,8 @@ public class Hopper extends SubsystemBase {
 
 
   public void updateSmartDashboard(){
-    SmartDashboard.putBoolean("frontIRsensor", frontIRsensor.get());
-    SmartDashboard.putBoolean("backIRsensor", backIRsensor.get());
+    SmartDashboard.putBoolean("Hopper/frontIRsensor", frontIRsensor.get());
+    SmartDashboard.putBoolean("Hopper/backIRsensor", backIRsensor.get());
   }
 
   @Override
