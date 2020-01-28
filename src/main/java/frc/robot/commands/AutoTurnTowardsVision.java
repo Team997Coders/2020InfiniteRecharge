@@ -31,7 +31,7 @@ public class AutoTurnTowardsVision extends CommandBase {
 
   public AutoTurnTowardsVision() {
     addRequirements(DriveTrain.getInstance());
-    Robot.m_limelight.setDouble(LimeLight.LED_MODE, 3.0);
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -51,19 +51,19 @@ public class AutoTurnTowardsVision extends CommandBase {
   public void execute() {
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
     double deltaT = currentTime - oldTime;
-    double output = pid.WhatShouldIDo(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
+    double output = pid.WhatShouldIDo(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
     DriveTrain.getInstance().setMotors(-output, output);
 
-    if (Math.abs(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance) {
+    if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance) {
       onTargetTime += deltaT;
     } else {
       onTargetTime = 0;
     }
 
-    SmartDashboard.putNumber("Shooter/PidError", Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(Robot.m_limelight.getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance);
+    SmartDashboard.putNumber("Shooter/PidError", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.visionTolerance);
 
-    targetLossTimeout = (Robot.m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
+    targetLossTimeout = (LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
     oldTime = currentTime;
   }
 

@@ -115,7 +115,7 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
     SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
   
-    SmartDashboard.putNumber("DriveTrain/Target Distance (in)", 98.25 / (Math.tan(Constants.Values.visionLimelightAngle + Robot.m_limelight.getDouble(LimeLight.TARGET_Y, 0))));
+    SmartDashboard.putNumber("DriveTrain/Target Distance (in)", (98.25 - Constants.Values.visionLimelightHeight) / (Math.tan(Constants.Values.visionLimelightAngle + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0))));
   }
 
   private static DriveTrain instance;

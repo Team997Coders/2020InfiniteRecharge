@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import org.team997coders.spartanlib.limelight.LimeLight;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -11,16 +13,12 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
-import org.team997coders.spartanlib.limelight.LimeLight;
-
 public class Robot extends TimedRobot {
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
   public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
   //public static final boolean isTuning = true;
-
-  public static LimeLight m_limelight;
 
   private Command m_autonomousCommand;
   public static OI oi;
@@ -34,10 +32,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
 
-    m_limelight = new LimeLight();
-
     Hopper.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    DriveTrain.getInstance().register();
     OI.getInstance();
     Climber.getInstance();
 
@@ -52,6 +49,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Target X (tx)", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putNumber("HasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 69));
+
     if (verbose) {
       if (commandList.size() > 0) {
         for (String cmdName : commandList) {
@@ -110,8 +110,8 @@ public class Robot extends TimedRobot {
   }
 
   public void updateSmartDashboard() {
-    SmartDashboard.putNumber("Limelight/hasTarget", m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0));
-    SmartDashboard.putNumber("Limelight/targetX", m_limelight.getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putNumber("Limelight/targetY", m_limelight.getDouble(LimeLight.TARGET_Y, 0));
+    SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
+    SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
   }
 }
