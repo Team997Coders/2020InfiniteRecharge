@@ -42,14 +42,14 @@ public class DriveTrain extends SubsystemBase {
 
     
     
-    //frontLeft.config_kP(0, .01);
-    //frontLeft.config_kI(0, );
-    //frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
-    //frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
-    //frontRight.config_kP(0, 0.01);
-    //frontRight.config_kI(0, Constants.Values.DRIVE_VELOCITY.kI);
-    //frontRight.config_kD(0, Constants.Values.DRIVE_VELOCITY.kD);
-    //frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY.kF);
+    frontLeft.config_kP(0, .01);
+    frontLeft.config_kI(0, 0);
+    frontLeft.config_kD(0, 0);
+    frontLeft.config_kF(0,0);
+    frontRight.config_kP(0, 0.01);
+    frontRight.config_kI(0, 0);
+    frontRight.config_kD(0, 0);
+    frontRight.config_kF(0, 0);
 
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
@@ -91,14 +91,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   
-  /*public void resetEncoders(){
-    frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); /* PIDLoop=0,timeoutMs=0 */
-		//frontLeft.setSelectedSensorPosition(0, 0, 10);
-   /// frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); /* PIDLoop=0,timeoutMs=0 */
-///		frontRight.setSelectedSensorPosition(0, 0, 10);
-		///System.out.println("Encoders reset!");
- /// }
-  //*/
+  public void resetEncoders(){
+    
+    frontLeft.setSelectedSensorPosition(0, 0, 10);
+    
+    frontRight.setSelectedSensorPosition(0, 0, 10);
+  }
+  
  
   public void setPosition(double leftPostion, double rightPosition){
     System.out.println("Doing the other thing-777777===="+ leftPostion+""+ rightPosition);
@@ -109,7 +108,7 @@ public class DriveTrain extends SubsystemBase {
   }
   public double calcualteEncoderTicksFromInches(double inches){
     System.out.println("22222");
-    double ticks = ((inches*(5*Math.PI))*(70.0 / 9.0));
+    double ticks = ((inches*(5*Math.PI))*(70.0 / 9.0*2048));
     System.out.println("1111111: " + ticks);
     return ticks;
     

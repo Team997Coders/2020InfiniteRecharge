@@ -35,7 +35,7 @@ public double calculateError(double current, double target){
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   // DriveTrain.getInstance().resetEncoders();
+    DriveTrain.getInstance().resetEncoders();
 		//DriveTrain.getInstance().resetGyroAngle();
   }
 
@@ -52,8 +52,8 @@ public double calculateError(double current, double target){
 
     System.out.println("000000000000000000"+currentLeftPosition+" "+currentRightPosition);
     
-    double leftPosition = leftEcncoderTarget;
-    double rightPosition = rightEncoderTarget;
+    double leftPosition =  -1*(leftEcncoderTarget)- currentLeftPosition;
+    double rightPosition = -1*(rightEncoderTarget) - currentRightPosition;
     DriveTrain.getInstance().setPosition(leftPosition,rightPosition);
 		}
   
@@ -70,6 +70,6 @@ public double calculateError(double current, double target){
     boolean onLeftTarget = (Math.abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget))) < errorMargin;
     boolean onRightTarget = (Math.abs(calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget))) < errorMargin;
 		boolean onAngleTarget = (Math.abs(calculateError(DriveTrain.getInstance().getGyroAngle(), 0))) < errorMargin;
-    return (onLeftTarget && onRightTarget && onAngleTarget);
+    return (onLeftTarget && onRightTarget);// && onAngleTarget);
   }
 }
