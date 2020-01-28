@@ -35,7 +35,7 @@ public double calculateError(double current, double target){
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DriveTrain.getInstance().resetEncoders();
+   // DriveTrain.getInstance().resetEncoders();
 		//DriveTrain.getInstance().resetGyroAngle();
   }
 

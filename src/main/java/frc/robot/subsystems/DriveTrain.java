@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.ArcadeDrive;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class DriveTrain extends SubsystemBase {
   
@@ -60,12 +61,17 @@ public class DriveTrain extends SubsystemBase {
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
 
+    
+
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
+
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
-    frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
+    frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
@@ -85,13 +91,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   
-  public void resetEncoders(){
-    frontLeft.setSelectedSensorPosition(0);
-    frontRight.setSelectedSensorPosition(0);
-  }
+  /*public void resetEncoders(){
+    frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); /* PIDLoop=0,timeoutMs=0 */
+		//frontLeft.setSelectedSensorPosition(0, 0, 10);
+   /// frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); /* PIDLoop=0,timeoutMs=0 */
+///		frontRight.setSelectedSensorPosition(0, 0, 10);
+		///System.out.println("Encoders reset!");
+ /// }
+  //*/
  
   public void setPosition(double leftPostion, double rightPosition){
-    System.out.println("Doing the other thing-----------------------------"+ leftPostion+""+ rightPosition);
+    System.out.println("Doing the other thing-777777===="+ leftPostion+""+ rightPosition);
+    
+   
     frontLeft.set(ControlMode.Position, leftPostion);
     frontRight.set(ControlMode.Position, rightPosition);
   }
@@ -105,6 +117,8 @@ public class DriveTrain extends SubsystemBase {
   
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("left Position Target", getLeftSensor());
+    SmartDashboard.putNumber("right Position Target", getRightSensor());
     SmartDashboard.putNumber("Drivetrain/Right Motors Position", getRightSensor());
     SmartDashboard.putNumber("Drivetrain/Left Motors Position", getLeftSensor());
 
