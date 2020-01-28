@@ -45,6 +45,7 @@ public class OI {
 
     //buttonB.whenPressed(new AutoTurnTowardsVision());
     buttonB.whenPressed(new AutoFaceTargetAndDrive());
+    buttonY.whenPressed(new AutoDriveForward(36));
 
     rightBumper2.whenPressed(new Succ());
     leftBumper2.whenPressed(new StopSucc());

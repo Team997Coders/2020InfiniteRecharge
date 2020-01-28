@@ -114,8 +114,8 @@ public class DriveTrain implements Subsystem {
  
   
   public double calcualteEncoderTicksFromInches(double inches){
-
-    double ticks = (inches*5*Math.PI)/(2048);
+    
+    double ticks = (inches / (Math.PI * 5)) * (50 / 9) * 2048;
     return ticks;
   }
   
