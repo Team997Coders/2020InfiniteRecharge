@@ -25,7 +25,7 @@ public class OI {
   private OI() {
     gamepad1 = new XboxController(0);
     rohanTest = new JoystickButton(gamepad1, XboxController.Button.kA.value);
-    rohanTest.whenPressed(new AutoDriveForward(DriveTrain.getInstance().calcualteEncoderTicksFromInches(36.0), DriveTrain.getInstance().calcualteEncoderTicksFromInches(36.0), 500));
+    rohanTest.whenPressed(new AutoDriveForward(DriveTrain.getInstance().calcualteEncoderTicksFromInches(60.0), DriveTrain.getInstance().calcualteEncoderTicksFromInches(60.0), 200));
   }
 
   public double getAxis(int portNum) {

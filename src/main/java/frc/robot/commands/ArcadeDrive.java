@@ -31,8 +31,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    left = (-1 * OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
-    right = (-1 * OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
+    left = (-OI.getInstance().getAxis(1)) + OI.getInstance().getAxis(4);
+    right = (-OI.getInstance().getAxis(1)) - OI.getInstance().getAxis(4);
     DriveTrain.getInstance().setMotors(left, right);
   }
 

@@ -17,7 +17,7 @@ import frc.robot.commands.ArcadeDrive;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class DriveTrain extends SubsystemBase {
-  
+
   private TalonFX frontLeft;
   private TalonFX frontRight;
   private TalonFX backLeft;
@@ -30,23 +30,37 @@ public class DriveTrain extends SubsystemBase {
   private DriveTrain() {
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
-    
 
     ultrasonic = new AnalogInput(Constants.Ports.ultraChannel);
-    imu = new AHRS(Port.kUSB);//TODO: but something in here 
+    imu = new AHRS(Port.kUSB);// TODO: but something in here
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
 
-    
-    
-    frontLeft.config_kP(0, .01);
+    frontLeft.configFactoryDefault(10);
+    frontRight.configFactoryDefault(10);
+    backLeft.configFactoryDefault(10);
+    backRight.configFactoryDefault(10);
+
+    backLeft.follow(frontLeft);
+    backRight.follow(frontRight);
+
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+
+
+    // frontLeft.setInverted(false);
+    // frontRight.setInverted(true);
+    // backLeft.setInverted(false);
+    // backRight.setInverted(true);
+
+    frontLeft.config_kP(0, .1);
     frontLeft.config_kI(0, 0);
     frontLeft.config_kD(0, 0);
-    frontLeft.config_kF(0,0);
-    frontRight.config_kP(0, 0.01);
+    frontLeft.config_kF(0, 0);
+    frontRight.config_kP(0, 0.1);
     frontRight.config_kI(0, 0);
     frontRight.config_kD(0, 0);
     frontRight.config_kF(0, 0);
@@ -61,13 +75,6 @@ public class DriveTrain extends SubsystemBase {
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
 
-    
-
-    backLeft.follow(frontLeft);
-    backRight.follow(frontRight);
-
-    frontLeft.setInverted(true);
-    backLeft.setInverted(true);
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -83,35 +90,42 @@ public class DriveTrain extends SubsystemBase {
     return frontRight.getSelectedSensorPosition(0);
   }
 
+  public boolean getVelocityZero(){
+
+    final boolean leftZero = (frontLeft.getSelectedSensorVelocity(0) == 0);
+    final boolean rightZero = (frontRight.getSelectedSensorVelocity(0) == 0);
+
+    return (leftZero && rightZero);
+    
+  }
   public double getGyroAngle() {
     return imu.getAngle();
   }
-  public void resetGyroAngle(){
+
+  public void resetGyroAngle() {
     imu.reset();
   }
 
-  
-  public void resetEncoders(){
-    
+  public void resetEncoders() {
+
     frontLeft.setSelectedSensorPosition(0, 0, 10);
-    
     frontRight.setSelectedSensorPosition(0, 0, 10);
   }
-  
- 
-  public void setPosition(double leftPostion, double rightPosition){
-    System.out.println("Doing the other thing-777777===="+ leftPostion+""+ rightPosition);
-    
-   
+
+  public void setPosition(double leftPostion, double rightPosition) {
+    System.out.println("Doing the other thing-777777====" + leftPostion + "" + rightPosition);
+
     frontLeft.set(ControlMode.Position, leftPostion);
     frontRight.set(ControlMode.Position, rightPosition);
   }
-  public double calcualteEncoderTicksFromInches(double inches){
-    double ticks = (inches / (Math.PI * 5)) * (50 / 9) * 2048;
+
+  public double calcualteEncoderTicksFromInches(double inches) {
+    //double ticks = (inches / (Math.PI * 5)) * (50 / 9) * 2048;
+    double ticks = inches * 1000;
     return ticks;
-    
+
   }
-  
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("left Position Target", getLeftSensor());
@@ -121,7 +135,7 @@ public class DriveTrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Drivetrain/Left Motor Velocity", frontLeft.getSelectedSensorVelocity(0));
     SmartDashboard.putNumber("Drivetrain/Right Motors Velocity", frontRight.getSelectedSensorVelocity(0));
-    
+
     SmartDashboard.putNumber("Drivetrain/Front Left Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("Drivetrain/Front Right Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("Drivetrain/Back Left Motor Temperature", frontLeft.getTemperature());
@@ -132,6 +146,9 @@ public class DriveTrain extends SubsystemBase {
   }
 
   private static DriveTrain instance;
-  public static DriveTrain getInstance() { return instance == null ? instance = new DriveTrain() : instance; }
-  
+
+  public static DriveTrain getInstance() {
+    return instance == null ? instance = new DriveTrain() : instance;
+  }
+
 }
