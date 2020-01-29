@@ -107,9 +107,7 @@ public class DriveTrain extends SubsystemBase {
     frontRight.set(ControlMode.Position, rightPosition);
   }
   public double calcualteEncoderTicksFromInches(double inches){
-    System.out.println("22222");
-    double ticks = ((inches*(5*Math.PI))*(70.0 / 9.0*2048));
-    System.out.println("1111111: " + ticks);
+    double ticks = (inches / (Math.PI * 5)) * (50 / 9) * 2048;
     return ticks;
     
   }

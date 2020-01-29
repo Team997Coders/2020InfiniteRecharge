@@ -10,7 +10,7 @@ package frc.robot.commands;
 import java.lang.module.ModuleDescriptor.Requires;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrain;
 
 public class AutoDriveForward extends CommandBase {
@@ -67,9 +67,11 @@ public double calculateError(double current, double target){
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean onLeftTarget = (Math.abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget))) < errorMargin;
-    boolean onRightTarget = (Math.abs(calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget))) < errorMargin;
-		boolean onAngleTarget = (Math.abs(calculateError(DriveTrain.getInstance().getGyroAngle(), 0))) < errorMargin;
+    boolean onLeftTarget = (Math.abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget))) <= errorMargin;
+    boolean onRightTarget = (Math.abs(calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget))) <= errorMargin;
+		boolean onAngleTarget = (Math.abs(calculateError(DriveTrain.getInstance().getGyroAngle(), 0))) <= errorMargin;
+    SmartDashboard.putBoolean("Left on Target", onLeftTarget);
+    SmartDashboard.putBoolean("Right on Target", onRightTarget);
     return (onLeftTarget && onRightTarget);// && onAngleTarget);
   }
 }
