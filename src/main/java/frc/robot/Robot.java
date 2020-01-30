@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.AutoDoNothing;
+import frc.robot.commands.auto.AutoSickoMode;
+import frc.robot.commands.auto.AutoStreamUntilEmpty;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.hopper.HopperTimedMove;
@@ -40,6 +42,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
     m_chooser.addOption("Auto One", new FollowPath(Constants.PathFollower.PATHS[0], false));
+    m_chooser.addOption("S1CK0 M0D3", new AutoSickoMode());
+    m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,

@@ -7,9 +7,9 @@ import frc.robot.Constants;
 import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.intake.IntakeBallToCount;
 
-public class AutoTestPickup extends SequentialCommandGroup {
+public class AutoSickoMode extends SequentialCommandGroup {
 
-  public AutoTestPickup() {
+  public AutoSickoMode() {
     addCommands(new FollowPath("GoToPickup", false));
     addCommands(new ParallelCommandGroup(
       new FollowPath("Pickup3", false),
