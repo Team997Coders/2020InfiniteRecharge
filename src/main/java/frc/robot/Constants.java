@@ -61,6 +61,7 @@ public final class Constants {
         HOPPER_EJECT_SPEED = -0.4,
 
         SHOOTER_GEARING = 3.0 / 4.0,
+        SHOOTER_RPM = 3700,
 
         CLIMBER_UP = 0.75,
         CLIMBER_DOWN = -0.6,

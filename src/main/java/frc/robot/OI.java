@@ -35,8 +35,8 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
 
     buttonB.whenPressed(new AutoFaceTargetAndDrive());
-    buttonRightBumper.whileHeld(new ShooterStream(3700));
-    buttonLeftBumper.whileHeld(new ShooterStreamAutoTarget(3700));
+    buttonRightBumper.whileHeld(new ShooterStream(Constants.Values.SHOOTER_RPM));
+    buttonLeftBumper.whileHeld(new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM));
 
     buttonRightBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
     buttonLeftBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));

@@ -13,7 +13,6 @@ import frc.robot.commands.auto.AutoDoNothing;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.hopper.HopperTimedMove;
-import frc.robot.pathfollower.PathManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -40,7 +39,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
-    m_chooser.addOption("Auto One", new FollowPath(PathManager.getSupplier("GoToPickup"), false));
+    m_chooser.addOption("Auto One", new FollowPath(Constants.PathFollower.PATHS[0], false));
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,
