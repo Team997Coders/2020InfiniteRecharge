@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,8 +34,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
 
     Hopper.getInstance();
-    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     DriveTrain.getInstance().register();
+    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
     Climber.getInstance();
 
@@ -49,8 +50,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Target X (tx)", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putNumber("HasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 69));
+    //SmartDashboard.putNumber("Math number yayayayayaya", Constants.Values.visionLimelightAngle);
+    //SmartDashboard.putNumber("Target X (tx)", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    //SmartDashboard.putNumber("HasTarget", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(69));
 
     if (verbose) {
       if (commandList.size() > 0) {

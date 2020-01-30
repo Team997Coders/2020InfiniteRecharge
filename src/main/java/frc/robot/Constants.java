@@ -49,7 +49,7 @@ public final class Constants {
         visionTimeout = 2000, //in ms
 
         visionLimelightHeight = 6, //Height (inches) up from the ground of the center of the limelight. 
-        visionLimelightAngle = Math.tanh(2.5/1.75); //angle the limelight is tilted at. In degrees up from the floor.
+        visionLimelightAngle = Math.atan(2.5/1.75) * (180 / Math.PI); //angle the limelight is tilted at. In degrees up from the floor.
   }
 
 }
