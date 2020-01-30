@@ -9,17 +9,14 @@ package frc.robot.commands.drivetrain;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
-import frc.robot.OI;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
-import java.util.concurrent.TimeUnit;
 
 public class AutoTurnTowardsVision extends CommandBase {
   
@@ -45,13 +42,13 @@ public class AutoTurnTowardsVision extends CommandBase {
     pid = new SpartanPID(pidConstants);
     pid.setSetpoint(0);
 
-    oldTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
+    oldTime = System.currentTimeMillis();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
+    currentTime = System.currentTimeMillis();
     double deltaT = currentTime - oldTime;
     double output = pid.WhatShouldIDo(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
     DriveTrain.getInstance().setMotors(-output, output);
