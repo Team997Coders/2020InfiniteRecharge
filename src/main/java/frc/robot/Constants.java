@@ -82,5 +82,12 @@ public final class Constants {
 
       TRACK_WIDTH = 2.1;
 
+    public static final String[] PATHS = {
+      "GoToPickup",
+      "GoToShootPos",
+      "Pickup3",
+      "TrenchPivot"
+    };
+
   }
 }

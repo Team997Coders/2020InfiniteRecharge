@@ -1,5 +1,11 @@
 package frc.robot.pathfollower;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
@@ -10,55 +16,53 @@ import frc.robot.Constants;
 public class PathManager {
 
   private static DifferentialDriveKinematics diffDriveKin;
-  public static TrajectorySupplier[] suppliers;
+  private static HashMap<String, Trajectory> trajectories;
+  private static Lock hashLock;
   private static Thread runner;
 
   static {
     diffDriveKin = new DifferentialDriveKinematics(f2m(Constants.PathFollower.TRACK_WIDTH));
 
-    suppliers = new TrajectorySupplier[] {
-      new TrajectorySupplier("GoToPickup"),
-      new TrajectorySupplier("GoToShootPos"),
-      new TrajectorySupplier("Pickup3"),
-      new TrajectorySupplier("TrenchPivot")
-    };
+    hashLock = new ReentrantLock();
 
-    runner = new Thread(() -> LoadAllPaths());
+    trajectories = new HashMap<String, Trajectory>();
+
+    runner = new Thread(() -> {
+      double completed = 0;
+      for (String path : Constants.PathFollower.PATHS) {
+        Trajectory t = loadPath(path);
+        addPath(path, t);
+        completed++;
+        System.out.println("Paths Loaded: " + completed / (double)Constants.PathFollower.PATHS.length);
+      }
+    });
     System.out.println("Started Loading Paths");
     runner.start();
   }
 
-  public static void LoadAllPaths() {
-    for (int i = 0; i < suppliers.length; i++) {
-      LoadPath(suppliers[i]);
-    }
-
-    System.out.println("Loaded Paths");
-  }
-
-  public static void LoadPath(TrajectorySupplier sup) {
+  public static Trajectory loadPath(String name) {
     int retryCount = 0;
-    boolean success = false;
-    while (!success) {
+    Path filePath = Paths.get("/home/lvuser/deploy/paths/output/" + name + ".wpilib.json");
+    while (true) {
       try {
-
-        Trajectory tra = TrajectoryUtil.fromPathweaverJson(sup.filePath);
+        Trajectory tra = TrajectoryUtil.fromPathweaverJson(filePath);
         if (tra != null) {
-          sup.SetTrajectory(tra);
-          success = true;
+          return tra;
         } else {
-          System.out.println("Loading Path '" + sup.filePath.toString() + "' Failed");
+          System.out.println("Loading Path '" + name + "' Failed\nReturning Null Path");
+          return null;
         }
 
       } catch (Exception e) {
 
-        System.out.println("Loading Path '" + sup.filePath.toString() + "' Failed");
+        System.out.println("Loading Path '" + name + "' Failed\nRetrying...");
         e.printStackTrace();
 
       } finally {
 
         if (retryCount > 2) {
-          return;
+          System.out.println("Loading Path '" + name + "' Failed\nGiving up on your garbage code");
+          return null;
         } else {
           retryCount++;
         }
@@ -67,11 +71,18 @@ public class PathManager {
     }
   }
 
-  public static TrajectorySupplier getSupplier(String name) {
-    for (TrajectorySupplier t : suppliers) {
-      if (name.equals(t.name)) return t;
-    }
-    return null;
+  private static void addPath(String n, Trajectory t) {
+    hashLock.lock();
+    trajectories.put(n, t);
+    hashLock.unlock();
+  }
+
+  public static Trajectory getPath(String name) {
+    Trajectory t = null;
+    hashLock.lock();
+    t = trajectories.get(name);
+    hashLock.unlock();
+    return t;
   }
 
   public static DifferentialDriveWheelSpeeds getDriveSpeeds(Trajectory.State currentState) {
