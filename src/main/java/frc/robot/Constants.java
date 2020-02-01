@@ -4,6 +4,7 @@ import frc.robot.util.Gains;
 
 public final class Constants {
 
+
   public static boolean eps(double a, double b, double eps) {
     return Math.abs(a - b) < eps;
   }
