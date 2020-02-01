@@ -7,6 +7,8 @@
 
 package frc.robot.commands.drivetrain;
 
+import org.team997coders.spartanlib.math.MathUtils;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.subsystems.DriveTrain;
@@ -32,6 +34,8 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
     right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
+    left = MathUtils.deadband(left, 0.05);
+    right = MathUtils.deadband(right, 0.05);
     DriveTrain.getInstance().setMotors(left, right);
   }
 

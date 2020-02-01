@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class PathManager {
 
@@ -33,7 +34,7 @@ public class PathManager {
         Trajectory t = loadPath(path);
         addPath(path, t);
         completed++;
-        System.out.println("Paths Loaded: " + completed / (double)Constants.PathFollower.PATHS.length);
+        Robot.Add("Paths Loaded: " + completed / (double)Constants.PathFollower.PATHS.length);
       }
     });
     System.out.println("Started Loading Paths");
@@ -41,6 +42,7 @@ public class PathManager {
   }
 
   public static Trajectory loadPath(String name) {
+    Robot.Add("AHSJJSHDJKASHKJD7\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     int retryCount = 0;
     Path filePath = Paths.get("/home/lvuser/deploy/paths/output/" + name + ".wpilib.json");
     while (true) {
@@ -49,19 +51,19 @@ public class PathManager {
         if (tra != null) {
           return tra;
         } else {
-          System.out.println("Loading Path '" + name + "' Failed\nReturning Null Path");
+          Robot.Add("Loading Path '" + name + "' Failed\nReturning Null Path");
           return null;
         }
 
       } catch (Exception e) {
 
-        System.out.println("Loading Path '" + name + "' Failed\nRetrying...");
+        Robot.Add("Loading Path '" + name + "' Failed\nRetrying...");
         e.printStackTrace();
 
       } finally {
 
         if (retryCount > 2) {
-          System.out.println("Loading Path '" + name + "' Failed\nGiving up on your garbage code");
+          Robot.Add("Loading Path '" + name + "' Failed\nGiving up on your garbage code");
           return null;
         } else {
           retryCount++;

@@ -48,7 +48,7 @@ public class OI {
 
   public double getGamepad1Axis(int portNum) {
     axisPos = gamepad1.getRawAxis(portNum);
-    if (Math.abs(axisPos) <= 0.05) {
+    if (Math.abs(axisPos) < 0.05) {
       axisPos = 0;
     }
     return axisPos;

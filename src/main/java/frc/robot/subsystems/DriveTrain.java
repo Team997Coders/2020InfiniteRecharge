@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -73,12 +74,18 @@ public class DriveTrain implements Subsystem {
     frontRight.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
     frontRight.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
     frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
+
+    frontLeft.setNeutralMode(NeutralMode.Brake);
+    backLeft.setNeutralMode(NeutralMode.Brake);
+    frontRight.setNeutralMode(NeutralMode.Brake);
+    backRight.setNeutralMode(NeutralMode.Brake);
   }
 
   public void updatePID() {
     P = SmartDashboard.getNumber("DriveTrain/P", 0);
     I = SmartDashboard.getNumber("DriveTrain/I", 0);
     D = SmartDashboard.getNumber("DriveTrain/D", 0);
+
   }
 
   public void putCurrentPID() {
