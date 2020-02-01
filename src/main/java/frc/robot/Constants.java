@@ -68,12 +68,12 @@ public final class Constants {
         CLIMBER_DOWN = -0.6,
 
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
-        DRIVE_VEL_2_FEET = 10 * ((double)1 / (double)2048)
-          * ((double)9 / (double)70) * ((double)5 * Math.PI) * ((double)1 / (double)12);
+        DRIVE_VEL_2_FEET = 10 * (1.0 / 2048.0)
+          * (9.0 / 70.0) * (4.875 * Math.PI) * (1.0 / 12.0);
 
     public static final Gains
 
-      DRIVE_VELOCITY_GAINS = new Gains(0.13, 0.0, 3.0, (double)1023 / (double)19990),
+      DRIVE_VELOCITY_GAINS = new Gains(0.15, 0.0, 3.0, 1023.0 / 21500.0),
       SHOOTER_VELOCITY_GAINS = new Gains(0.25, 0.001, 20, 1 / 500);
 
   }

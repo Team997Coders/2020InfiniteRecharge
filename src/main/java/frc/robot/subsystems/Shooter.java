@@ -58,7 +58,7 @@ public class Shooter implements Subsystem {
 
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
-    System.out.println("Shooter Sped: " + getRPMs());
+    //System.out.println("Shooter Sped: " + getRPMs());
   }
 
   public double getRPMs() {

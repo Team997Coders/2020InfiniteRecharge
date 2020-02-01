@@ -17,6 +17,7 @@ import frc.robot.commands.auto.AutoStreamUntilEmpty;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.hopper.HopperTimedMove;
+import frc.robot.pathfollower.PathManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -50,6 +51,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
 
+    double m = PathManager.f2m(5);
+
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,
       Constants.Values.VISION_TURNING_I,
@@ -70,6 +73,8 @@ public class Robot extends TimedRobot {
       });
     }
     DriveTrain.getInstance().putCurrentPID();
+
+    SmartDashboard.putData(m_chooser);
   }
 
   @Override
@@ -89,6 +94,7 @@ public class Robot extends TimedRobot {
     for (Object a : msgs) {
       System.out.println(a.toString());
     }
+    messages = new ArrayList<String>();
     ugh.unlock();
   }
 
@@ -99,7 +105,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     CommandScheduler.getInstance().run();
 
-    DriveTrain.getInstance().updatePID();
+    //DriveTrain.getInstance().updatePID();
   }
 
   @Override

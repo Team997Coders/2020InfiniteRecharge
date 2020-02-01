@@ -42,11 +42,11 @@ public class FollowPath extends CommandBase {
     DifferentialDriveWheelSpeeds speeds = PathManager.getDriveSpeeds(currentState);
 
     if (!reverse) {
-      DriveTrain.getInstance().setVelocity(speeds.leftMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET,
-          speeds.rightMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+      DriveTrain.getInstance().setVelocity(PathManager.m2f(speeds.leftMetersPerSecond),
+          PathManager.m2f(speeds.rightMetersPerSecond));
     } else {
-      DriveTrain.getInstance().setVelocity(-speeds.rightMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET,
-          -speeds.leftMetersPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+      DriveTrain.getInstance().setVelocity(-PathManager.m2f(speeds.rightMetersPerSecond),
+          -PathManager.m2f(speeds.leftMetersPerSecond));
     }
   }
 
@@ -67,6 +67,8 @@ public class FollowPath extends CommandBase {
       System.out.println("Path '" + name + "' was interrupted");
     else
       System.out.println("Path '" + name + "' has finished");
+
+    DriveTrain.getInstance().setMotors(0.0, 0.0);
   }
 
 }

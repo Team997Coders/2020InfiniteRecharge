@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.pathfollower.PathManager;
 
 public class DriveTrain implements Subsystem {
 
@@ -81,21 +82,21 @@ public class DriveTrain implements Subsystem {
     backRight.setNeutralMode(NeutralMode.Brake);
   }
 
-  public void updatePID() {
+  /*public void updatePID() {
     P = SmartDashboard.getNumber("DriveTrain/P", 0);
     I = SmartDashboard.getNumber("DriveTrain/I", 0);
     D = SmartDashboard.getNumber("DriveTrain/D", 0);
 
-  }
+  }*/
 
   public void putCurrentPID() {
     SmartDashboard.putNumber("DriveTrain/P", Constants.Values.VISION_TURNING_P);
     SmartDashboard.putNumber("DriveTrain/I", Constants.Values.VISION_TURNING_I);
     SmartDashboard.putNumber("DriveTrain/D", Constants.Values.VISION_TURNING_D);
 
-    SmartDashboard.setPersistent("DriveTrain/P");
-    SmartDashboard.setPersistent("DriveTrain/I");
-    SmartDashboard.setPersistent("DriveTrain/D");
+    //SmartDashboard.setPersistent("DriveTrain/P");
+    //SmartDashboard.setPersistent("DriveTrain/I");
+    //SmartDashboard.setPersistent("DriveTrain/D");
 
   }
 
@@ -105,6 +106,7 @@ public class DriveTrain implements Subsystem {
   }
 
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
+    //SmartDashboard.putNumber(, value)
     frontLeft.set(ControlMode.Velocity, leftFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
     frontRight.set(ControlMode.Velocity, rightFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
   }
@@ -134,11 +136,26 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Back Left Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Back Right Motor Temperature", frontLeft.getTemperature());
 
+    SmartDashboard.putNumber("DriveTrain/Left Feet", getFeet(frontLeft));
+    SmartDashboard.putNumber("DriveTrain/Right Feet", getFeet(frontRight));
+
+    SmartDashboard.putNumber("DriveTrain/Left Error", frontLeft.getClosedLoopError());
+    SmartDashboard.putNumber("DriveTrain/Right Error", frontRight.getClosedLoopError());
+
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
     SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
   }
 
   private static DriveTrain instance;
+
+  public double getFeet(TalonFX m) {
+    return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
+  }
+
+  public void resetEncoders() {
+    frontLeft.setSelectedSensorPosition(0, 0, 10);
+    frontRight.setSelectedSensorPosition(0, 0, 10);
+  }
 
   public static DriveTrain getInstance() {
     if (instance == null) { 
