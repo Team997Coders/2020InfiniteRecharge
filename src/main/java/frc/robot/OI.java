@@ -38,6 +38,7 @@ public class OI {
     //buttonB2.whenPressed(new StopShooting());
     buttonB2.whileHeld(new UpperConveyorMotor(-Constants.Values.shooterBeltSpeed));
     buttonX2.whileHeld(new LowerConveyorMotor(Constants.Values.shooterBeltSpeed));
+    //lower conveyer motor is for elevator NOT hopper (I think)
     buttonY2.whileHeld(new UpperConveyorMotor(Constants.Values.shooterBeltSpeed));
 
     buttonA.whenPressed(new ClimberUp());
