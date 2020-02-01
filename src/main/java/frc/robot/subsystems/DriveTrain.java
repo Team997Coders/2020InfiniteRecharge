@@ -43,6 +43,17 @@ public class DriveTrain implements Subsystem {
     backLeft = new TalonFX(Constants.Ports.motorBackLeft);
     backRight = new TalonFX(Constants.Ports.motorBackRight);
 
+    frontLeft.configFactoryDefault(10);
+    frontRight.configFactoryDefault(10);
+    backLeft.configFactoryDefault(10);
+    backRight.configFactoryDefault(10);
+
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+
+    backLeft.follow(frontLeft);
+    backRight.follow(frontRight);
+
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
     backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
@@ -52,12 +63,6 @@ public class DriveTrain implements Subsystem {
     frontLeft.setSelectedSensorPosition(0, 0, 10);
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
-
-    frontLeft.setInverted(true);
-    backLeft.setInverted(true);
-
-    backLeft.follow(frontLeft);
-    backRight.follow(frontRight);
 
     frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
     frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
