@@ -8,19 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
-public class AutoShoot extends CommandBase {
+public class TimedAutoIntake extends CommandBase {
   
   long tiempo;
   double seconds;
 
-  public AutoShoot(double seconds) {
-    this.seconds = seconds;
-    
+  public TimedAutoIntake(double seconds) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.seconds = seconds;
   }
 
   // Called when the command is initially scheduled.
@@ -32,16 +29,13 @@ public class AutoShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Shooter.getInstance().SetYeeterRPM((double)4500);
-    Hopper.getInstance().setUpperSpeed(Constants.Values.shooterBeltSpeed);
-    
+    Intake.getInstance().IntakePercent(.75);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Shooter.getInstance().SetYeeterRPM(0);
-    Hopper.getInstance().setUpperSpeed(0);
+    Intake.getInstance().IntakePercent(0);
   }
 
   // Returns true when the command should end.
