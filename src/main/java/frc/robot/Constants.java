@@ -11,6 +11,10 @@ public final class Constants {
       //SHOOTER_MOTOR_2 = 6,
       shooterIR = 0, //Maybe not
       
+      //Intake things
+      intakeIR = 0, //Maybe not
+      destromos = 0, //TODO: replace with actual (intake motor)
+
       //Hopper things
       upperHopperMotor1 = 4, 
       upperHopperMotor2 = 5,
@@ -33,9 +37,8 @@ public final class Constants {
       buttonA = 1,
       buttonB = 2,
       buttonX = 3,
-      buttonY = 4,
+      buttonY = 4;
 
-      destromos = 0; //TODO: replace with actual (intake motor)
       
   }
 
