@@ -52,7 +52,7 @@ public final class Constants {
         visionTolerance = 1,
         visionTimeout = 2000, //in ms
 
-        autoDriveForwardp = 0.01,
+        autoDriveForwardp = 0.00001,
         autoDriveForwardi = 0,
         autoDriveForwardd = 0,
         autoGyrop = 0.01,
