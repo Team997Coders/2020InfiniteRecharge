@@ -9,7 +9,8 @@ public final class Constants {
 
       SHOOTER_MOTOR_1 = 4,
       //SHOOTER_MOTOR_2 = 6,
-
+      shooterIR = 0, //Maybe not
+      
       //Hopper things
       upperHopperMotor1 = 4, 
       upperHopperMotor2 = 5,

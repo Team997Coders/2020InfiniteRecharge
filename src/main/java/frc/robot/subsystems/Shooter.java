@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -22,11 +23,14 @@ import frc.robot.Constants;
 public class Shooter implements Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  DigitalInput shooterIR;
   private TalonSRX yeeter;
   private Shooter() {
     yeeter = new TalonSRX(Constants.Ports.SHOOTER_MOTOR_1);
     yeeter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     yeeter.setNeutralMode(NeutralMode.Coast);
+
+    shooterIR = new DigitalInput(Constants.Ports.shooterIR);
 
     //yeeterPIDController = yeeter1.getPIDController(); //TODO: set up constants
 
@@ -44,6 +48,10 @@ public class Shooter implements Subsystem {
   public void SetYeeterRPM(double yeeterRPMs) {
     double rpmToInternal = 1 / 0.1465;
     yeeter.set(ControlMode.Velocity, yeeterRPMs * rpmToInternal);
+  }
+
+  public boolean getShooterIR() {
+    return shooterIR.get();
   }
 
   public void SetYeeterPercent(double perc) {
