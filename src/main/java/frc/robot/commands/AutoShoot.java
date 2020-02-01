@@ -17,12 +17,13 @@ public class AutoShoot extends CommandBase {
   /**
    * Creates a new AutoShoot.
    */
-  int ballsShot;
+  int ballsShot, numOfBalls;
   long tiempo;
 
   boolean sensingBall;
-  public AutoShoot() {
+  public AutoShoot(int numOfBalls) {
     // Use addRequirements() here to declare subsystem dependencies.
+  this.numOfBalls = numOfBalls;  
   ballsShot = 0;
   tiempo = 0;
   }
@@ -54,7 +55,7 @@ public class AutoShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (ballsShot >= 3) {
+    if (ballsShot >= numOfBalls) {
       return true;
     }
     return false;
