@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,9 +19,12 @@ import frc.robot.Constants;
 public class Climber extends SubsystemBase {
   private Solenoid climberPiston;
   private CANSparkMax climberMotor;
+  private VictorSPX crawlerMotor;
+
   private Climber() {
     climberMotor = new CANSparkMax(Constants.Ports.climberMotorPort, MotorType.kBrushless);
     climberPiston = new Solenoid(Constants.Ports.climberPistonPort);
+    crawlerMotor = new VictorSPX(Constants.Ports.crawlerMotorPort);
   }
   public void ExtendPiston(){
     climberPiston.set(true);
@@ -27,12 +32,16 @@ public class Climber extends SubsystemBase {
   public void RetractPiston(){
     climberPiston.set(false);
   }
-public void setSpeed(double speed){
+  public void setSpeed(double speed){
   climberMotor.set(speed);
 }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void crawler(double setSpep){
+    crawlerMotor.set(ControlMode.PercentOutput, setSpep);
   }
 
   public static Climber instance;

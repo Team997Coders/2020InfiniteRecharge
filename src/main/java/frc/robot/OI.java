@@ -29,8 +29,8 @@ public class OI {
     buttonX = new JoystickButton(gamepad1, XboxController.Button.kX.value);
     buttonY = new JoystickButton(gamepad1, XboxController.Button.kY.value);
     buttonB = new JoystickButton(gamepad1, XboxController.Button.kB.value);
-    buttonRightBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
-    buttonLeftBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
+    buttonRightBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperRight.value);
+    buttonLeftBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
     buttonRightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
 

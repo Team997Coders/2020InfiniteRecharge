@@ -33,8 +33,8 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 0;
-      
+      climberPistonPort = 0,
+      crawlerMotorPort = 30; //TODO: replace with actual
   }
 
   public static class Values {     
