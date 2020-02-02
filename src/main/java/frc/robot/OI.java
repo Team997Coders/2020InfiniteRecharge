@@ -28,8 +28,8 @@ public class OI {
     buttonA.whenPressed(new ClimberUp());
     buttonX.whenPressed(new ClimberDown());
 
-    //buttonB.whenPressed(new AutoTurnTowardsVision());
-    buttonB.whenPressed(new AutoFaceTargetAndDrive());
+    buttonB.whenPressed(new AutoTurnTowardsVision());
+    //buttonB.whenPressed(new AutoFaceTargetAndDrive());
   }
 
   public double getGamepad1Axis(int portNum) {

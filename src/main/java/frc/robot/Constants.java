@@ -42,10 +42,10 @@ public final class Constants {
 
         shooterOutput = 1.0, // TODO: replace with actual
 
-        visionTurningP = 0.028,
-        visionTurningI = 0.01,
-        visionTurningD = 0.06,
-        visionTolerance = 1,
+        visionTurningP = 0.012, //0.028,
+        visionTurningI = 0.03,//0.01,
+        visionTurningD = 0.06,//0.06,
+        visionTolerance = 1.5, //1
         visionTimeout = 2000, //in ms
 
         visionLimelightHeight = 6, //Height (inches) up from the ground of the center of the limelight. 
