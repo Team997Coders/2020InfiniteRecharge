@@ -1,6 +1,7 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -21,12 +22,16 @@ public class FollowPath extends CommandBase {
     this.name = name;
     this.reverse = reverse;
 
+    SmartDashboard.putNumber("Paht" + name, 0);
+
     addRequirements(DriveTrain.getInstance());
   }
 
   @Override
   public void initialize() {
     startTime = (double) System.currentTimeMillis() / (double) 1000;
+
+    SmartDashboard.putString("Path '" + name + "' has Started", "");
 
     trajectory = PathManager.getPath(name);
   }
@@ -64,9 +69,9 @@ public class FollowPath extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted)
-      System.out.println("Path '" + name + "' was interrupted");
+    SmartDashboard.putString("Path '" + name + "' was interrupted", "");
     else
-      System.out.println("Path '" + name + "' has finished");
+    SmartDashboard.putString("Path '" + name + "' has finished", "");
 
     DriveTrain.getInstance().setMotors(0.0, 0.0);
   }

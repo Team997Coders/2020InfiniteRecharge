@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.AutoDoNothing;
 import frc.robot.commands.auto.AutoSickoMode;
+import frc.robot.commands.auto.AutoSickoModeBoneless;
 import frc.robot.commands.auto.AutoStreamUntilEmpty;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
@@ -46,10 +47,17 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
+    SequentialCommandGroup seq = new SequentialCommandGroup(
+      new FollowPath("Pickup3", false),
+      new FollowPath("TrenchPivot", true)
+    );
+
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
-    m_chooser.addOption("Auto One", new FollowPath("Pickup3", false));
+    m_chooser.addOption("Auto One", new FollowPath("TrenchPivot", false));
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
+    m_chooser.addOption("s1ck0 m0d3 b0n3l355", seq);
 
     double m = PathManager.f2m(5);
 

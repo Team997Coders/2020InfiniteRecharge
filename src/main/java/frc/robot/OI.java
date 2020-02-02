@@ -11,8 +11,8 @@ import frc.robot.commands.intake.IntakeMove;
 
 public class OI {
   private double axisPos;
-  private  XboxController gamepad1, gamepad2;
-  private  JoystickButton buttonA, buttonB, buttonX, buttonY,
+  public XboxController gamepad1, gamepad2;
+  private JoystickButton buttonA, buttonB, buttonX, buttonY,
     buttonA2, buttonB2, buttonX2, buttonY2;
   private JoystickButton buttonRightBumper, buttonLeftBumper,
     buttonRightBumper2, buttonLeftBumper2;

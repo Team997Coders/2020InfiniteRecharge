@@ -132,9 +132,9 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Right Motors Velocity", frontRight.getSelectedSensorVelocity(0));
     
     SmartDashboard.putNumber("DriveTrain/Front Left Motor Temperature", frontLeft.getTemperature());
-    SmartDashboard.putNumber("DriveTrain/Front Right Motor Temperature", frontLeft.getTemperature());
-    SmartDashboard.putNumber("DriveTrain/Back Left Motor Temperature", frontLeft.getTemperature());
-    SmartDashboard.putNumber("DriveTrain/Back Right Motor Temperature", frontLeft.getTemperature());
+    SmartDashboard.putNumber("DriveTrain/Front Right Motor Temperature", frontRight.getTemperature());
+    SmartDashboard.putNumber("DriveTrain/Back Left Motor Temperature", backLeft.getTemperature());
+    SmartDashboard.putNumber("DriveTrain/Back Right Motor Temperature", backRight.getTemperature());
 
     SmartDashboard.putNumber("DriveTrain/Left Feet", getFeet(frontLeft));
     SmartDashboard.putNumber("DriveTrain/Right Feet", getFeet(frontRight));
