@@ -1,5 +1,8 @@
 package frc.robot;
 
+import org.team997coders.spartanlib.motion.pathfollower.PathData;
+import org.team997coders.spartanlib.motion.pathfollower.PathPreloadedData;
+
 import frc.robot.util.Gains;
 
 public final class Constants {
@@ -67,6 +70,8 @@ public final class Constants {
         CLIMBER_UP = 0.75,
         CLIMBER_DOWN = -0.6,
 
+        TRACK_WIDTH = 2.1,
+
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * (1.0 / 2048.0)
           * (9.0 / 70.0) * (4.875 * Math.PI) * (1.0 / 12.0);
@@ -78,18 +83,16 @@ public final class Constants {
 
   }
 
-  public static class PathFollower {
+  public static class Paths {
 
-    public static final double
-
-      TRACK_WIDTH = 2.1;
-
-    public static final String[] PATHS = {
-      "GoToPickup",
-      "GoToShootPos",
-      "Pickup3",
-      "TrenchPivot"
-    };
+    public static final PathData
+    
+      SHOOT_TO_PICKUP = new PathPreloadedData("ShootToPickup"),
+      PICKUP_3 = new PathPreloadedData("Pickup3"),
+      TRENCH_PIVOT = new PathPreloadedData("TrenchPivot"),
+      PIVOT_TO_SHOOT = new PathPreloadedData("PivotToShoot"),
+      ALT_SHOOT_TO_PICKUP = new PathPreloadedData("AltShootToPickup"),
+      START_TO_ALT_SHOOT = new PathPreloadedData("StartToAltShoot");
 
   }
 }

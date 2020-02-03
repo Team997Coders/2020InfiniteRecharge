@@ -1,11 +1,11 @@
 package frc.robot.commands.drivetrain;
 
+import org.team997coders.spartanlib.motion.pathfollower.PathManager;
+
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import frc.robot.pathfollower.PathManager;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class FollowPath extends CommandBase {
@@ -21,8 +21,6 @@ public class FollowPath extends CommandBase {
     this.name = name;
     this.reverse = reverse;
 
-    SmartDashboard.putNumber("Paht" + name, 0);
-
     addRequirements(DriveTrain.getInstance());
   }
 
@@ -30,9 +28,7 @@ public class FollowPath extends CommandBase {
   public void initialize() {
     startTime = (double) System.currentTimeMillis() / (double) 1000;
 
-    SmartDashboard.putString("Path '" + name + "' has Started", "");
-
-    trajectory = PathManager.getPath(name);
+    trajectory = PathManager.getInstance().getTrajectory(name);
   }
 
   @Override
@@ -43,7 +39,7 @@ public class FollowPath extends CommandBase {
     currentTime = (System.currentTimeMillis() / (double) 1000) - startTime;
 
     Trajectory.State currentState = trajectory.sample(currentTime);
-    DifferentialDriveWheelSpeeds speeds = PathManager.getDriveSpeeds(currentState);
+    DifferentialDriveWheelSpeeds speeds = PathManager.getDriveSpeeds(Constants.Values.TRACK_WIDTH, currentState);
 
     if (!reverse) {
       DriveTrain.getInstance().setVelocity(PathManager.m2f(speeds.leftMetersPerSecond),
@@ -68,9 +64,9 @@ public class FollowPath extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted)
-    SmartDashboard.putString("Path '" + name + "' was interrupted", "");
+    System.out.println("Path '" + name + "' was interrupted");
     else
-    SmartDashboard.putString("Path '" + name + "' has finished", "");
+    System.out.println("Path '" + name + "' has finished");
 
     DriveTrain.getInstance().setMotors(0.0, 0.0);
   }

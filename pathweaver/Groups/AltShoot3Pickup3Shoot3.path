@@ -1,4 +1,5 @@
-ShootToPickup.path
+StartToAltShoot.path
+AltShootToPickup.path
 Pickup3.path
 TrenchPivot.path
 PivotToShoot.path
