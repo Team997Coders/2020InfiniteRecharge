@@ -13,12 +13,10 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.AutoDoNothing;
 import frc.robot.commands.auto.AutoSickoMode;
-import frc.robot.commands.auto.AutoSickoModeBoneless;
 import frc.robot.commands.auto.AutoStreamUntilEmpty;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.hopper.HopperTimedMove;
-import frc.robot.pathfollower.PathManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -58,8 +56,6 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
     m_chooser.addOption("s1ck0 m0d3 b0n3l355", seq);
-
-    double m = PathManager.f2m(5);
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,
