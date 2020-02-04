@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-
+import java.lang.Math;
 public class DriveTrain implements Subsystem {
-  
+
   private TalonFX frontLeft;
   private TalonFX frontRight;
   private TalonFX backLeft;
@@ -49,7 +49,6 @@ public class DriveTrain implements Subsystem {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -57,25 +56,38 @@ public class DriveTrain implements Subsystem {
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
-  public void accelerateMotors(double leftSpeed, double rightSpeed){
-    if (leftSpeed-frontLeft.getMotorOutputPercent()>Constants.Values.acceleration){
-      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent()+Constants.Values.acceleration);
-    }else if (leftSpeed-frontLeft.getMotorOutputPercent()<-Constants.Values.acceleration){
-      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent()-Constants.Values.acceleration);
-    }else{
-      frontLeft.set(ControlMode.PercentOutput, leftSpeed );
+  public void accelerateMotors(double leftSpeed, double rightSpeed, double deltaT) {
+    deltaT /= 60000;
+    double adjustment = Constants.Values.acceleration * deltaT;
+    
+    final double leftcurrent = frontLeft.getSelectedSensorVelocity(0);
+    final double rightCurrent = frontRight.getSelectedSensorVelocity(0);
+    if (Math.abs(leftSpeed - leftcurrent)> adjustment){
+      
+      double error = leftcurrent - leftSpeed;
+      double sign = Math.abs(error)/error;
+      double output = (leftcurrent + adjustment)*sign;
+      frontLeft.set(ControlMode.PercentOutput, output);
     }
 
-    if (rightSpeed-frontRight.getMotorOutputPercent()>Constants.Values.acceleration){
-      frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent()+Constants.Values.acceleration);
-    }else if (rightSpeed-frontRight.getMotorOutputPercent()<-Constants.Values.acceleration){
-      frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent()-Constants.Values.acceleration);
-    }else{
-      frontRight.set(ControlMode.PercentOutput, rightSpeed);
+    
+    if (leftSpeed > frontLeft.getMotorOutputPercent()) {
+      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent() + Constants.Values.acceleration);
+    } else if (leftSpeed < frontLeft.getMotorOutputPercent() ) {
+     frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent() - Constants.Values.acceleration);
+    } else {
+      frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     }
+
+    //if (rightSpeed > frontRight.getMotorOutputPercent()) {
+      //frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent() + Constants.Values.acceleration);
+    //} else if (rightSpeed < frontRight.getMotorOutputPercent()) {
+      //frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent() - Constants.Values.acceleration);
+    //} else {
+     // frontRight.set(ControlMode.PercentOutput, rightSpeed);
+    ///}
 
   }
-
 
   public double getLeftSensor() {
     return frontLeft.getSelectedSensorPosition(0);
@@ -96,20 +108,23 @@ public class DriveTrain implements Subsystem {
 
     SmartDashboard.putNumber("DriveTrain/Left Motor Velocity", frontLeft.getSelectedSensorVelocity(0));
     SmartDashboard.putNumber("DriveTrain/Right Motors Velocity", frontRight.getSelectedSensorVelocity(0));
-    
+
     SmartDashboard.putNumber("DriveTrain/Front Left Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Front Right Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Back Left Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Back Right Motor Temperature", frontLeft.getTemperature());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); // displays
+                                                                                                                 // feet
+                                                                                                                 // from
+                                                                                                                 // target.
   }
 
   private static DriveTrain instance;
 
   public static DriveTrain getInstance() {
-    if (instance == null) { 
+    if (instance == null) {
       instance = new DriveTrain();
       System.out.println("Inited========================================================================");
     }

@@ -33,10 +33,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
 
-    m_limelight = new LimeLight();
+    LimeLight.getInstance();
 
     Hopper.getInstance().register();
-    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    DriveTrain.getInstance().setDefaultCommand(new AccelerateArcadeDrive());
     OI.getInstance();
     Climber.getInstance();
 
