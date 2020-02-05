@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
-import java.lang.Math;
+
 public class DriveTrain implements Subsystem {
+
+  private double lastLeft = 0.0, lastRight = 0.0,
+    deltaT = 0.0, lastUpdate = 0.0, acceleration = 0.1;
 
   private TalonFX frontLeft;
   private TalonFX frontRight;
@@ -49,12 +52,29 @@ public class DriveTrain implements Subsystem {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
+    lastUpdate = System.currentTimeMillis() / 1000.0;
+
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
     System.out.println("4444444444444444444444444444444444444444444444444");
     frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
+  }
+
+  public void simpleAccelControl(double left, double right) {
+    double maxAdjust = acceleration * deltaT;
+    if (Math.abs(left) > Math.abs(lastLeft) + maxAdjust) {
+      int sign = (int)(Math.abs(lastLeft - left) / (left - lastLeft));
+      left += maxAdjust * sign;
+    }
+    if (Math.abs(left) > Math.abs(lastLeft) + maxAdjust) {
+      int sign = (int)(Math.abs(lastLeft - left) / (left - lastLeft));
+      left += maxAdjust * sign;
+    }
+
+    lastLeft = left;
+    lastRight = right;
   }
 
   public void accelerateMotors(double leftSpeed, double rightSpeed, double deltaT) {
@@ -116,6 +136,11 @@ public class DriveTrain implements Subsystem {
 
   @Override
   public void periodic() {
+
+    double currentTime = System.currentTimeMillis() / 1000.0;
+    deltaT = currentTime - lastUpdate;
+    lastUpdate = currentTime;
+
     SmartDashboard.putNumber("DriveTrain/Right Motors Position", getRightSensor());
     SmartDashboard.putNumber("DriveTrain/Left Motors Position", getLeftSensor());
 
