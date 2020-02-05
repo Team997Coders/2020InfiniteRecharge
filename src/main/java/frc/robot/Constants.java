@@ -18,10 +18,10 @@ public final class Constants {
       hopperbackIR = 1,
 
       //Drivetrain things
-      motorFrontLeft = 0,
-      motorFrontRight = 1,
+      motorFrontLeft = 1,
+      motorFrontRight = 3,
       motorBackLeft = 2,
-      motorBackRight = 3,
+      motorBackRight = 4,
       ultrasonicChannel = 0,
 
       //climber things
@@ -38,7 +38,7 @@ public final class Constants {
   public static class Values {     
 
     public static final double
-        acceleration = 60000,//// Measured in rotations per minuite squared 
+        acceleration = 0.05,//// Measured in rotations per minuite squared 
         voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
 
         shooterOutput = 1.0, // TODO: replace with actual

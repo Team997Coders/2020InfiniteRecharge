@@ -52,27 +52,40 @@ public class DriveTrain implements Subsystem {
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
+    System.out.println("4444444444444444444444444444444444444444444444444");
     frontLeft.set(ControlMode.PercentOutput, -leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
   }
 
   public void accelerateMotors(double leftSpeed, double rightSpeed, double deltaT) {
+    System.out.println("99999999999999999999999999999999999999999999");
+    
+    
     deltaT /= 60000;
     double adjustment = Constants.Values.acceleration * deltaT;
-    
+    System.out.println("1111111111111111111111111111111111111111");
     final double leftcurrent = frontLeft.getSelectedSensorVelocity(0);
     final double rightCurrent = frontRight.getSelectedSensorVelocity(0);
-    if (Math.abs(leftSpeed - leftcurrent)> adjustment){
-      
+    System.out.println("7777777777777777777777777777777777777");
+    /*
+    if (Math.abs(leftSpeed - leftcurrent) > adjustment){
+      System.out.println("----------------------------- " + leftSpeed);
+      System.out.println("+++++++++++++++++++++++++++++++++++  " + leftcurrent);
       double error = leftcurrent - leftSpeed;
       double sign = Math.abs(error)/error;
       double output = (leftcurrent + adjustment)*sign;
-      frontLeft.set(ControlMode.PercentOutput, output);
-    }
 
+      System.out.println("thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" + "" + output);
+      frontLeft.set(ControlMode.PercentOutput, output);
+    }else {
+      System.out.println("33333333333333333333333333333333333333333");
+      frontLeft.set(ControlMode.PercentOutput, leftSpeed);
+    }
+*/
     
     if (leftSpeed > frontLeft.getMotorOutputPercent()) {
-      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent() + Constants.Values.acceleration);
+      double output = leftcurrent + (adjustment);
+      frontLeft.set(ControlMode.PercentOutput, output);
     } else if (leftSpeed < frontLeft.getMotorOutputPercent() ) {
      frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent() - Constants.Values.acceleration);
     } else {

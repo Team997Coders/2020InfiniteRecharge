@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     LimeLight.getInstance();
 
     Hopper.getInstance().register();
-    DriveTrain.getInstance().setDefaultCommand(new AccelerateArcadeDrive());
+    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     OI.getInstance();
     Climber.getInstance();
 
