@@ -36,7 +36,7 @@ public class ArcadeDrive extends CommandBase {
     right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
     left = MathUtils.deadband(left, 0.05);
     right = MathUtils.deadband(right, 0.05);
-    DriveTrain.getInstance().setMotors(left, right);
+    DriveTrain.getInstance().simpleAccelControl(left, right);
   }
 
   // Called once the command ends or is interrupted.

@@ -24,11 +24,9 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
-  
-  private ArrayList<String> commandList;
-  private static ArrayList<String> messages = new ArrayList<String>();
 
-  private static Lock ugh = new ReentrantLock();
+  private static double lastUpdate = 0.0;
+  private ArrayList<String> commandList;
 
   public static long cycles = 0;
   public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
@@ -93,13 +91,7 @@ public class Robot extends TimedRobot {
     commandList.clear();
     cycles++;
 
-    ugh.lock();
-    Object[] msgs = messages.toArray();
-    for (Object a : msgs) {
-      System.out.println(a.toString());
-    }
-    messages = new ArrayList<String>();
-    ugh.unlock();
+    lastUpdate = getCurrentSeconds();
   }
 
   @Override
@@ -171,15 +163,13 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() { }
 
+  public static double getDeltaT() { return getCurrentSeconds() - lastUpdate; }
+
+  public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
+
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
     SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
     SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
-  }
-
-  public static void Add(String m) {
-    ugh.lock();
-    messages.add(m);
-    ugh.unlock();
   }
 }

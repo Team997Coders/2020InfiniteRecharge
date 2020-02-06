@@ -34,7 +34,6 @@ public class PathManager {
         Trajectory t = loadPath(path);
         addPath(path, t);
         completed++;
-        Robot.Add("Paths Loaded: " + completed / (double)Constants.PathFollower.PATHS.length);
       }
     });
     System.out.println("Started Loading Paths");
@@ -42,7 +41,6 @@ public class PathManager {
   }
 
   public static Trajectory loadPath(String name) {
-    Robot.Add("AHSJJSHDJKASHKJD7\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     int retryCount = 0;
     Path filePath = Paths.get("/home/lvuser/deploy/paths/output/" + name + ".wpilib.json");
     while (true) {
@@ -51,19 +49,14 @@ public class PathManager {
         if (tra != null) {
           return tra;
         } else {
-          Robot.Add("Loading Path '" + name + "' Failed\nReturning Null Path");
           return null;
         }
 
       } catch (Exception e) {
-
-        Robot.Add("Loading Path '" + name + "' Failed\nRetrying...");
         e.printStackTrace();
-
       } finally {
 
         if (retryCount > 2) {
-          Robot.Add("Loading Path '" + name + "' Failed\nGiving up on your garbage code");
           return null;
         } else {
           retryCount++;
