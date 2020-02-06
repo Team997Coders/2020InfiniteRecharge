@@ -16,12 +16,12 @@ public class OI {
     
 
   private double axisPos;
-  private  Joystick gamepad1, gamepad2;
+  private  XboxController gamepad1, gamepad2;
   private  JoystickButton buttonA2, buttonB2, buttonY2, buttonX2, buttonX, buttonY, buttonA, buttonB, rightBumper2, leftBumper2;
     private OI() {
     //public OI() {
-    gamepad1 = new Joystick(0);
-    gamepad2 = new Joystick(1);
+    gamepad1 = new XboxController(0);
+    gamepad2 = new XboxController(1);
     
     rightBumper2 = new JoystickButton(gamepad2, 5);
     leftBumper2 = new JoystickButton(gamepad2, 6);
