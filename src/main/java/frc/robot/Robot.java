@@ -14,6 +14,8 @@ import frc.robot.subsystems.DriveTrain;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
 public class Robot extends TimedRobot {
+
+  private static double lastUpdate = 0.0;
   private ArrayList<String> commandList;
 
   public long cycles = 0;
@@ -32,6 +34,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_chooser.addOption("Do Nothing", new AutoDoNothing());
+
+    lastUpdate = getCurrentSeconds();
 
     LimeLight.getInstance();
 
@@ -57,6 +61,8 @@ public class Robot extends TimedRobot {
     }
     commandList.clear();
     cycles++;
+
+    lastUpdate = getCurrentSeconds();
   }
 
   @Override
@@ -101,6 +107,10 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  public static double getDeltaT() { return getCurrentSeconds() - lastUpdate; }
+
+  public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
 
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Limelight/hasTarget", m_limelight.getDouble(LimeLight.TARGET_VISIBLE, 0));

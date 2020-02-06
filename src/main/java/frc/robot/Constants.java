@@ -38,7 +38,7 @@ public final class Constants {
   public static class Values {     
 
     public static final double
-        acceleration = 0.05,//// Measured in rotations per minuite squared 
+        ACCELERATION = 2, // Percentage / Seconds
         voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
 
         shooterOutput = 1.0, // TODO: replace with actual

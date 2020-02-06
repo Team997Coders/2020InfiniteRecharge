@@ -6,16 +6,19 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.team997coders.spartanlib.math.MathUtils;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class DriveTrain implements Subsystem {
 
-  private double lastLeft = 0.0, lastRight = 0.0,
-    deltaT = 0.0, lastUpdate = 0.0, acceleration = 0.1;
+  private double lastLeft = 0.0, lastRight = 0.0;
+  private double maxSpeedForward = 0.6, maxSpeedReverse = -0.6;
 
   private TalonFX frontLeft;
   private TalonFX frontRight;
@@ -51,9 +54,6 @@ public class DriveTrain implements Subsystem {
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
-
-    lastUpdate = System.currentTimeMillis() / 1000.0;
-
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -63,63 +63,27 @@ public class DriveTrain implements Subsystem {
   }
 
   public void simpleAccelControl(double left, double right) {
-    double maxAdjust = acceleration * deltaT;
-    if (Math.abs(left) > Math.abs(lastLeft) + maxAdjust) {
-      int sign = (int)(Math.abs(lastLeft - left) / (left - lastLeft));
-      left += maxAdjust * sign;
+    double maxAdjust = Constants.Values.ACCELERATION * Robot.getDeltaT();
+    if (Math.abs(left - lastLeft) > maxAdjust) {
+      int sign = (int)(Math.abs(left - lastLeft) / (left - lastLeft));
+      left = lastLeft + (maxAdjust * sign);
     }
-    if (Math.abs(left) > Math.abs(lastLeft) + maxAdjust) {
-      int sign = (int)(Math.abs(lastLeft - left) / (left - lastLeft));
-      left += maxAdjust * sign;
+    if (Math.abs(right - lastRight) > maxAdjust) {
+      int sign = (int)(Math.abs(right - lastRight) / (right - lastRight));
+      right = lastRight + (maxAdjust * sign);
     }
+
+    left = MathUtils.clamp(left, maxSpeedReverse, maxSpeedForward);
+    right = MathUtils.clamp(right, maxSpeedReverse, maxSpeedForward);
+
+    frontLeft.set(ControlMode.PercentOutput, -left);
+    frontRight.set(ControlMode.PercentOutput, right);
 
     lastLeft = left;
     lastRight = right;
-  }
 
-  public void accelerateMotors(double leftSpeed, double rightSpeed, double deltaT) {
-    System.out.println("99999999999999999999999999999999999999999999");
-    
-    
-    deltaT /= 60000;
-    double adjustment = Constants.Values.acceleration * deltaT;
-    System.out.println("1111111111111111111111111111111111111111");
-    final double leftcurrent = frontLeft.getSelectedSensorVelocity(0);
-    final double rightCurrent = frontRight.getSelectedSensorVelocity(0);
-    System.out.println("7777777777777777777777777777777777777");
-    /*
-    if (Math.abs(leftSpeed - leftcurrent) > adjustment){
-      System.out.println("----------------------------- " + leftSpeed);
-      System.out.println("+++++++++++++++++++++++++++++++++++  " + leftcurrent);
-      double error = leftcurrent - leftSpeed;
-      double sign = Math.abs(error)/error;
-      double output = (leftcurrent + adjustment)*sign;
-
-      System.out.println("thiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" + "" + output);
-      frontLeft.set(ControlMode.PercentOutput, output);
-    }else {
-      System.out.println("33333333333333333333333333333333333333333");
-      frontLeft.set(ControlMode.PercentOutput, leftSpeed);
-    }
-*/
-    
-    if (leftSpeed > frontLeft.getMotorOutputPercent()) {
-      double output = leftcurrent + (adjustment);
-      frontLeft.set(ControlMode.PercentOutput, output);
-    } else if (leftSpeed < frontLeft.getMotorOutputPercent() ) {
-     frontLeft.set(ControlMode.PercentOutput, frontLeft.getMotorOutputPercent() - Constants.Values.acceleration);
-    } else {
-      frontLeft.set(ControlMode.PercentOutput, leftSpeed);
-    }
-
-    //if (rightSpeed > frontRight.getMotorOutputPercent()) {
-      //frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent() + Constants.Values.acceleration);
-    //} else if (rightSpeed < frontRight.getMotorOutputPercent()) {
-      //frontRight.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent() - Constants.Values.acceleration);
-    //} else {
-     // frontRight.set(ControlMode.PercentOutput, rightSpeed);
-    ///}
-
+    lastLeft = MathUtils.clamp(lastLeft, maxSpeedReverse, maxSpeedForward);
+    lastRight = MathUtils.clamp(lastRight, maxSpeedReverse, maxSpeedForward);
   }
 
   public double getLeftSensor() {
@@ -136,10 +100,6 @@ public class DriveTrain implements Subsystem {
 
   @Override
   public void periodic() {
-
-    double currentTime = System.currentTimeMillis() / 1000.0;
-    deltaT = currentTime - lastUpdate;
-    lastUpdate = currentTime;
 
     SmartDashboard.putNumber("DriveTrain/Right Motors Position", getRightSensor());
     SmartDashboard.putNumber("DriveTrain/Left Motors Position", getLeftSensor());

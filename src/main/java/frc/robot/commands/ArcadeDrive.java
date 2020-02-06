@@ -32,7 +32,8 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
     right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
-    DriveTrain.getInstance().setMotors(left, right);
+    // DriveTrain.getInstance().setMotors(left, right);
+    DriveTrain.getInstance().simpleAccelControl(left, right);
   }
 
   // Called once the command ends or is interrupted.
