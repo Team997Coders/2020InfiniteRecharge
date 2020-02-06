@@ -56,11 +56,11 @@ public class DriveTrain extends SubsystemBase {
     // backLeft.setInverted(false);
     // backRight.setInverted(true);
 
-    frontLeft.config_kP(0, .1);
+    frontLeft.config_kP(0, 0.2);
     frontLeft.config_kI(0, 0);
     frontLeft.config_kD(0, 0);
     frontLeft.config_kF(0, 0);
-    frontRight.config_kP(0, 0.1);
+    frontRight.config_kP(0, 0.2);
     frontRight.config_kI(0, 0);
     frontRight.config_kD(0, 0);
     frontRight.config_kF(0, 0);
