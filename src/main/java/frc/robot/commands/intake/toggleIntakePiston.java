@@ -16,6 +16,7 @@ public class toggleIntakePiston extends CommandBase {
    */
   public toggleIntakePiston() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Intake.getInstance());
   }
 
   // Called when the command is initially scheduled.
