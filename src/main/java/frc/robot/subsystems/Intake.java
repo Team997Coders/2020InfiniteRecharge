@@ -20,6 +20,7 @@ public class Intake extends SubsystemBase {
 
   private Intake() {
     mMotor = new CANSparkMax(Constants.Ports.INTAKE_MOTOR, MotorType.kBrushless);
+    intakePiston = new Solenoid(Constants.Ports.INTAKE_SOLONOID);
   }
 
   public void setPercent(double percent) {

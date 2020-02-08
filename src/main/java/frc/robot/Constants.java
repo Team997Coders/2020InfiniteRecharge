@@ -17,6 +17,7 @@ public final class Constants {
       SHOOTER_MOTOR_2 = 9,
 
       INTAKE_MOTOR = 7,
+      INTAKE_SOLONOID = 0,
 
       //Hopper things
       HOPPER_MOTOR_TOP = 6,
