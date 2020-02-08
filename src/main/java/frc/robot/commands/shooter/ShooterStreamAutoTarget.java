@@ -32,7 +32,7 @@ public class ShooterStreamAutoTarget extends CommandBase {
     Shooter.getInstance().setRPM(mTarget);
     if (MathUtils.epsilon(Shooter.getInstance().getRPMs(), mTarget, 80)
       && Hopper.getInstance().mBallCount > 0
-      && Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < 1) {
+      && Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE) {
       Hopper.getInstance().setSpeed(Constants.Values.HOPPER_STREAM_SPEED);
     } else {
       Hopper.getInstance().setSpeed(0.0);
