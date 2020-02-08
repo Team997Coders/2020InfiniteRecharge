@@ -33,9 +33,17 @@ public final class Constants {
     public static class Values {
         public static final int 
             voltageToFeet = 1;
+        public static final double
+            leftP = 0.2,
+            leftI = 0.0,
+            leftD = 0.0,
+            leftF = 0.0,
+
+            rightP = 0.2,
+            rightI = 0.0,
+            rightD = 0.0,
+            rightF = 0.0;
         
-            
-     
             
     
     }

@@ -56,14 +56,14 @@ public class DriveTrain extends SubsystemBase {
     // backLeft.setInverted(false);
     // backRight.setInverted(true);
 
-    frontLeft.config_kP(0, 0.2);
-    frontLeft.config_kI(0, 0);
-    frontLeft.config_kD(0, 0);
-    frontLeft.config_kF(0, 0);
-    frontRight.config_kP(0, 0.2);
-    frontRight.config_kI(0, 0);
-    frontRight.config_kD(0, 0);
-    frontRight.config_kF(0, 0);
+    frontLeft.config_kP(0, Constants.Values.leftP);
+    frontLeft.config_kI(0, Constants.Values.leftI);
+    frontLeft.config_kD(0, Constants.Values.leftD);
+    frontLeft.config_kF(0, Constants.Values.leftF);
+    frontRight.config_kP(0, Constants.Values.rightP);
+    frontRight.config_kI(0, Constants.Values.rightI);
+    frontRight.config_kD(0, Constants.Values.rightD);
+    frontRight.config_kF(0, Constants.Values.rightF);
 
     frontLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);

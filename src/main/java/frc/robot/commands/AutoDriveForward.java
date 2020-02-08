@@ -18,13 +18,13 @@ public class AutoDriveForward extends CommandBase {
    * Creates a new AutoDoNothing.
    */
   private double rightEncoderTarget = 0;
-  private double leftEcncoderTarget = 0;
+  private double leftEncoderTarget = 0;
   private double errorMargin = 0;
 
   public AutoDriveForward(double leftEncoderTarget, double rightEncoderTarget, double errorMargin) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(DriveTrain.getInstance());
-    this.leftEcncoderTarget = leftEncoderTarget;
+    this.leftEncoderTarget = leftEncoderTarget;
     this.rightEncoderTarget = rightEncoderTarget;
     this.errorMargin = errorMargin;
   }
@@ -53,9 +53,9 @@ public class AutoDriveForward extends CommandBase {
 
     System.out.println("000000000000000000" + currentLeftPosition + " " + currentRightPosition);
 
-    double leftPosition = (leftEcncoderTarget) - currentLeftPosition;
+    double leftPosition = (leftEncoderTarget) - currentLeftPosition;
     double rightPosition = (rightEncoderTarget) - currentRightPosition;
-    DriveTrain.getInstance().setPosition(leftEcncoderTarget, rightEncoderTarget);
+    DriveTrain.getInstance().setPosition(leftEncoderTarget, rightEncoderTarget);
   }
 
   // Called once the command ends or is interrupted.
@@ -67,16 +67,16 @@ public class AutoDriveForward extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean onLeftTarget = (Math
-        .abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget))) <= errorMargin;
+        .abs(calculateError(DriveTrain.getInstance().getLeftSensor(), leftEncoderTarget))) <= errorMargin;
     boolean onRightTarget = (Math
         .abs(calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget))) <= errorMargin;
     boolean onAngleTarget = (Math.abs(calculateError(DriveTrain.getInstance().getGyroAngle(), 0))) <= errorMargin;
-    SmartDashboard.putNumber("Lef Target Value", leftEcncoderTarget);
+    SmartDashboard.putNumber("Lef Target Value", leftEncoderTarget);
     SmartDashboard.putNumber("current left vau", DriveTrain.getInstance().getLeftSensor());
 
     SmartDashboard.putBoolean("Left on Target", onLeftTarget);
     SmartDashboard.putBoolean("Right on Target", onRightTarget);
-    SmartDashboard.putNumber("Left Error", (calculateError(DriveTrain.getInstance().getLeftSensor(), leftEcncoderTarget)));
+    SmartDashboard.putNumber("Left Error", (calculateError(DriveTrain.getInstance().getLeftSensor(), leftEncoderTarget)));
     SmartDashboard.putNumber("Right Error", (calculateError(DriveTrain.getInstance().getRightSensor(), rightEncoderTarget)));
  
     return (onLeftTarget && onRightTarget && DriveTrain.getInstance().getVelocityZero());// && onAngleTarget);
