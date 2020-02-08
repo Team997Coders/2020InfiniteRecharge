@@ -10,11 +10,12 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-  
+  private Solenoid intakePiston;
   private CANSparkMax mMotor;
 
   private Intake() {
@@ -23,6 +24,10 @@ public class Intake extends SubsystemBase {
 
   public void setPercent(double percent) {
     mMotor.set(percent);
+  }
+ 
+  public void togglePiston() {
+    intakePiston.set(!intakePiston.get());
   }
 
   @Override
