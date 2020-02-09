@@ -79,13 +79,6 @@ public class DriveTrain implements Subsystem {
     backRight.setNeutralMode(NeutralMode.Brake);
   }
 
-  /*public void updatePID() {
-    P = SmartDashboard.getNumber("DriveTrain/P", 0);
-    I = SmartDashboard.getNumber("DriveTrain/I", 0);
-    D = SmartDashboard.getNumber("DriveTrain/D", 0);
-
-  }*/
-
   public void putCurrentPID() {
     SmartDashboard.putNumber("DriveTrain/P", Constants.Values.VISION_TURNING_P);
     SmartDashboard.putNumber("DriveTrain/I", Constants.Values.VISION_TURNING_I);
@@ -106,7 +99,6 @@ public class DriveTrain implements Subsystem {
   }
 
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
-    //SmartDashboard.putNumber(, value)
     frontLeft.set(ControlMode.Velocity, leftFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
     frontRight.set(ControlMode.Velocity, rightFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
   }

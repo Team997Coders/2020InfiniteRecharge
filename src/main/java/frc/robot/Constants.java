@@ -55,6 +55,7 @@ public final class Constants {
 
         INTAKE_IN = 1,
         INTAKE_EJECT = -0.5,
+        INTAKE_EXTEND_DELAY = 0.7, // seconds
 
         HOPPER_HANDOFF_DELAY = 0.25,
         HOPPER_HANDOFF_ROLL_TIME = 0.4,
