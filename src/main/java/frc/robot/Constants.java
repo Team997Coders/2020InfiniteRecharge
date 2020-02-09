@@ -17,7 +17,7 @@ public final class Constants {
       SHOOTER_MOTOR_2 = 9,
 
       INTAKE_MOTOR = 7,
-      INTAKE_SOLONOID = 0,
+      INTAKE_SOLENOID = 3,
 
       //Hopper things
       HOPPER_MOTOR_TOP = 6,
@@ -53,8 +53,8 @@ public final class Constants {
         VISION_TOLERANCE = 1,
         VISION_TIMEOUT = 2000, //in ms
 
-        INTAKE_IN = 0.4,
-        INTAKE_EJECT = -0.6,
+        INTAKE_IN = 1,
+        INTAKE_EJECT = -0.5,
 
         HOPPER_HANDOFF_DELAY = 0.25,
         HOPPER_HANDOFF_ROLL_TIME = 0.4,

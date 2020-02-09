@@ -32,11 +32,20 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    left = (-1 * OI.getInstance().getGamepad1Axis(1)) + OI.getInstance().getGamepad1Axis(4);
-    right = (-1 * OI.getInstance().getGamepad1Axis(1)) - OI.getInstance().getGamepad1Axis(4);
-    left = MathUtils.deadband(left, 0.05);
-    right = MathUtils.deadband(right, 0.05);
-    DriveTrain.getInstance().simpleAccelControl(left, right);
+    double forward = -OI.getInstance().gamepad1.getRawAxis(1);
+    double turn = OI.getInstance().gamepad1.getRawAxis(4);
+
+    forward = MathUtils.deadband(forward, 0.1);
+    turn = MathUtils.deadband(turn, 0.1);
+
+    forward *= 0.7;
+    turn *= 0.4;
+
+    left = forward + turn;
+    right = forward - turn;
+    
+    // DriveTrain.getInstance().simpleAccelControl(left, right);
+    DriveTrain.getInstance().setMotors(left, right);
   }
 
   // Called once the command ends or is interrupted.

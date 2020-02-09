@@ -23,6 +23,8 @@ public class IntakeMove extends CommandBase {
   @Override
   public void initialize() {
     if (mEnableAutoLoader) Robot.autoLoadHopper = true;
+
+    // Intake.getInstance().setPiston(true);
   }
 
   @Override
@@ -39,6 +41,7 @@ public class IntakeMove extends CommandBase {
   public void end(boolean interrupted) {
     Intake.getInstance().setPercent(0.0);
     Robot.autoLoadHopper = false;
+    //Intake.getInstance().setPiston(false);
   }
 
 }

@@ -100,6 +100,9 @@ public class DriveTrain implements Subsystem {
   public void setMotors(double leftSpeed, double rightSpeed) {
     frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
+
+    SmartDashboard.putNumber("DriveTrain/left speddd", leftSpeed);
+    SmartDashboard.putNumber("DriveTrain/right speddd", rightSpeed);
   }
 
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
@@ -122,7 +125,7 @@ public class DriveTrain implements Subsystem {
     left = MathUtils.clamp(left, maxSpeedReverse, maxSpeedForward);
     right = MathUtils.clamp(right, maxSpeedReverse, maxSpeedForward);
 
-    frontLeft.set(ControlMode.PercentOutput, -left);
+    frontLeft.set(ControlMode.PercentOutput, left);
     frontRight.set(ControlMode.PercentOutput, right);
 
     lastLeft = left;
