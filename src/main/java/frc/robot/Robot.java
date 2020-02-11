@@ -12,6 +12,7 @@ import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.auto.AutoDoNothing;
 import frc.robot.commands.auto.AutoSickoMode;
 import frc.robot.commands.auto.AutoStreamUntilEmpty;
@@ -88,6 +89,8 @@ public class Robot extends TimedRobot {
     mHopperCommand = new HopperAutoIndex();
   }
 
+  public boolean c = false;
+
   @Override
   public void robotPeriodic() {
     if (verbose) {
@@ -101,6 +104,16 @@ public class Robot extends TimedRobot {
     cycles++;
 
     lastUpdate = getCurrentSeconds();
+
+    if (!c) {
+      Trajectory t = PathManager.getInstance().getTrajectory(Constants.Paths.GENERATOR_TEST.getName());
+      if (t != null) {
+        c = true;
+        System.out.println(t.getTotalTimeSeconds());
+      } else {
+        System.out.println("===== WAITING =====");
+      }
+    }
   }
 
   @Override
@@ -152,12 +165,15 @@ public class Robot extends TimedRobot {
   }
 
   public void queuePaths() {
-    PathManager.getInstance().queueData(Constants.Paths.SHOOT_TO_PICKUP);
-    PathManager.getInstance().queueData(Constants.Paths.PICKUP_3);
-    PathManager.getInstance().queueData(Constants.Paths.TRENCH_PIVOT);
-    PathManager.getInstance().queueData(Constants.Paths.PIVOT_TO_SHOOT);
-    PathManager.getInstance().queueData(Constants.Paths.ALT_SHOOT_TO_PICKUP);
-    PathManager.getInstance().queueData(Constants.Paths.START_TO_ALT_SHOOT);
+    // PathManager.getInstance().queueData(Constants.Paths.SHOOT_TO_PICKUP);
+    // PathManager.getInstance().queueData(Constants.Paths.PICKUP_3);
+    // PathManager.getInstance().queueData(Constants.Paths.TRENCH_PIVOT);
+    // PathManager.getInstance().queueData(Constants.Paths.PIVOT_TO_SHOOT);
+    // PathManager.getInstance().queueData(Constants.Paths.ALT_SHOOT_TO_PICKUP);
+    // PathManager.getInstance().queueData(Constants.Paths.START_TO_ALT_SHOOT);
+    PathManager.getInstance().queueData(Constants.Paths.GENERATOR_TEST);
+
+    PathManager.getInstance().startDaemons();
   }
 
   @Override

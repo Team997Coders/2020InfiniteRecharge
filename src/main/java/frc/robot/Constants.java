@@ -1,8 +1,12 @@
 package frc.robot;
 
 import org.team997coders.spartanlib.motion.pathfollower.PathData;
+import org.team997coders.spartanlib.motion.pathfollower.PathGeneratedData;
 import org.team997coders.spartanlib.motion.pathfollower.PathPreloadedData;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import frc.robot.util.Gains;
 
 public final class Constants {
@@ -94,7 +98,13 @@ public final class Constants {
       TRENCH_PIVOT = new PathPreloadedData("TrenchPivot"),
       PIVOT_TO_SHOOT = new PathPreloadedData("PivotToShoot"),
       ALT_SHOOT_TO_PICKUP = new PathPreloadedData("AltShootToPickup"),
-      START_TO_ALT_SHOOT = new PathPreloadedData("StartToAltShoot");
+      START_TO_ALT_SHOOT = new PathPreloadedData("StartToAltShoot"),
+      GENERATOR_TEST = new PathGeneratedData(
+        "GeneratorTest", 
+        new TrajectoryConfig(5 / 3.281, 1.2192),
+        new Pose2d(5.432, -0.705, new Rotation2d(3.048, 0.0)),
+        new Pose2d(7.842, -0.705, new Rotation2d(2.523, 0.0))
+      );
 
   }
 }
