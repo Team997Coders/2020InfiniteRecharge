@@ -1,5 +1,7 @@
 package frc.robot.util;
 
+import org.team997coders.spartanlib.helpers.PIDConstants;
+
 public class Gains {
 	public final double kP;
 	public final double kI;
@@ -11,5 +13,9 @@ public class Gains {
 		kI = _kI;
 		kD = _kD;
 		kF = _kF;
+	}
+
+	public PIDConstants toPIDConstants() {
+		return new PIDConstants(kP, kI, kD);
 	}
 }

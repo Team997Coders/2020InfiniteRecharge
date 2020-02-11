@@ -135,8 +135,8 @@ public class DriveTrain implements Subsystem {
     return frontRight.getSelectedSensorPosition(0);
   }
 
-  public double getGyroAngle() {
-    return imu.getAngle();
+  public double getYaw() {
+    return imu.getYaw();
   }
 
   @Override
@@ -159,14 +159,12 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Left Error", frontLeft.getClosedLoopError());
     SmartDashboard.putNumber("DriveTrain/Right Error", frontRight.getClosedLoopError());
 
-    SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
+    SmartDashboard.putNumber("DriveTrain/Gyro", getYaw());
     SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); // displays
                                                                                                                  // feet
                                                                                                                  // from
                                                                                                                  // target.
   }
-
-  private static DriveTrain instance;
 
   public double getFeet(TalonFX m) {
     return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
@@ -177,11 +175,15 @@ public class DriveTrain implements Subsystem {
     frontRight.setSelectedSensorPosition(0, 0, 10);
   }
 
+  private static DriveTrain instance;
   public static DriveTrain getInstance() {
-    if (instance == null) {
-      instance = new DriveTrain();
-      //System.out.println("Inited========================================================================");
-    }
-    return instance;
+    if (instance == null) { instance = new DriveTrain(); } return instance;
   }
+
+  public static double angleLimiter(double theta) {
+    theta %= 360;
+    if (theta < 0) theta += 360;
+    return theta;
+  }
+
 }
