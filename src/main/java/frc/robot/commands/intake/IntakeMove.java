@@ -53,7 +53,7 @@ public class IntakeMove extends CommandBase {
   public void end(boolean interrupted) {
     Intake.getInstance().setPercent(0.0);
     Robot.autoLoadHopper = false;
-    Intake.getInstance().setPiston(false);
+    //Intake.getInstance().setPiston(false);
   }
 
 }

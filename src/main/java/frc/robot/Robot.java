@@ -19,6 +19,7 @@ import frc.robot.commands.drivetrain.FollowPath;
 import frc.robot.commands.hopper.HopperAutoIndex;
 import frc.robot.commands.hopper.HopperTimedMove;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
@@ -100,6 +101,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    Intake.getInstance().setPiston(false);
+
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
   }
