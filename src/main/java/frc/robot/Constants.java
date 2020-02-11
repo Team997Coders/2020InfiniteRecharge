@@ -20,6 +20,7 @@ public final class Constants {
       SHOOTER_MOTOR_2 = 9,
 
       INTAKE_MOTOR = 7,
+      INTAKE_SOLENOID = 3,
 
       //Hopper things
       HOPPER_MOTOR_TOP = 6,
@@ -44,7 +45,7 @@ public final class Constants {
   public static class Values {     
 
     public static final double
-
+        ACCELERATION = 2, // Percentage / Seconds
         voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
 
         shooterOutput = 1.0, // TODO: replace with actual
@@ -55,8 +56,9 @@ public final class Constants {
         VISION_TOLERANCE = 1,
         VISION_TIMEOUT = 2000, //in ms
 
-        INTAKE_IN = 0.4,
-        INTAKE_EJECT = -0.6,
+        INTAKE_IN = 1,
+        INTAKE_EJECT = -0.5,
+        INTAKE_EXTEND_DELAY = 0.7, // seconds
 
         HOPPER_HANDOFF_DELAY = 0.25,
         HOPPER_HANDOFF_ROLL_TIME = 0.4,
@@ -79,7 +81,7 @@ public final class Constants {
     public static final Gains
 
       DRIVE_VELOCITY_GAINS = new Gains(0.6, 0.012, 6.8, 1023.0 / 21500.0),
-      SHOOTER_VELOCITY_GAINS = new Gains(0.25, 0.001, 20, 1 / 500);
+      SHOOTER_VELOCITY_GAINS = new Gains(0.001, 0, 0.005, (1.0 / (4060.0 * (22.0 / 18.0) * 0.5)));
 
   }
 

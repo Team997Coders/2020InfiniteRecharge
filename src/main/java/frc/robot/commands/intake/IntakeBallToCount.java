@@ -39,6 +39,7 @@ public class IntakeBallToCount extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Hopper.getInstance().setSpeed(0.0);
+    Robot.autoLoadHopper = false;
   }
 
 }

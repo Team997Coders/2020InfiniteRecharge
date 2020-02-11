@@ -5,23 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.drivetrain;
-
-import org.team997coders.spartanlib.math.MathUtils;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 
-public class ArcadeDrive extends CommandBase {
+public class toggleIntakePiston extends CommandBase {
   /**
-   * Creates a new ArcadeDrive.
+   * Creates a new toggleIntakePiston.
    */
-  double left, right;
-  public ArcadeDrive() {
-    //System.out.println("sadness");
-    addRequirements(DriveTrain.getInstance());
+  public toggleIntakePiston() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Intake.getInstance());
   }
 
   // Called when the command is initially scheduled.
@@ -32,31 +27,17 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = -OI.getInstance().gamepad1.getRawAxis(1);
-    double turn = OI.getInstance().gamepad1.getRawAxis(4);
-
-    forward = MathUtils.deadband(forward, 0.1);
-    turn = MathUtils.deadband(turn, 0.1);
-
-    forward *= 0.7;
-    turn *= 0.4;
-
-    left = forward + turn;
-    right = forward - turn;
-    
-    // DriveTrain.getInstance().simpleAccelControl(left, right);
-    DriveTrain.getInstance().setMotors(left, right);
+    Intake.getInstance().togglePiston();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    DriveTrain.getInstance().setMotors(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

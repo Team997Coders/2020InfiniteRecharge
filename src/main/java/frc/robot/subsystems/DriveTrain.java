@@ -7,18 +7,20 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.team997coders.spartanlib.math.MathUtils;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class DriveTrain implements Subsystem {
 
-  public double P;
-  public double I;
-  public double D;
-  
+  private double lastLeft = 0.0, lastRight = 0.0;
+  private double maxSpeedForward = 0.6, maxSpeedReverse = -0.6;
+
   private TalonFX frontLeft;
   private TalonFX frontRight;
   private TalonFX backLeft;
@@ -29,10 +31,6 @@ public class DriveTrain implements Subsystem {
   private AnalogInput ultrasonic;
 
   private DriveTrain() {
-
-    P = Constants.Values.VISION_TURNING_P;
-    I = Constants.Values.VISION_TURNING_I;
-    D = Constants.Values.VISION_TURNING_D;
 
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
 
@@ -81,13 +79,6 @@ public class DriveTrain implements Subsystem {
     backRight.setNeutralMode(NeutralMode.Brake);
   }
 
-  /*public void updatePID() {
-    P = SmartDashboard.getNumber("DriveTrain/P", 0);
-    I = SmartDashboard.getNumber("DriveTrain/I", 0);
-    D = SmartDashboard.getNumber("DriveTrain/D", 0);
-
-  }*/
-
   public void putCurrentPID() {
     SmartDashboard.putNumber("DriveTrain/P", Constants.Values.VISION_TURNING_P);
     SmartDashboard.putNumber("DriveTrain/I", Constants.Values.VISION_TURNING_I);
@@ -102,12 +93,38 @@ public class DriveTrain implements Subsystem {
   public void setMotors(double leftSpeed, double rightSpeed) {
     frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
+
+    SmartDashboard.putNumber("DriveTrain/left speddd", leftSpeed);
+    SmartDashboard.putNumber("DriveTrain/right speddd", rightSpeed);
   }
 
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
-    //SmartDashboard.putNumber(, value)
     frontLeft.set(ControlMode.Velocity, leftFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
     frontRight.set(ControlMode.Velocity, rightFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
+  }
+
+  public void simpleAccelControl(double left, double right) {
+    double maxAdjust = Constants.Values.ACCELERATION * Robot.getDeltaT();
+    if (Math.abs(left - lastLeft) > maxAdjust) {
+      int sign = (int)(Math.abs(left - lastLeft) / (left - lastLeft));
+      left = lastLeft + (maxAdjust * sign);
+    }
+    if (Math.abs(right - lastRight) > maxAdjust) {
+      int sign = (int)(Math.abs(right - lastRight) / (right - lastRight));
+      right = lastRight + (maxAdjust * sign);
+    }
+
+    left = MathUtils.clamp(left, maxSpeedReverse, maxSpeedForward);
+    right = MathUtils.clamp(right, maxSpeedReverse, maxSpeedForward);
+
+    frontLeft.set(ControlMode.PercentOutput, left);
+    frontRight.set(ControlMode.PercentOutput, right);
+
+    lastLeft = left;
+    lastRight = right;
+
+    lastLeft = MathUtils.clamp(lastLeft, maxSpeedReverse, maxSpeedForward);
+    lastRight = MathUtils.clamp(lastRight, maxSpeedReverse, maxSpeedForward);
   }
 
   public double getLeftSensor() {
@@ -124,12 +141,13 @@ public class DriveTrain implements Subsystem {
 
   @Override
   public void periodic() {
+
     SmartDashboard.putNumber("DriveTrain/Right Motors Position", getRightSensor());
     SmartDashboard.putNumber("DriveTrain/Left Motors Position", getLeftSensor());
 
     SmartDashboard.putNumber("DriveTrain/Left Motor Velocity", frontLeft.getSelectedSensorVelocity(0));
     SmartDashboard.putNumber("DriveTrain/Right Motors Velocity", frontRight.getSelectedSensorVelocity(0));
-    
+
     SmartDashboard.putNumber("DriveTrain/Front Left Motor Temperature", frontLeft.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Front Right Motor Temperature", frontRight.getTemperature());
     SmartDashboard.putNumber("DriveTrain/Back Left Motor Temperature", backLeft.getTemperature());
@@ -142,10 +160,8 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Right Error", frontRight.getClosedLoopError());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); // displays feet from target.
   }
-
-  private static DriveTrain instance;
 
   public double getFeet(TalonFX m) {
     return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
@@ -156,11 +172,13 @@ public class DriveTrain implements Subsystem {
     frontRight.setSelectedSensorPosition(0, 0, 10);
   }
 
+  private static DriveTrain instance;
   public static DriveTrain getInstance() {
-    if (instance == null) { 
+    if (instance == null) {
       instance = new DriveTrain();
       //System.out.println("Inited========================================================================");
     }
     return instance;
   }
+
 }

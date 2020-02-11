@@ -37,8 +37,8 @@ public class AutoTurnTowardsVision extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DriveTrain driveTrain = DriveTrain.getInstance();
-    pidConstants = new PIDConstants(driveTrain.P, driveTrain.I, driveTrain.D);
+    pidConstants = new PIDConstants(Constants.Values.VISION_TURNING_P,
+      Constants.Values.VISION_TURNING_I, Constants.Values.VISION_TURNING_D);
     pid = new SpartanPID(pidConstants);
     pid.setSetpoint(0);
 

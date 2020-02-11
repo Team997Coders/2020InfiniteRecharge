@@ -17,15 +17,18 @@ import frc.robot.commands.auto.AutoSickoMode;
 import frc.robot.commands.auto.AutoStreamUntilEmpty;
 import frc.robot.commands.drivetrain.ArcadeDrive;
 import frc.robot.commands.drivetrain.FollowPath;
+import frc.robot.commands.hopper.HopperAutoIndex;
 import frc.robot.commands.hopper.HopperTimedMove;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
 import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
-  
+
+  private static double lastUpdate = 0.0;
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot {
   //public static final boolean isTuning = true;
 
   private Command m_autonomousCommand;
+  private Command mHopperCommand;
   public static boolean autoLoadHopper = false;
 
   Command autonomousCommand;
@@ -80,6 +84,8 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance().putCurrentPID();
 
     SmartDashboard.putData(m_chooser);
+
+    mHopperCommand = new HopperAutoIndex();
   }
 
   @Override
@@ -93,10 +99,17 @@ public class Robot extends TimedRobot {
     }
     commandList.clear();
     cycles++;
+
+    lastUpdate = getCurrentSeconds();
   }
 
   @Override
-  public void disabledInit() { }
+  public void disabledInit() {
+    Intake.getInstance().setPiston(false);
+
+    if (mHopperCommand != null) mHopperCommand.cancel();
+    mHopperCommand = new HopperAutoIndex();
+  }
 
   @Override
   public void disabledPeriodic() {
@@ -124,35 +137,12 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-  }
 
-  boolean lastInShooter = false;
+    mHopperCommand.schedule();
+  }
 
   @Override
   public void teleopPeriodic() {
-
-    //#region Auto Indexing
-
-    boolean intakeBall = Hopper.getInstance().getIntakeBall();
-    boolean shooterBall = Hopper.getInstance().getShooterBall();
-
-    SmartDashboard.putBoolean("Hopper/Used", Hopper.getInstance().autoIndexMoving);
-
-    if ((!shooterBall && Robot.autoLoadHopper) && (intakeBall && !Hopper.getInstance().autoIndexMoving)) {
-      CommandScheduler.getInstance().schedule(
-        new WaitCommand(Constants.Values.HOPPER_HANDOFF_DELAY).andThen( // 0.2
-        new HopperTimedMove(Constants.Values.HOPPER_HANDOFF_ROLL_TIME) // 0.13
-      ));
-      Hopper.getInstance().mBallCount++;
-    }
-
-    if (Hopper.getInstance().getShooterBall() && !lastInShooter) {
-      Hopper.getInstance().mBallCount--;
-    }
-    lastInShooter = Hopper.getInstance().getShooterBall();
-
-    //#endregion
-
     CommandScheduler.getInstance().run();
   }
 
@@ -172,6 +162,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() { }
+
+  public static double getDeltaT() { return getCurrentSeconds() - lastUpdate; }
+
+  public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
 
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
