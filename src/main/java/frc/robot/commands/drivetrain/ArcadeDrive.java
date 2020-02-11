@@ -38,8 +38,8 @@ public class ArcadeDrive extends CommandBase {
     forward = MathUtils.deadband(forward, 0.1);
     turn = MathUtils.deadband(turn, 0.1);
 
-    forward *= 0.2;
-    turn *= 0.2;
+    forward *= 0.7;
+    turn *= 0.4;
 
     left = forward + turn;
     right = forward - turn;
