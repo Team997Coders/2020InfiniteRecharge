@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
     if (verbose) {
       if (commandList.size() > 0) {
         for (String cmdName : commandList) {
-          //System.out.println("Ran " + cmdName + " on cycle " + cycles);
+          System.out.println("Ran " + cmdName + " on cycle " + cycles);
         }
       }
     }
@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     CommandScheduler.getInstance().run();
 
+    Hopper.getInstance().updateBallCount();
     //DriveTrain.getInstance().updatePID();
   }
 

@@ -62,6 +62,8 @@ public final class Constants {
         HOPPER_INTAKE_SPEED = 0.4,
         HOPPER_STREAM_SPEED = 0.75,
         HOPPER_EJECT_SPEED = -0.4,
+        HOPPER_INTAKE_IR_DELAY = 0, // ms
+        HOPPER_SHOOTER_IR_DELAY = 20, //ms
 
         SHOOTER_GEARING = 3.0 / 4.0,
         SHOOTER_RPM = 3700,

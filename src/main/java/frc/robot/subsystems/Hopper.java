@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -20,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 public class Hopper implements Subsystem {
 
   public boolean autoIndexMoving = false;
-  public int mBallCount = 0;
+  public int mBallCount = 3;
 
   private DigitalInput mIntakeIR, mShooterIR;
   private TalonSRX mMotor1, mMotor2;
@@ -39,12 +40,20 @@ public class Hopper implements Subsystem {
 
     mMotor2.setInverted(true);
     mMotor2.follow(mMotor1);
-
+ 
+    SmartDashboard.putNumber("Driver/Set Ball Count", mBallCount); //Driver tab is stuff for drive team specifically to edit.
     register();
   }
 
   public void setSpeed(double speed){
     mMotor1.set(ControlMode.PercentOutput, speed);
+  }
+
+  /**
+   * Allows drivers to update the amount of balls in the hopper before the match starts.
+   */
+  public void updateBallCount() {
+    mBallCount = (int)NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("Driver/Set Ball Count").getDouble(3);
   }
 
   public boolean getShooterBall() { return !mShooterIR.get(); }
