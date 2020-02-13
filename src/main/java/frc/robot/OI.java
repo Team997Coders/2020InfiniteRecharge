@@ -32,8 +32,8 @@ public class OI {
     buttonB2 = new JoystickButton(gamepad2, XboxController.Button.kB.value);
     buttonX2 = new JoystickButton(gamepad2, XboxController.Button.kX.value);
     buttonY2 = new JoystickButton(gamepad2, XboxController.Button.kY.value);
-    buttonRightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
-    buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
+    buttonRightBumper2 = new JoystickButton(gamepad1, XboxController.Button.kBumperRight.value);
+    buttonLeftBumper2 = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
     buttonB.whenPressed(new AutoFaceTargetAndDrive());

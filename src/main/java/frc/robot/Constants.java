@@ -62,7 +62,7 @@ public final class Constants {
 
         INTAKE_IN = 1,
         INTAKE_EJECT = -0.5,
-        INTAKE_EXTEND_DELAY = 0.7, // seconds
+        INTAKE_EXTEND_DELAY = 0.3, // seconds
 
         HOPPER_HANDOFF_DELAY = 0.25,
         HOPPER_HANDOFF_ROLL_TIME = 0.4,
@@ -102,7 +102,7 @@ public final class Constants {
       ALT_SHOOT_TO_PICKUP = new PathPreloadedData("AltShootToPickup"),
       START_TO_ALT_SHOOT = new PathPreloadedData("StartToAltShoot"),
       GENERATOR_TEST = new PathGeneratedData(
-        "GeneratorTest", 
+        "GeneratorTest",
         new TrajectoryConfig(5 / 3.281, 1.2192),
         new Pose2d(5.432, -0.705, new Rotation2d(3.048, 0.0)),
         new Pose2d(7.842, -0.705, new Rotation2d(2.523, 0.0))

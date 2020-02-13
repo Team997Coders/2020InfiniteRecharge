@@ -35,8 +35,8 @@ public class ArcadeDrive extends CommandBase {
     double forward = -OI.getInstance().gamepad1.getRawAxis(1);
     double turn = OI.getInstance().gamepad1.getRawAxis(4);
 
-    forward = MathUtils.deadband(forward, 0.1);
-    turn = MathUtils.deadband(turn, 0.1);
+    forward = MathUtils.deadband(forward, 0.15);
+    turn = MathUtils.deadband(turn, 0.15);
 
     forward *= 0.7;
     turn *= 0.4;

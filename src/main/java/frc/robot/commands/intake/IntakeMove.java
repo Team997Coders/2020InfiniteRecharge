@@ -28,24 +28,24 @@ public class IntakeMove extends CommandBase {
 
   @Override
   public void initialize() {
-    if (mEnableAutoLoader) Robot.autoLoadHopper = true;
+    if (mEnableAutoLoader)
+      Robot.autoLoadHopper = true;
 
     mIntakeTrigger.trigger();
-    // Intake.getInstance().setPiston(true);
+    Intake.getInstance().setPiston(true);
   }
 
   @Override
   public void execute() {
-
-    if (mIntakeTrigger.get(true)) {
-      Intake.getInstance().setPiston(true);
-    }
-
-    if (mEnableAutoLoader) {
-      if (!Hopper.getInstance().getShooterBall()) Intake.getInstance().setPercent(mSpeed);
-      else Intake.getInstance().setPercent(0.0);
-    } else {
-      Intake.getInstance().setPercent(mSpeed);
+    if (mIntakeTrigger.get(false)) {
+      if (mEnableAutoLoader) {
+        if (!Hopper.getInstance().getShooterBall())
+          Intake.getInstance().setPercent(mSpeed);
+        else
+          Intake.getInstance().setPercent(0.0);
+      } else {
+        Intake.getInstance().setPercent(mSpeed);
+      }
     }
   }
 
@@ -53,7 +53,7 @@ public class IntakeMove extends CommandBase {
   public void end(boolean interrupted) {
     Intake.getInstance().setPercent(0.0);
     Robot.autoLoadHopper = false;
-    //Intake.getInstance().setPiston(false);
+    Intake.getInstance().setPiston(false);
   }
 
 }
