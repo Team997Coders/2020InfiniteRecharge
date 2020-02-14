@@ -1,10 +1,11 @@
 package frc.robot;
 
+import frc.robot.commands.shooter.ShooterBasic;
 import frc.robot.commands.shooter.ShooterStream;
 import frc.robot.commands.shooter.ShooterStreamAutoTarget;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
-import frc.robot.commands.hopper.HopperMove;
+import frc.robot.commands.hopper.*;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.IntakeMove;
@@ -25,8 +26,8 @@ public class OI {
     buttonX = new JoystickButton(gamepad1, XboxController.Button.kX.value);
     buttonY = new JoystickButton(gamepad1, XboxController.Button.kY.value);
     buttonB = new JoystickButton(gamepad1, XboxController.Button.kB.value);
-    buttonRightBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
-    buttonLeftBumper = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
+    buttonRightBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperRight.value);
+    buttonLeftBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
 
     buttonA2 = new JoystickButton(gamepad2, XboxController.Button.kA.value);
     buttonB2 = new JoystickButton(gamepad2, XboxController.Button.kB.value);
@@ -37,8 +38,8 @@ public class OI {
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
     buttonB.whenPressed(new AutoFaceTargetAndDrive());
-    buttonRightBumper.whileHeld(new ShooterStream(Constants.Values.SHOOTER_RPM));
-    buttonLeftBumper.whileHeld(new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM));
+    buttonRightBumper.whileHeld(new ShooterBasic(-0.55)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper.whileHeld(new ShooterBasic(-0.6)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
     
     buttonA2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_DOWN));

@@ -12,6 +12,7 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -24,11 +25,11 @@ public class Hopper implements Subsystem {
   public int mBallCount = 3;
 
   private DigitalInput mIntakeIR, mShooterIR;
-  private TalonSRX mMotor1, mMotor2;
+  private VictorSPX mMotor1, mMotor2;
   
   private Hopper() {
-    mMotor1 = new TalonSRX(Constants.Ports.HOPPER_MOTOR_TOP);
-    mMotor2 = new TalonSRX(Constants.Ports.HOPPER_MOTOR_BOTTOM);
+    mMotor1 = new VictorSPX(Constants.Ports.HOPPER_MOTOR_TOP);
+    mMotor2 = new VictorSPX(Constants.Ports.HOPPER_MOTOR_BOTTOM);
     mIntakeIR = new DigitalInput(Constants.Ports.INTAKE_IR);
     mShooterIR = new DigitalInput(Constants.Ports.SHOOTER_IR);
 
@@ -38,6 +39,7 @@ public class Hopper implements Subsystem {
     mMotor1.setNeutralMode(NeutralMode.Brake);
     mMotor2.setNeutralMode(NeutralMode.Brake);
 
+    mMotor1.setInverted(true);
     mMotor2.setInverted(true);
     mMotor2.follow(mMotor1);
  

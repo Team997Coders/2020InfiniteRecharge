@@ -47,10 +47,10 @@ public final class Constants {
 
         shooterOutput = 1.0, // TODO: replace with actual
 
-        VISION_TURNING_P = 0.028,
-        VISION_TURNING_I = 0.01,
+        VISION_TURNING_P = 0.02,
+        VISION_TURNING_I = 0.03,
         VISION_TURNING_D = 0.06,
-        VISION_TOLERANCE = 1,
+        VISION_TOLERANCE = 1.5,
         VISION_TIMEOUT = 2000, //in ms
 
         INTAKE_IN = 1,
