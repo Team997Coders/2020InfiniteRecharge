@@ -67,6 +67,10 @@ public class Shooter implements Subsystem {
     return mEncoder.getVelocity();
   }
 
+  public double getNeededBallVelocity(double distance) {
+    return (1 / (((Math.tan(Constants.Values.SHOOTER_RELEASE_ANGLE * (Math.PI / 180))) / (-4.9 * distance)) + ((2.49 - Constants.Values.SHOOTER_RELEASE_HEIGHT) / (4.9 * distance * distance)))) * (1 / Math.cos(Constants.Values.SHOOTER_RELEASE_ANGLE * (Math.PI / 180)));
+  }
+
   public double getBallSpeed() {
     return (getRPMs() / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
   }
