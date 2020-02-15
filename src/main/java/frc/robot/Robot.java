@@ -8,6 +8,10 @@ import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
+import org.team997coders.spartanlib.limelight.LimeLight;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -43,6 +47,8 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
+    //CameraServer.getInstance().startAutomaticCapture(0);
+
     CommandScheduler.getInstance().cancelAll();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -66,6 +72,7 @@ public class Robot extends TimedRobot {
 
     Shooter.getInstance();
     Hopper.getInstance();
+    DriveTrain.getInstance().register();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
 
@@ -86,6 +93,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    //SmartDashboard.putNumber("Math number yayayayayaya", Constants.Values.visionLimelightAngle);
+    //SmartDashboard.putNumber("Target X (tx)", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    //SmartDashboard.putNumber("HasTarget", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(69));
+
     if (verbose) {
       if (commandList.size() > 0) {
         for (String cmdName : commandList) {

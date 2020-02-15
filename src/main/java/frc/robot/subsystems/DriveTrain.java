@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import org.team997coders.spartanlib.limelight.LimeLight;
 
 public class DriveTrain implements Subsystem {
 
@@ -160,10 +161,10 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Right Error", frontRight.getClosedLoopError());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); // displays
-                                                                                                                 // feet
-                                                                                                                 // from
-                                                                                                                 // target.
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
+  
+    SmartDashboard.putNumber("DriveTrain/Target Distance (in)", (98.25 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )));
+    SmartDashboard.putNumber("AngleToTarget", (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)));
   }
 
   private static DriveTrain instance;

@@ -53,6 +53,9 @@ public final class Constants {
         VISION_TOLERANCE = 1.5,
         VISION_TIMEOUT = 2000, //in ms
 
+        VISION_LIMELIGHT_HEIGHT = 6, //Height (inches) up from the ground of the center of the limelight. 
+        VISION_LIMELIGHT_ANGLE = Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
+
         INTAKE_IN = 1,
         INTAKE_EJECT = -0.5,
         INTAKE_EXTEND_DELAY = 0.7, // seconds
