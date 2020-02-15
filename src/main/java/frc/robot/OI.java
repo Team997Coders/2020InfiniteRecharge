@@ -48,8 +48,17 @@ public class OI {
     buttonStart2.whenPressed(new toggleIntakePiston());
 
     /*
-    buttonA2.whileHeld(new ShooterStream(Constants.Values.SHOOTER_RPM));
+    buttonA.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
+    buttonB.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
+    buttonY.whileHeld(new AutoFaceTargetAndDrive());
+    buttonRightBumper.whileHeld(new ShooterBasic(0.55));
+
+    buttonY2.whileHeld(new ShooterStream(Constants.Values.SHOOTER_RPM));
+    buttonRightBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
+    buttonLeftBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
     */
+    
+    
   }
 
   public double getGamepad1Axis(int portNum) {
