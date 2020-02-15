@@ -15,30 +15,29 @@ public class HopperMove extends CommandBase {
   
   private double mSpeed;
 
+  /**
+   * Boring command that just moves the hopper at a speed.
+   */
   public HopperMove(double speed) {
     mSpeed = speed;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     Robot.autoLoadHopper = true;
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     Hopper.getInstance().setSpeed(mSpeed);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     Hopper.getInstance().setSpeed(0.0);
     Robot.autoLoadHopper = false;
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

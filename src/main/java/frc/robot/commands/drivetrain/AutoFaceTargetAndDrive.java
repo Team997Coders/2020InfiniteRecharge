@@ -33,10 +33,8 @@ public class AutoFaceTargetAndDrive extends CommandBase {
   public AutoFaceTargetAndDrive() {
     addRequirements(DriveTrain.getInstance());
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     pidConstants = new PIDConstants(Constants.Values.VISION_TURNING_P,
@@ -47,7 +45,6 @@ public class AutoFaceTargetAndDrive extends CommandBase {
     oldTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
@@ -70,16 +67,14 @@ public class AutoFaceTargetAndDrive extends CommandBase {
     oldTime = currentTime;
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (interrupted) { System.out.println("AutoTurnTowardsVision was interrupted"); }
-    if (targetLossTimeout > Constants.Values.VISION_TIMEOUT) { System.out.println("AutoTurnTowardsVision lost vision target for " + targetLossTimeout + "ms"); }
-    else { System.out.println("AutoTurnTowardsVision ended on target."); }
-    System.out.println("AutoTurnTowardsVision ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
+    if (interrupted) { System.out.println("AutoFaceTargetAndDrive was interrupted"); }
+    if (targetLossTimeout > Constants.Values.VISION_TIMEOUT) { System.out.println("AutoFaceTargetAndDrive lost vision target for " + targetLossTimeout + "ms"); }
+    else { System.out.println("AutoFaceTargetAndDrive ended on target."); }
+    System.out.println("AutoFaceTargetAndDrive ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

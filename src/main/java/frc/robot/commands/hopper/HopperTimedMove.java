@@ -1,6 +1,7 @@
 package frc.robot.commands.hopper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.Hopper;
 
 public class HopperTimedMove extends CommandBase {
@@ -39,7 +40,7 @@ public class HopperTimedMove extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Hopper.getInstance().setSpeed(0.0);
-    if (interrupted) System.out.println("Wtf");
+    if (interrupted) System.out.println("HopperTimedMove interuppted on cycle " + Robot.cycles);
   }
 
 }

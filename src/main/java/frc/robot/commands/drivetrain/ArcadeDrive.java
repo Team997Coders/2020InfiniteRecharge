@@ -14,22 +14,16 @@ import frc.robot.OI;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDrive extends CommandBase {
-  /**
-   * Creates a new ArcadeDrive.
-   */
+
   double left, right;
   public ArcadeDrive() {
-    //System.out.println("sadness");
     addRequirements(DriveTrain.getInstance());
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double forward = -OI.getInstance().gamepad1.getRawAxis(1);
@@ -44,17 +38,14 @@ public class ArcadeDrive extends CommandBase {
     left = forward + turn;
     right = forward - turn;
     
-    // DriveTrain.getInstance().simpleAccelControl(left, right);
     DriveTrain.getInstance().setMotors(left, right);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     DriveTrain.getInstance().setMotors(0, 0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

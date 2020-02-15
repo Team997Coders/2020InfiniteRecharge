@@ -10,13 +10,10 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
-/**
- * Add your docs here.
- */
 public class Shooter implements Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
   private CANSparkMax mMotor1, mMotor2;
   private CANPIDController mController;
   private CANEncoder mEncoder;
@@ -26,6 +23,9 @@ public class Shooter implements Subsystem {
     mMotor2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
     mMotor1.setIdleMode(IdleMode.kCoast);
     mMotor2.setIdleMode(IdleMode.kCoast);
+
+    mMotor1.setInverted(true);
+    mMotor2.setInverted(true);
 
     mMotor2.follow(mMotor1);
 
@@ -58,7 +58,9 @@ public class Shooter implements Subsystem {
 
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
-    //System.out.println("Shooter Sped: " + getRPMs());
+    if (Robot.verbose) {
+      // put non-essential data here.
+    }
   }
 
   public double getRPMs() {

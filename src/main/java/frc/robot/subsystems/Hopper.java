@@ -8,10 +8,10 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -62,9 +62,13 @@ public class Hopper implements Subsystem {
   public boolean getIntakeBall() { return !mIntakeIR.get(); }
 
   public void updateSmartDashboard(){
-    SmartDashboard.putBoolean("Hopper/Intake IR Sensor", getIntakeBall());
-    SmartDashboard.putBoolean("Hopper/Shooter IR Sensor", getShooterBall());
+    
     SmartDashboard.putNumber("Hopper/Ball Count", mBallCount);
+
+    if (Robot.verbose) {
+      SmartDashboard.putBoolean("Hopper/Intake IR Sensor", getIntakeBall());
+      SmartDashboard.putBoolean("Hopper/Shooter IR Sensor", getShooterBall());
+    }
   }
 
   @Override

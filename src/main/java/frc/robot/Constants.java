@@ -43,9 +43,7 @@ public final class Constants {
 
     public static final double
         ACCELERATION = 2, // Percentage / Seconds
-        voltageToFeet = (12 * 0.0098), //9.8mV per inch with a 5V input.
-
-        shooterOutput = 1.0, // TODO: replace with actual
+        VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
 
         VISION_TURNING_P = 0.02,
         VISION_TURNING_I = 0.03,
@@ -56,8 +54,8 @@ public final class Constants {
         VISION_LIMELIGHT_HEIGHT = 6, //Height (inches) up from the ground of the center of the limelight. 
         VISION_LIMELIGHT_ANGLE = Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
 
-        INTAKE_IN = 1,
-        INTAKE_EJECT = -0.5,
+        INTAKE_IN = 1, // percent speed to intake
+        INTAKE_EJECT = -0.5, // percent speed to outtake
         INTAKE_EXTEND_DELAY = 0.7, // seconds
 
         HOPPER_HANDOFF_DELAY = 0.25,

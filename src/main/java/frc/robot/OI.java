@@ -1,8 +1,6 @@
 package frc.robot;
 
-import frc.robot.commands.shooter.ShooterBasic;
-import frc.robot.commands.shooter.ShooterStream;
-import frc.robot.commands.shooter.ShooterStreamAutoTarget;
+import frc.robot.commands.shooter.*;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
@@ -37,9 +35,9 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
-    buttonB.whenPressed(new AutoFaceTargetAndDrive());
-    buttonRightBumper.whileHeld(new ShooterBasic(-0.55)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
-    buttonLeftBumper.whileHeld(new ShooterBasic(-0.6)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
+    buttonB.whileHeld(new AutoFaceTargetAndDrive());
+    buttonRightBumper.whileHeld(new ShooterBasic(0.55)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper.whileHeld(new ShooterBasic(0.6)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
     
     buttonA2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whenPressed(new ClimberMove(Constants.Values.CLIMBER_DOWN));
@@ -52,6 +50,14 @@ public class OI {
 
   public double getGamepad1Axis(int portNum) {
     axisPos = gamepad1.getRawAxis(portNum);
+    if (Math.abs(axisPos) < 0.05) {
+      axisPos = 0;
+    }
+    return axisPos;
+  }
+
+  public double getGamepad2Axis(int portNum) {
+    axisPos = gamepad2.getRawAxis(portNum);
     if (Math.abs(axisPos) < 0.05) {
       axisPos = 0;
     }

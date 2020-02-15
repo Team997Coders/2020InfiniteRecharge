@@ -31,10 +31,8 @@ public class AutoTurnTowardsVision extends CommandBase {
   public AutoTurnTowardsVision() {
     addRequirements(DriveTrain.getInstance());
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     pidConstants = new PIDConstants(Constants.Values.VISION_TURNING_P,
@@ -45,7 +43,6 @@ public class AutoTurnTowardsVision extends CommandBase {
     oldTime = System.currentTimeMillis();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     currentTime = System.currentTimeMillis();
@@ -66,7 +63,6 @@ public class AutoTurnTowardsVision extends CommandBase {
     oldTime = currentTime;
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     if (interrupted) { System.out.println("AutoTurnTowardsVision was interrupted"); }
@@ -75,7 +71,6 @@ public class AutoTurnTowardsVision extends CommandBase {
     System.out.println("AutoTurnTowardsVision ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return ((onTargetTime >= 250) || (targetLossTimeout > Constants.Values.VISION_TIMEOUT));

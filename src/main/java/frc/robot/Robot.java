@@ -8,26 +8,15 @@ import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
-import org.team997coders.spartanlib.limelight.LimeLight;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import frc.robot.commands.auto.AutoDoNothing;
-import frc.robot.commands.auto.AutoSickoMode;
-import frc.robot.commands.auto.AutoStreamUntilEmpty;
-import frc.robot.commands.drivetrain.ArcadeDrive;
-import frc.robot.commands.drivetrain.FollowPath;
-import frc.robot.commands.hopper.HopperAutoIndex;
-import frc.robot.commands.hopper.HopperTimedMove;
-import frc.robot.subsystems.Hopper;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DriveTrain;
-
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.auto.*;
+import frc.robot.commands.drivetrain.*;
+import frc.robot.commands.hopper.*;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
@@ -35,8 +24,7 @@ public class Robot extends TimedRobot {
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
-  public final boolean verbose = false; //debug variable, set to true for ALL THE DATA
-  //public static final boolean isTuning = true;
+  public static final boolean verbose = false; //debug variable, set to true for command logging in the console and non-essential smartdashboard bits.
 
   private Command m_autonomousCommand;
   private Command mHopperCommand;
@@ -50,8 +38,6 @@ public class Robot extends TimedRobot {
     //CameraServer.getInstance().startAutomaticCapture(0);
 
     CommandScheduler.getInstance().cancelAll();
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
 
     SequentialCommandGroup seq = new SequentialCommandGroup(
       new FollowPath("Pickup3", false),
@@ -72,7 +58,7 @@ public class Robot extends TimedRobot {
 
     Shooter.getInstance();
     Hopper.getInstance();
-    DriveTrain.getInstance().register();
+    DriveTrain.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
 
@@ -84,7 +70,6 @@ public class Robot extends TimedRobot {
         commandList.add(command.getName());
       });
     }
-    DriveTrain.getInstance().putCurrentPID();
 
     SmartDashboard.putData(m_chooser);
 
@@ -93,10 +78,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    //SmartDashboard.putNumber("Math number yayayayayaya", Constants.Values.visionLimelightAngle);
-    //SmartDashboard.putNumber("Target X (tx)", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
-    //SmartDashboard.putNumber("HasTarget", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(69));
-
+    
     if (verbose) {
       if (commandList.size() > 0) {
         for (String cmdName : commandList) {
@@ -123,7 +105,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     Hopper.getInstance().updateBallCount();
-    //DriveTrain.getInstance().updatePID();
   }
 
   @Override
@@ -166,9 +147,4 @@ public class Robot extends TimedRobot {
 
   public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
 
-  public void updateSmartDashboard() {
-    SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
-    SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
-  }
 }

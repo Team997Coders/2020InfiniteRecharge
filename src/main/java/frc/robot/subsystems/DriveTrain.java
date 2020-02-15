@@ -78,17 +78,8 @@ public class DriveTrain implements Subsystem {
     backLeft.setNeutralMode(NeutralMode.Brake);
     frontRight.setNeutralMode(NeutralMode.Brake);
     backRight.setNeutralMode(NeutralMode.Brake);
-  }
 
-  public void putCurrentPID() {
-    SmartDashboard.putNumber("DriveTrain/P", Constants.Values.VISION_TURNING_P);
-    SmartDashboard.putNumber("DriveTrain/I", Constants.Values.VISION_TURNING_I);
-    SmartDashboard.putNumber("DriveTrain/D", Constants.Values.VISION_TURNING_D);
-
-    //SmartDashboard.setPersistent("DriveTrain/P");
-    //SmartDashboard.setPersistent("DriveTrain/I");
-    //SmartDashboard.setPersistent("DriveTrain/D");
-
+    register();
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
@@ -140,9 +131,21 @@ public class DriveTrain implements Subsystem {
     return imu.getAngle();
   }
 
+  public double getFeet(TalonFX m) {
+    return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
+  }
+
+  public void resetEncoders() {
+    frontLeft.setSelectedSensorPosition(0, 0, 10);
+    frontRight.setSelectedSensorPosition(0, 0, 10);
+  }
+
   @Override
   public void periodic() {
+    updateSmartDashboard();
+  }
 
+  public void updateSmartDashboard() {
     SmartDashboard.putNumber("DriveTrain/Right Motors Position", getRightSensor());
     SmartDashboard.putNumber("DriveTrain/Left Motors Position", getLeftSensor());
 
@@ -161,27 +164,23 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Right Error", frontRight.getClosedLoopError());
 
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
-    SmartDashboard.putNumber("DriveTrain/Ultrasonic", ultrasonic.getVoltage() / Constants.Values.voltageToFeet); //displays feet from target.
-  
-    SmartDashboard.putNumber("DriveTrain/Target Distance (in)", (98.25 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )));
-    SmartDashboard.putNumber("AngleToTarget", (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)));
+    SmartDashboard.putNumber("DriveTrain/Ultrasonic Distance (ft)", ultrasonic.getVoltage() / Constants.Values.VOLTAGE_TO_FEET);
+
+    if (Robot.verbose) {
+      SmartDashboard.putNumber("LimeLight/Target Distance (in)", (98.25 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )));
+      SmartDashboard.putNumber("LimeLight/AngleToTarget", (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)));
+          
+      SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
+      SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+      SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
+    }
   }
 
   private static DriveTrain instance;
 
-  public double getFeet(TalonFX m) {
-    return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
-  }
-
-  public void resetEncoders() {
-    frontLeft.setSelectedSensorPosition(0, 0, 10);
-    frontRight.setSelectedSensorPosition(0, 0, 10);
-  }
-
   public static DriveTrain getInstance() {
     if (instance == null) {
       instance = new DriveTrain();
-      //System.out.println("Inited========================================================================");
     }
     return instance;
   }
