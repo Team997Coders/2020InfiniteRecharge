@@ -75,6 +75,9 @@ public final class Constants {
 
         CLIMBER_UP = 0.75,
         CLIMBER_DOWN = -0.6,
+        CLIMBER_P = 0,
+        CLIMBER_I = 0,
+        CLIMBER_D = 0,
 
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * (1.0 / 2048.0)
