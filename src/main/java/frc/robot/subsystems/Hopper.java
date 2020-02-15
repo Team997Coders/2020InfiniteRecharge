@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -24,7 +25,7 @@ public class Hopper implements Subsystem {
   public boolean autoIndexMoving = false;
   public int mBallCount = 3;
 
-  private DigitalInput mIntakeIR, mShooterIR;
+  private DigitalInput mIntakeIR, mOverflowIR, mShooterIR;
   private VictorSPX mMotor1, mMotor2;
   
   private Hopper() {
@@ -32,7 +33,7 @@ public class Hopper implements Subsystem {
     mMotor2 = new VictorSPX(Constants.Ports.HOPPER_MOTOR_BOTTOM);
     mIntakeIR = new DigitalInput(Constants.Ports.INTAKE_IR);
     mShooterIR = new DigitalInput(Constants.Ports.SHOOTER_IR);
-
+    mOverflowIR = new DigitalInput(Constants.Ports.OVERFLOW_IR);
     mMotor1.configFactoryDefault(10);
     mMotor2.configFactoryDefault(10);
 
@@ -60,6 +61,7 @@ public class Hopper implements Subsystem {
 
   public boolean getShooterBall() { return !mShooterIR.get(); }
   public boolean getIntakeBall() { return !mIntakeIR.get(); }
+  public boolean getOverflowBall() { return !mOverflowIR.get(); }
 
   public void updateSmartDashboard(){
     

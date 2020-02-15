@@ -25,6 +25,7 @@ public final class Constants {
 
       INTAKE_IR = 0,
       SHOOTER_IR = 1,
+      OVERFLOW_IR = 2,
 
       //Drivetrain things
       motorFrontLeft = 1,
