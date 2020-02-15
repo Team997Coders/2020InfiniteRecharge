@@ -46,6 +46,10 @@ public class OI {
     buttonRightBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
     buttonLeftBumper2.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
     buttonStart2.whenPressed(new toggleIntakePiston());
+
+    /*
+    buttonA2.whileHeld(new ShooterStream(Constants.Values.SHOOTER_RPM));
+    */
   }
 
   public double getGamepad1Axis(int portNum) {

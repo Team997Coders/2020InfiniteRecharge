@@ -59,12 +59,16 @@ public class Shooter implements Subsystem {
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
     if (Robot.verbose) {
-      // put non-essential data here.
+      SmartDashboard.putNumber("Shooter/Ball Ejection Speed", getBallSpeed());
     }
   }
 
   public double getRPMs() {
     return mEncoder.getVelocity();
+  }
+
+  public double getBallSpeed() {
+    return (getRPMs() / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
   }
 
   @Override

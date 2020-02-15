@@ -68,6 +68,7 @@ public final class Constants {
 
         SHOOTER_GEARING = 3.0 / 4.0,
         SHOOTER_RPM = 3700,
+        SHOOTER_CIRCUMFERENCE_CM = (10.16 * Math.PI), // cm
 
         CLIMBER_UP = 0.75,
         CLIMBER_DOWN = -0.6,
