@@ -21,11 +21,15 @@ public class Shooter implements Subsystem {
   private Shooter() {
     mMotor1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
     mMotor2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
+
+    mMotor1.restoreFactoryDefaults();
+    mMotor2.restoreFactoryDefaults();
+
     mMotor1.setIdleMode(IdleMode.kCoast);
     mMotor2.setIdleMode(IdleMode.kCoast);
 
-    mMotor1.setInverted(true);
-    mMotor2.setInverted(true);
+    //mMotor1.setInverted(true);
+    //mMotor2.setInverted(true);
 
     mMotor2.follow(mMotor1);
 

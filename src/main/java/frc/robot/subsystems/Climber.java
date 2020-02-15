@@ -29,16 +29,16 @@ public class Climber extends SubsystemBase {
 
     climberEncoder = climberMotor.getEncoder();
 
-    climberMotor.setSmartCurrentLimit(50);
+    climberMotor.setSmartCurrentLimit(70);
     climberMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void ExtendPiston(){
-    climberPiston.set(true);
+    climberPiston.set(false);
   }
 
   public void RetractPiston(){
-    climberPiston.set(false);
+    climberPiston.set(true);
   }
 
   public void setBrake() {

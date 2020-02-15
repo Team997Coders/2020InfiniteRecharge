@@ -36,7 +36,7 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 0;
+      climberPistonPort = 2;
       
   }
 
@@ -55,14 +55,14 @@ public final class Constants {
         VISION_LIMELIGHT_HEIGHT = 6, //Height (inches) up from the ground of the center of the limelight. 
         VISION_LIMELIGHT_ANGLE = Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
 
-        INTAKE_IN = 1, // percent speed to intake
+        INTAKE_IN = 0.75, // percent speed to intake
         INTAKE_EJECT = -0.5, // percent speed to outtake
-        INTAKE_EXTEND_DELAY = 0.7, // seconds
+        INTAKE_EXTEND_DELAY = 0.2, // seconds
 
-        HOPPER_HANDOFF_DELAY = 0.25,
-        HOPPER_HANDOFF_ROLL_TIME = 0.4,
+        HOPPER_HANDOFF_DELAY = 0.13,
+        HOPPER_HANDOFF_ROLL_TIME = 0.68,
         HOPPER_INTAKE_SPEED = 0.4,
-        HOPPER_STREAM_SPEED = 0.75,
+        HOPPER_STREAM_SPEED = 1,
         HOPPER_EJECT_SPEED = -0.4,
         HOPPER_INTAKE_IR_DELAY = 0, // ms
         HOPPER_SHOOTER_IR_DELAY = 20, //ms
@@ -73,8 +73,8 @@ public final class Constants {
         SHOOTER_RELEASE_ANGLE = 80, // degrees up from horizontal
         SHOOTER_RELEASE_HEIGHT = 1.0612121212, // meters up from ground
 
-        CLIMBER_UP = 0.75,
-        CLIMBER_DOWN = -0.6,
+        CLIMBER_UP = 1,
+        CLIMBER_DOWN = -1,
         CLIMBER_P = 0,
         CLIMBER_I = 0,
         CLIMBER_D = 0,
