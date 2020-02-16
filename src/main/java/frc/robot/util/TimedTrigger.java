@@ -13,7 +13,7 @@ public class TimedTrigger {
   }
 
   public void trigger() {
-    mTimeTriggered = getCurrentTime();
+    if (!Double.isFinite(mTimeTriggered)) mTimeTriggered = getCurrentTime();
   }
 
   public void reset() {

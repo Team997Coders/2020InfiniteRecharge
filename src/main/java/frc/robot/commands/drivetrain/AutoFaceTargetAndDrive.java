@@ -32,11 +32,11 @@ public class AutoFaceTargetAndDrive extends CommandBase {
 
   public AutoFaceTargetAndDrive() {
     addRequirements(DriveTrain.getInstance());
-    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
   }
 
   @Override
   public void initialize() {
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOn);
     pidConstants = new PIDConstants(Constants.Values.VISION_TURNING_P,
       Constants.Values.VISION_TURNING_I, Constants.Values.VISION_TURNING_D);
     pid = new SpartanPID(pidConstants);
@@ -47,6 +47,9 @@ public class AutoFaceTargetAndDrive extends CommandBase {
 
   @Override
   public void execute() {
+    /*if (!(LimeLight.getInstance().getDouble(LimeLight.LED_MODE, 3.0) == 3.0)) {
+      LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOn);
+    }*/
     currentTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
     double deltaT = currentTime - oldTime;
     double output = pid.WhatShouldIDo(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
@@ -73,6 +76,7 @@ public class AutoFaceTargetAndDrive extends CommandBase {
     if (targetLossTimeout > Constants.Values.VISION_TIMEOUT) { System.out.println("AutoFaceTargetAndDrive lost vision target for " + targetLossTimeout + "ms"); }
     else { System.out.println("AutoFaceTargetAndDrive ended on target."); }
     System.out.println("AutoFaceTargetAndDrive ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
   }
 
   @Override

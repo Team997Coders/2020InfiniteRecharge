@@ -69,6 +69,7 @@ public class AutoTurnTowardsVision extends CommandBase {
     if (targetLossTimeout > Constants.Values.VISION_TIMEOUT) { System.out.println("AutoTurnTowardsVision lost vision target for " + targetLossTimeout + "ms"); }
     else { System.out.println("AutoTurnTowardsVision ended on target."); }
     System.out.println("AutoTurnTowardsVision ended on cycle " + Robot.cycles + ", and was onTarget for " + onTargetTime);
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
   }
 
   @Override

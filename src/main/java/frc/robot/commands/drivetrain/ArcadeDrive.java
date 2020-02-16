@@ -32,7 +32,7 @@ public class ArcadeDrive extends CommandBase {
     forward = MathUtils.deadband(forward, 0.1);
     turn = MathUtils.deadband(turn, 0.1);
 
-    forward *= 0.7;
+    forward *= 0.9;
     turn *= 0.4;
 
     left = forward + turn;

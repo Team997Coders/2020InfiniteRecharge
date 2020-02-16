@@ -2,9 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.team997coders.spartanlib.math.MathUtils;
@@ -33,7 +35,9 @@ public class DriveTrain implements Subsystem {
 
   private DriveTrain() {
 
+    // Try setting the Threshold Limit to 0 to hard cap the current
     SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
+    // StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true)
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
     imu = new AHRS(Port.kUSB);
@@ -59,6 +63,8 @@ public class DriveTrain implements Subsystem {
     backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     backRight.configSupplyCurrentLimit(currentLimitConfig, 10);
 
+    double current = frontLeft.getSupplyCurrent();
+
     frontLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontLeft.setSelectedSensorPosition(0, 0, 10);
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
@@ -83,6 +89,9 @@ public class DriveTrain implements Subsystem {
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
+
+    
+
     frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
 
@@ -131,6 +140,10 @@ public class DriveTrain implements Subsystem {
     return imu.getAngle();
   }
 
+  public double getLeftFeet() {
+    return getFeet(frontLeft);
+  }
+
   public double getFeet(TalonFX m) {
     return m.getSelectedSensorPosition(0) * (Constants.Values.DRIVE_VEL_2_FEET / 10.0);
   }
@@ -174,6 +187,27 @@ public class DriveTrain implements Subsystem {
       SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
       SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
     }
+  }
+
+  private double currentAugment(double wants, TalonFX motor) {
+    final double LIM = 35;
+    final double GAIN_MOD = 1.0;
+    final double MAX_AUGMENT = 0.4; // Max amount of augmentation per second
+
+    double currentError = motor.getSupplyCurrent() - LIM;
+    wants -= currentError * GAIN_MOD;
+
+    return MathUtils.clamp(wants, wants - MAX_AUGMENT * Robot.getDeltaT(), wants + MAX_AUGMENT * Robot.getDeltaT());
+  }
+
+  public void setCoast() {
+    frontLeft.setNeutralMode(NeutralMode.Coast);
+    frontRight.setNeutralMode(NeutralMode.Coast);
+  }
+
+  public void setBrake() {
+    frontLeft.setNeutralMode(NeutralMode.Brake);
+    frontRight.setNeutralMode(NeutralMode.Brake);
   }
 
   private static DriveTrain instance;

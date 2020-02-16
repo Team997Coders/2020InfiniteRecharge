@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
+import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -37,18 +38,20 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //CameraServer.getInstance().startAutomaticCapture(0);
 
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
+
     CommandScheduler.getInstance().cancelAll();
 
     SequentialCommandGroup seq = new SequentialCommandGroup(
-      new FollowPath("Pickup3", false),
-      new FollowPath("TrenchPivot", true)
+      new DriveBadly(7.5),
+      new ShootBadly()
     );
 
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
     m_chooser.addOption("Auto One", new FollowPath("TrenchPivot", false));
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
-    m_chooser.addOption("s1ck0 m0d3 b0n3l355", seq);
+    m_chooser.addOption("Bad Auto", seq);
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,
@@ -94,6 +97,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+
+    DriveTrain.getInstance().setCoast();
+
+    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
     Intake.getInstance().setPiston(false);
 
     if (mHopperCommand != null) mHopperCommand.cancel();
@@ -105,6 +112,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     Hopper.getInstance().updateBallCount();
+
   }
 
   @Override
@@ -123,6 +131,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
+    DriveTrain.getInstance().setBrake();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
