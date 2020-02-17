@@ -6,10 +6,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
+import org.team997coders.spartanlib.helpers.SwerveMixerData;
+import org.team997coders.spartanlib.helpers.threading.SpartanRunner;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -20,6 +20,8 @@ import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
+
+  public static SpartanRunner mRunner = new SpartanRunner(20);
 
   private static double lastUpdate = 0.0;
   private ArrayList<String> commandList;
@@ -36,7 +38,8 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-    //CameraServer.getInstance().startAutomaticCapture(0);
+
+    // CameraServer.getInstance().startAutomaticCapture(0);
 
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
 
@@ -62,7 +65,7 @@ public class Robot extends TimedRobot {
     Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance();
-    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    DriveTrain.getInstance().setDefaultCommand(new SwerveMixer());
     Climber.getInstance();
 
     OI.getInstance();

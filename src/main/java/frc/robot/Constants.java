@@ -29,21 +29,34 @@ public final class Constants {
       OVERFLOW_IR = 2,
 
       //Drivetrain things
-      motorFrontLeft = 1,
-      motorBackLeft = 2,
-      motorFrontRight = 3,
-      motorBackRight = 4,
       ultrasonicChannel = 0,
 
       //climber things
       climberMotorPort = 10,
       climberPistonPort = 2;
       
+    public static final int[]
+
+      AZIMUTH_PORTS = {
+        1, 3, 5, 7
+      },
+
+      DRIVE_PORTS = {
+        2, 4, 6, 8
+      },
+
+      MODULE_ENCODERS = {
+        0, 1, 2, 3
+      };
   }
 
   public static class Values {     
 
     public static final double
+
+        WHEEL_BASE = 1.0,
+        TRACK_WIDTH = 1.0,
+
         ACCELERATION = 2, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
 
@@ -84,10 +97,32 @@ public final class Constants {
         DRIVE_VEL_2_FEET = 10 * (1.0 / 2048.0)
           * (9.0 / 70.0) * (4.875 * Math.PI) * (1.0 / 12.0);
 
+    public static final double[]
+
+      MODULE_ZEROS = {
+        0.0, 0.0, 0.0, 0.0
+      };
+
     public static final Gains
 
       DRIVE_VELOCITY_GAINS = new Gains(0.6, 0.012, 6.8, 1023.0 / 21500.0),
       SHOOTER_VELOCITY_GAINS = new Gains(0.001, 0, 0.005, (1.0 / (4060.0 * (22.0 / 18.0) * 0.5)));
+
+    public static final Gains[]
+
+      DRIVE_GAINS = {
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0)
+      },
+
+      AZIMUTH_GAINS = {
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0),
+        new Gains(0.0, 0.0, 0.0, 0.0)
+      };
 
   }
 
