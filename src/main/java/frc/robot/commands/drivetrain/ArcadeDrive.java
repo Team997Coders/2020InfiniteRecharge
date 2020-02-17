@@ -22,6 +22,7 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void initialize() {
+    // DriveTrain.getInstance().playOrchestra("Megalovania.chrp");
     DriveTrain.getInstance().stopOrchestra();
   }
 
@@ -33,13 +34,16 @@ public class ArcadeDrive extends CommandBase {
     forward = MathUtils.deadband(forward, 0.1);
     turn = MathUtils.deadband(turn, 0.1);
 
-    forward *= 0.9;
+    forward *= 0.7;
     turn *= 0.4;
+
+    
 
     left = forward + turn;
     right = forward - turn;
     
-    DriveTrain.getInstance().setMotors(left, right);
+    // DriveTrain.getInstance().setMotors(left, right);
+    DriveTrain.getInstance().simpleAccelControl(left, right);
   }
 
   @Override

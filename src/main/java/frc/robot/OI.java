@@ -38,7 +38,7 @@ public class OI {
 
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
-    buttonLeftBumper2.whileHeld(new ShooterBasic(0.66)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper2.whileHeld(new ShooterBasic(0.75)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
 
     buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
