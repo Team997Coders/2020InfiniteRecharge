@@ -19,26 +19,35 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Intake extends SubsystemBase {
+
   private Solenoid intakePiston;
-  private CANSparkMax mMotor;
+  private CANSparkMax mLeader, mFollower;
   private CANEncoder encoder;
 
-
   private Intake() {
-    mMotor = new CANSparkMax(Constants.Ports.INTAKE_MOTOR, MotorType.kBrushless);
+    mLeader = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_1, MotorType.kBrushless);
+    mFollower = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_2, MotorType.kBrushless);
     intakePiston = new Solenoid(Constants.Ports.INTAKE_SOLENOID);
-    encoder = mMotor.getEncoder();
+
+    mLeader.restoreFactoryDefaults();
+    mFollower.restoreFactoryDefaults();
+
+    mFollower.follow(mLeader, true);
+
+    encoder = mLeader.getEncoder();
 
     intakePiston.set(false);
 
-    mMotor.setSmartCurrentLimit(50);
-    mMotor.setIdleMode(IdleMode.kCoast);
+    mLeader.setSmartCurrentLimit(50);
+    mLeader.setIdleMode(IdleMode.kCoast);
+    mFollower.setSmartCurrentLimit(50);
+    mFollower.setIdleMode(IdleMode.kCoast);
 
     register();
   }
 
   public void setPercent(double percent) {
-    mMotor.set(percent);
+    mLeader.set(percent);
   }
 
   public double getRPM() {
@@ -53,7 +62,7 @@ public class Intake extends SubsystemBase {
     intakePiston.set(extend);
   }
 
-  public boolean getPistonExtended() {
+  public boolean getPiston() {
     return intakePiston.get();
   }
 

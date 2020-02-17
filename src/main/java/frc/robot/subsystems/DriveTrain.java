@@ -2,11 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.team997coders.spartanlib.math.MathUtils;
@@ -29,6 +28,8 @@ public class DriveTrain implements Subsystem {
   private TalonFX backLeft;
   private TalonFX backRight;
 
+  private Orchestra orch;
+
   private AHRS imu;
 
   private AnalogInput ultrasonic;
@@ -36,11 +37,13 @@ public class DriveTrain implements Subsystem {
   private DriveTrain() {
 
     // Try setting the Threshold Limit to 0 to hard cap the current
-    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.1);
+    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 0, 0);
     // StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true)
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
     imu = new AHRS(Port.kUSB);
+
+    orch = new Orchestra();
 
     frontLeft = new TalonFX(Constants.Ports.motorFrontLeft);
     frontRight = new TalonFX(Constants.Ports.motorFrontRight);
@@ -62,8 +65,6 @@ public class DriveTrain implements Subsystem {
     frontRight.configSupplyCurrentLimit(currentLimitConfig, 10);
     backLeft.configSupplyCurrentLimit(currentLimitConfig, 10);
     backRight.configSupplyCurrentLimit(currentLimitConfig, 10);
-
-    double current = frontLeft.getSupplyCurrent();
 
     frontLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontLeft.setSelectedSensorPosition(0, 0, 10);
@@ -89,8 +90,6 @@ public class DriveTrain implements Subsystem {
   }
 
   public void setMotors(double leftSpeed, double rightSpeed) {
-
-    
 
     frontLeft.set(ControlMode.PercentOutput, leftSpeed);
     frontRight.set(ControlMode.PercentOutput, rightSpeed);
@@ -126,6 +125,20 @@ public class DriveTrain implements Subsystem {
 
     lastLeft = MathUtils.clamp(lastLeft, maxSpeedReverse, maxSpeedForward);
     lastRight = MathUtils.clamp(lastRight, maxSpeedReverse, maxSpeedForward);
+  }
+
+  public void stopOrchestra() {
+    orch.clearInstruments();
+    if (orch.isPlaying()) orch.stop();
+  }
+
+  public void playOrchestra(String song) {
+    orch.addInstrument(frontLeft);
+    orch.addInstrument(frontRight);
+    orch.addInstrument(backLeft);
+    orch.addInstrument(backRight);
+    orch.loadMusic("Megalovania.chrp");
+    orch.play();
   }
 
   public double getLeftSensor() {

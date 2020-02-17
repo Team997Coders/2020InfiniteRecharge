@@ -22,6 +22,7 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void initialize() {
+    DriveTrain.getInstance().stopOrchestra();
   }
 
   @Override
