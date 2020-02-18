@@ -18,6 +18,7 @@ import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
+import frc.robot.util.LEDManager;
 
 public class Robot extends TimedRobot {
 
@@ -65,6 +66,8 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
 
+    LEDManager.getInstance();
+
     OI.getInstance();
 
     commandList = new ArrayList<String>();
@@ -93,6 +96,8 @@ public class Robot extends TimedRobot {
     cycles++;
 
     lastUpdate = getCurrentSeconds();
+
+    OI.getInstance().update();
   }
 
   @Override

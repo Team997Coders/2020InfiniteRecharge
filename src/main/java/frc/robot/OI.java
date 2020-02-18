@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.shooter.*;
+import frc.robot.util.LEDManager;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
@@ -76,6 +77,15 @@ public class OI {
       axisPos = 0;
     }
     return axisPos;
+  }
+
+  public void update() {
+    if (gamepad1.getXButtonPressed()) {
+      LEDManager.getInstance().setColor(120, 255, 255);
+    }
+    if (gamepad1.getYButtonPressed()) {
+      LEDManager.getInstance().setColor(0, 255, 255);
+    }
   }
 
   private static OI instance;
