@@ -107,6 +107,8 @@ public class Robot extends TimedRobot {
 
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
+
+    LEDManager.getInstance().setColorToAlliance();
   }
 
   @Override

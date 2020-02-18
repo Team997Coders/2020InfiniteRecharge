@@ -96,7 +96,9 @@ public final class Constants {
 
     public static final int
 
-      LED_COUNT = 77;
+      LED_COUNT = 21,
+      LED_WIDTH = 7,
+      LED_ROWS = 3;
 
   }
 

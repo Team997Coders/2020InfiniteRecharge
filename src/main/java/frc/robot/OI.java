@@ -5,6 +5,9 @@ import frc.robot.util.LEDManager;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
+
+import org.team997coders.spartanlib.limelight.LimeLight;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,7 +41,10 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
-    buttonA.whenPressed(new InstantCommand());
+    buttonA.whenPressed(
+      () -> {
+        LEDManager.getInstance().targetReticle();
+    });
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonX.whenPressed(new InstantCommand());
     buttonY.whenPressed(new InstantCommand());
