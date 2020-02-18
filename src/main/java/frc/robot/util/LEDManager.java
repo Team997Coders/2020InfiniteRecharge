@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import com.ctre.phoenix.schedulers.ConcurrentScheduler;
-
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import frc.robot.Constants;

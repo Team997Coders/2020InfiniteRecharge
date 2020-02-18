@@ -202,6 +202,7 @@ public class DriveTrain implements Subsystem {
     }
   }
 
+  /* Save for now
   private double currentAugment(double wants, TalonFX motor) {
     final double LIM = 35;
     final double GAIN_MOD = 1.0;
@@ -212,6 +213,7 @@ public class DriveTrain implements Subsystem {
 
     return MathUtils.clamp(wants, wants - MAX_AUGMENT * Robot.getDeltaT(), wants + MAX_AUGMENT * Robot.getDeltaT());
   }
+  */
 
   public void setCoast() {
     frontLeft.setNeutralMode(NeutralMode.Coast);
