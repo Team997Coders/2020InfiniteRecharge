@@ -6,6 +6,7 @@ import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.IntakeMove;
 import frc.robot.commands.intake.toggleIntakePiston;
@@ -22,9 +23,9 @@ public class OI {
     gamepad2 = new XboxController(1);
 
     buttonA = new JoystickButton(gamepad1, XboxController.Button.kA.value);
+    buttonB = new JoystickButton(gamepad1, XboxController.Button.kB.value);
     buttonX = new JoystickButton(gamepad1, XboxController.Button.kX.value);
     buttonY = new JoystickButton(gamepad1, XboxController.Button.kY.value);
-    buttonB = new JoystickButton(gamepad1, XboxController.Button.kB.value);
     buttonRightBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperRight.value);
     buttonLeftBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
     buttonStart = new JoystickButton(gamepad1, XboxController.Button.kStart.value);
@@ -37,17 +38,21 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
+    buttonA.whenPressed(new InstantCommand());
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
-    buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
-    buttonLeftBumper2.whileHeld(new ShooterBasic(0.75)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
+    buttonX.whenPressed(new InstantCommand());
+    buttonY.whenPressed(new InstantCommand());
+    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
+    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
+    buttonStart.whenPressed(new toggleIntakePiston());
 
     buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
     buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
-    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
-    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
-    buttonStart.whenPressed(new toggleIntakePiston());
+    buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper2.whileHeld(new ShooterBasic(0.75)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
+    buttonStart2.whenPressed(new InstantCommand());
 
     /*
     buttonA.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
