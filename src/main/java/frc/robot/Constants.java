@@ -37,7 +37,13 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 2;
+      climberPistonPort = 2,
+
+      //LEDs
+      LEDPORT = 9,
+      LEDCOUNT = 21,
+
+      __end_of_ports__ = 0;
       
   }
 

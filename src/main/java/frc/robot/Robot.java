@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
+    //Leds.getInstance();
 
     LEDManager.getInstance();
 
