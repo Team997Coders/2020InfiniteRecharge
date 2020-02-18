@@ -7,25 +7,40 @@ import frc.robot.Constants;
 public class LEDManager {
 
   private AddressableLED mLeds;
+  private AddressableLEDBuffer m_buf;
 
   private LEDManager() {
-    mLeds = new AddressableLED(9);
-    mLeds.setLength(Constants.Values.LED_COUNT);
+    mLeds = new AddressableLED(Constants.Ports.LEDPORT);
+    m_buf = new AddressableLEDBuffer(Constants.Values.LED_COUNT);
+    mLeds.setLength(m_buf.getLength());
 
-    setColor(0, 100, 100);
-  }
-
-  public void setColor(int h, int s, int v) {
-    AddressableLEDBuffer buf = new AddressableLEDBuffer(Constants.Values.LED_COUNT);
-    for (int i = 0; i < buf.getLength(); i++) {
-      buf.setHSV(i, h, s, v);
+    // clear the string (set to black)
+    for (int i = 0; i < m_buf.getLength(); i++) {
+      m_buf.setRGB(i, 0, 0, 0);
     }
 
-    mLeds.setData(buf);
+    mLeds.setData(m_buf);
     mLeds.start();
   }
 
+  public void setColor(int h, int s, int v) {
+    for (int i = 0; i < m_buf.getLength(); i++) {
+      m_buf.setHSV(i, h, s, v);
+    }
+
+  }
+
+  public void setColorIndex(int index, int h, int s, int v) {
+    m_buf.setHSV(index, h, s, v);
+    mLeds.setData(m_buf);
+  }
+
   private static LEDManager instance;
-  public static LEDManager getInstance() { if (instance == null) instance = new LEDManager(); return instance; } 
+
+  public static LEDManager getInstance() {
+    if (instance == null)
+      instance = new LEDManager();
+    return instance;
+  }
 
 }
