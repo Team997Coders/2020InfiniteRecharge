@@ -37,7 +37,7 @@ public class DriveTrain implements Subsystem {
   private DriveTrain() {
 
     // Try setting the Threshold Limit to 0 to hard cap the current
-    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 0, 0);
+    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 60, 0, 0);
     // StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true)
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
