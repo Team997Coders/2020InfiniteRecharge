@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import org.team997coders.spartanlib.math.MathUtils;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +38,7 @@ public class DriveTrain implements Subsystem {
   private DriveTrain() {
 
     // Try setting the Threshold Limit to 0 to hard cap the current
-    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 40, 0, 0);
+    SupplyCurrentLimitConfiguration currentLimitConfig = new SupplyCurrentLimitConfiguration(true, 60, 0, 0);
     // StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true)
 
     ultrasonic = new AnalogInput(Constants.Ports.ultrasonicChannel);
@@ -198,7 +199,8 @@ public class DriveTrain implements Subsystem {
           
       SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
       SmartDashboard.putNumber("Limelight/targetX", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
-      SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
+      //SmartDashboard.putNumber("Limelight/targetY", LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0));
+      SmartDashboard.putNumber("Limelight/targetY", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(69));
     }
   }
 
