@@ -33,7 +33,7 @@ public class Leds extends SubsystemBase {
     // clear the led string (set to black)
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      m_ledBuffer.setRGB(i, 0, 0, 0);
+      m_ledBuffer.setRGB(i, 0, 0, 255);
     }
 
     // Set the data
