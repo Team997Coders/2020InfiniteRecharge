@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+/**
+ * @deprecated This path manager is limited to 1 thread and I don't like it as much
+ *  as the other one. Use the SpartanLib version.
+ */
 public class PathManager {
 
   private static DifferentialDriveKinematics diffDriveKin;

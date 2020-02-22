@@ -1,5 +1,11 @@
 package frc.robot;
 
+import java.util.HashMap;
+
+import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
+import org.team997coders.spartanlib.motion.pathfollower.data.PathSwervePreloadedData;
+
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.util.Gains;
 
 public final class Constants {
@@ -54,8 +60,8 @@ public final class Constants {
 
     public static final double
 
-        WHEEL_BASE = 1.0,
-        TRACK_WIDTH = 1.0,
+        WHEEL_BASE = 22,
+        TRACK_WIDTH = 12,
 
         ACCELERATION = 2, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
@@ -138,6 +144,17 @@ public final class Constants {
       "Pickup3",
       "TrenchPivot"
     };
+
+    public static final HashMap<String, PathData> PATH_DATA = new HashMap<String, PathData>() {{
+      put("GoToPickup", new PathSwervePreloadedData("GoToPickup",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+      put("GoToShootPos", new PathSwervePreloadedData("GoToShootPos",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+      put("Pickup3", new PathSwervePreloadedData("Pickup3",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+      put("TrenchPivot", new PathSwervePreloadedData("TrenchPivot",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+    }};
 
   }
 }

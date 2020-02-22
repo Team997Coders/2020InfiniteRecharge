@@ -1,6 +1,7 @@
 package frc.robot;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -9,6 +10,8 @@ import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.helpers.SwerveMixerData;
 import org.team997coders.spartanlib.helpers.threading.SpartanRunner;
 import org.team997coders.spartanlib.limelight.LimeLight;
+import org.team997coders.spartanlib.motion.pathfollower.PathManager;
+import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
@@ -40,6 +43,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     // CameraServer.getInstance().startAutomaticCapture(0);
+    requestPaths();
 
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
 
@@ -152,6 +156,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+  }
+
+  public void requestPaths() {
+    for (Map.Entry<String, PathData> entry : Constants.PathFollower.PATH_DATA.entrySet()) {
+      PathManager.getInstance().queueData(entry.getValue());
+    }
   }
 
   @Override

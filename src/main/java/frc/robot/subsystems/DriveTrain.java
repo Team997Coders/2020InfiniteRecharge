@@ -4,11 +4,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.team997coders.spartanlib.commands.UpdateModule;
+import org.team997coders.spartanlib.helpers.SwerveMixerData;
 import org.team997coders.spartanlib.helpers.threading.SpartanRunner;
+import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 import org.team997coders.spartanlib.swerve.SwerveDrive;
 import org.team997coders.spartanlib.swerve.module.SwerveModule;
 
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.swerve.module.TeslaModule;
@@ -69,11 +72,18 @@ public class DriveTrain extends SwerveDrive {
 
   public void setBrake() { }
 
-  private static DriveTrain instance;
-  public static DriveTrain getInstance() {
-    if (instance == null) {
-      instance = new DriveTrain();
+  public SwerveMixerData toSwerveMixerData(SwerveModuleState[] moduleStates) {
+    SwerveMixerData dat = new SwerveMixerData();
+    double[] angles = new double[4], speeds = new double[4];
+    for (int i = 0; i < 4; i++) {
+      angles[i] = moduleStates[i].angle.getDegrees();
+      speeds[i] = PathManager.m2f(moduleStates[i].speedMetersPerSecond);
     }
-    return instance;
+    dat.setAngles(angles);
+    dat.setSpeeds(speeds);
+    return dat;
   }
+
+  private static DriveTrain instance;
+  public static DriveTrain getInstance() { if (instance == null) { instance = new DriveTrain(); } return instance; }
 }
