@@ -14,9 +14,10 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.CRGB;
 
 public class LEDManager extends SubsystemBase {
-  
+
   private AddressableLED mLeds;
   private AddressableLEDBuffer m_buf;
   private static int delay = 0;
@@ -40,9 +41,9 @@ public class LEDManager extends SubsystemBase {
     mLeds.setData(m_buf);
   }
 
-  public void setColor(int h, int s, int v) {
+  public void setColor(CRGB color) {
     for (int i = 0; i < m_buf.getLength(); i++) {
-      m_buf.setHSV(i, h, s, v);
+      m_buf.setRGB(i, color.getRed(), color.getGreen(), color.getBlue());
     }
     mLeds.setData(m_buf);
   }
@@ -55,9 +56,9 @@ public class LEDManager extends SubsystemBase {
   public void setColorToAlliance() {
     boolean blueAlliance = DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue ? true : false;
     if (blueAlliance) {
-      setColor(120, 255, 255); // blue
+      setColor(CRGB.BLUE); // blue
     } else {
-      setColor(255, 255, 255); // red
+      setColor(CRGB.RED); // red
     }
   }
 
@@ -90,12 +91,12 @@ public class LEDManager extends SubsystemBase {
     if (delay % 10 == 0) {
       int rows = Constants.Values.LED_ROWS;
       int res = 5; // degrees per led
-      int middle = (int)(Constants.Values.LED_WIDTH / 2);
+      int middle = (int) (Constants.Values.LED_WIDTH / 2);
       if (LimeLight.getInstance().getDouble(LimeLight.LED_MODE, 0) != 3) {
         // limelight LED is off, need to turn it on to look for the target
         LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
       }
-      int deltax = Math.min(0,(int) (0.1 + LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0) / res));
+      int deltax = Math.min(0, (int) (0.1 + LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0) / res));
       boolean hasTarget = LimeLight.getInstance().hasTarget;
       clear(); // reset the string to black
       if (hasTarget) {
@@ -109,11 +110,11 @@ public class LEDManager extends SubsystemBase {
             setColorIndex(center, 30, 255, 255); // yellow
             // off-target
             if (deltax < 0) {
-              for (int i=Math.min(0,(center - deltax)); i < center; i++){
+              for (int i = Math.min(0, (center - deltax)); i < center; i++) {
                 setColorIndex(i, 30, 255, 255); // yellow
               }
             } else {
-              for (int i=center+1; i < Math.max((center+deltax),Constants.Values.LED_WIDTH); i++){
+              for (int i = center + 1; i < Math.max((center + deltax), Constants.Values.LED_WIDTH); i++) {
                 setColorIndex(i, 30, 255, 255); // yellow
               }
             }
@@ -121,7 +122,7 @@ public class LEDManager extends SubsystemBase {
         }
       } else {
         // set leds to red.
-        setColor(255, 255, 255);
+        setColor(CRGB.RED);
       }
       delay = 0;
     }
@@ -130,17 +131,17 @@ public class LEDManager extends SubsystemBase {
     clear();
   }
 
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+
+
   private static LEDManager instance;
 
   public static LEDManager getInstance() {
     if (instance == null)
       instance = new LEDManager();
     return instance;
-  }
-
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

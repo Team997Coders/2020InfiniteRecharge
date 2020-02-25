@@ -3,18 +3,16 @@ package frc.robot;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDManager;
+import frc.robot.util.CRGB;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.vision.*;
 
-import org.team997coders.spartanlib.limelight.LimeLight;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.IntakeMove;
-import frc.robot.commands.intake.toggleIntakePiston;
 
 public class OI {
   private double axisPos;
@@ -46,12 +44,13 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
-    buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
-
     buttonA.whileHeld(new Compass());
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
+    buttonX.whenPressed(() -> LEDManager.getInstance().setColor(CRGB.RED));
+    buttonY.whenPressed(() -> LEDManager.getInstance().setColorToAlliance());
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper2.whileHeld(new ShooterBasic(0.66));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
+    buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
 
     buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
@@ -91,10 +90,10 @@ public class OI {
 
   public void update() {
     if (gamepad1.getXButtonPressed()) {
-      LEDManager.getInstance().setColor(120, 255, 255);
+      LEDManager.getInstance().setColor(CRGB.BLUE);
     }
     if (gamepad1.getYButtonPressed()) {
-      LEDManager.getInstance().setColor(0, 255, 255);
+      LEDManager.getInstance().setColor(CRGB.RED);
     }
   }
 

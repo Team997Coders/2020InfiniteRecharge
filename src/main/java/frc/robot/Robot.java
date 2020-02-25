@@ -1,15 +1,11 @@
 package frc.robot;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -18,6 +14,7 @@ import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
+import frc.robot.util.CRGB;
 
 public class Robot extends TimedRobot {
 
@@ -110,7 +107,7 @@ public class Robot extends TimedRobot {
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
 
-    LEDManager.getInstance().setColor(1, 0, 100);
+    LEDManager.getInstance().setColor(CRGB.WHITE);
 
   }
 
