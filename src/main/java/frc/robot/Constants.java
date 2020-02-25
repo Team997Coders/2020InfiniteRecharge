@@ -41,10 +41,7 @@ public final class Constants {
 
       //LEDs
       LEDPORT = 9,
-<<<<<<< HEAD
       LEDCOUNT = 35,
-=======
->>>>>>> leds
 
       __end_of_ports__ = 0;
       
