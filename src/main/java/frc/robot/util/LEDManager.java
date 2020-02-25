@@ -36,6 +36,7 @@ public class LEDManager {
     for (int i = 0; i < m_buf.getLength(); i++) {
       m_buf.setHSV(i, h, s, v);
     }
+    mLeds.setData(m_buf);
   }
 
   public void setColorIndex(int index, int h, int s, int v) {

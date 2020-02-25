@@ -1,11 +1,15 @@
 package frc.robot;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -61,7 +65,6 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
-    Leds.getInstance();
 
     LEDManager.getInstance();
 
@@ -108,7 +111,8 @@ public class Robot extends TimedRobot {
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
 
-    LEDManager.getInstance().setColorToAlliance();
+    LEDManager.getInstance().setColor(1, 0, 100);
+
   }
 
   @Override
@@ -141,6 +145,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    LEDManager.getInstance().setColorToAlliance();
 
     mHopperCommand.schedule();
   }

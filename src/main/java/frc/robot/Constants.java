@@ -53,9 +53,9 @@ public final class Constants {
         ACCELERATION = 2.5, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
 
-        VISION_TURNING_P = 0.04,
-        VISION_TURNING_I = 0.03,
-        VISION_TURNING_D = 0.06,
+        VISION_TURNING_P = 0.025, //0.04
+        VISION_TURNING_I = 0.06,
+        VISION_TURNING_D = 0.07,
         VISION_TOLERANCE = 1.5,
         VISION_TIMEOUT = 2000, //in ms
 
@@ -97,9 +97,9 @@ public final class Constants {
 
     public static final int
 
-      LED_COUNT = 21,
+      LED_COUNT = 35,
       LED_WIDTH = 7,
-      LED_ROWS = 3;
+      LED_ROWS = 5;
 
   }
 

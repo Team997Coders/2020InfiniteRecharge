@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.shooter.*;
+import frc.robot.subsystems.Intake;
 import frc.robot.util.LEDManager;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
@@ -33,6 +34,9 @@ public class OI {
     buttonLeftBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
     buttonStart = new JoystickButton(gamepad1, XboxController.Button.kStart.value);
 
+    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
+
     buttonA2 = new JoystickButton(gamepad2, XboxController.Button.kA.value);
     buttonB2 = new JoystickButton(gamepad2, XboxController.Button.kB.value);
     buttonX2 = new JoystickButton(gamepad2, XboxController.Button.kX.value);
@@ -40,6 +44,8 @@ public class OI {
     buttonRightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
+
+    buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
 
     buttonA.whenPressed(
       () -> {
@@ -53,8 +59,6 @@ public class OI {
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
     buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
-    buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
-    buttonLeftBumper2.whileHeld(new ShooterBasic(0.75)/*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/);
     buttonStart2.whenPressed(new InstantCommand());
 
     /*
