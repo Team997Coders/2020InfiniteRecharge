@@ -1,15 +1,11 @@
 package frc.robot;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.limelight.LimeLight;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -18,6 +14,7 @@ import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
+import frc.robot.util.LEDManager;
 
 public class Robot extends TimedRobot {
 
@@ -66,6 +63,8 @@ public class Robot extends TimedRobot {
     Climber.getInstance();
     Leds.getInstance();
 
+    LEDManager.getInstance();
+
     OI.getInstance();
 
     commandList = new ArrayList<String>();
@@ -94,6 +93,8 @@ public class Robot extends TimedRobot {
     cycles++;
 
     lastUpdate = getCurrentSeconds();
+
+    OI.getInstance().update();
   }
 
   @Override
@@ -106,6 +107,8 @@ public class Robot extends TimedRobot {
 
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
+
+    LEDManager.getInstance().setColorToAlliance();
   }
 
   @Override

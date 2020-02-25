@@ -41,7 +41,10 @@ public final class Constants {
 
       //LEDs
       LEDPORT = 9,
+<<<<<<< HEAD
       LEDCOUNT = 35,
+=======
+>>>>>>> leds
 
       __end_of_ports__ = 0;
       
@@ -94,6 +97,12 @@ public final class Constants {
 
       DRIVE_VELOCITY_GAINS = new Gains(0.6, 0.012, 6.8, 1023.0 / 21500.0),
       SHOOTER_VELOCITY_GAINS = new Gains(0.001, 0, 0.005, (1.0 / (4060.0 * (22.0 / 18.0) * 0.5)));
+
+    public static final int
+
+      LED_COUNT = 21,
+      LED_WIDTH = 7,
+      LED_ROWS = 3;
 
   }
 
