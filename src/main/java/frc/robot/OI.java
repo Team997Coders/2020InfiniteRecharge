@@ -46,16 +46,8 @@ public class OI {
         LEDManager.getInstance().targetReticle();
     });
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
-<<<<<<< HEAD
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper2.whileHeld(new ShooterBasic(0.66));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
-=======
-    buttonX.whenPressed(new InstantCommand());
-    buttonY.whenPressed(new InstantCommand());
-    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true));
-    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
-    buttonStart.whenPressed(new toggleIntakePiston());
->>>>>>> leds
 
     buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
