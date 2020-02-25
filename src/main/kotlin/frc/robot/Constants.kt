@@ -31,6 +31,21 @@ object Constants {
 
   object Values {
 
+    val SHOOTER_GEARING = 3.0 / 4.0
+
+    val INTAKE_EXTEND_DELAY = 0.2
+    val INTAKE_IN = 0.6
+    val INTAKE_EJECT = -0.5
+
+    val CLIMBER_UP = 1.0
+    val CLIMBER_DOWN = -1.0
+
+    val HOPPER_HANDOFF_DELAY = 0.0
+    val HOPPER_HANDOFF_ROLL_TIME = 0.68
+    val HOPPER_INTAKE_SPEED = 0.4
+    val HOPPER_STREAM_SPEED = 1
+    val HOPPER_EJECT_SPEED = -0.4
+
     val DRIVE_VELOCITY_GAINS: Gains = Gains().apply {
       P = 0.6
       I = 0.012

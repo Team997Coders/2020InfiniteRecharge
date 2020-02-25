@@ -9,6 +9,10 @@ import frc.robot.subsystems.Drivetrain
 
 class ArcadeDrive: CommandBase() {
 
+  init {
+    addRequirements(Drivetrain)
+  }
+
   override fun initialize() {
     Drivetrain.setNeutralMode(NeutralMode.Brake)
   }

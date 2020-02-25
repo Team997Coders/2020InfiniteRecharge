@@ -8,7 +8,11 @@
 package frc.robot
 
 import edu.wpi.first.wpilibj.TimedRobot
+import edu.wpi.first.wpilibj2.command.CommandScheduler
+import frc.robot.commands.drivetrain.ArcadeDrive
+import frc.robot.commands.hopper.HopperAutoIndex
 import frc.robot.subsystems.Drivetrain
+import frc.robot.subsystems.Hopper
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,17 +27,40 @@ class Robot : TimedRobot() {
    * for any initialization code.
    */
 
-  override fun robotInit() {}
+  companion object {
+    var EnableAutoLoader: Boolean = false
+  }
 
-  override fun autonomousInit() {}
+  override fun robotInit() {
+    Drivetrain.setDefaultCommand(ArcadeDrive())
+    Hopper.setDefaultCommand(HopperAutoIndex())
+  }
 
-  override fun autonomousPeriodic() {}
+  override fun disabledInit() {}
 
-  override fun teleopInit() {}
+  override fun disabledPeriodic() {
+    CommandScheduler.getInstance().run()
+  }
 
-  override fun teleopPeriodic() {}
+  override fun autonomousInit() {
+    // TODO: Add auto command
+  }
 
-  override fun testInit() {}
+  override fun autonomousPeriodic() {
+    CommandScheduler.getInstance().run()
+  }
+
+  override fun teleopInit() {
+    // TODO: Cancel auto command
+  }
+
+  override fun teleopPeriodic() {
+    CommandScheduler.getInstance().run()
+  }
+
+  override fun testInit() {
+    CommandScheduler.getInstance().cancelAll()
+  }
 
   override fun testPeriodic() {}
 }
