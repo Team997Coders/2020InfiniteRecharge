@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import frc.robot.commands.climber.ClimberMove
+import frc.robot.commands.drivetrain.TargetVision
 import frc.robot.commands.hopper.HopperMove
 import frc.robot.commands.intake.IntakeMove
 import frc.robot.commands.shooter.ShooterBasic
@@ -19,7 +20,7 @@ object OI {
 
   }
   val mB = JoystickButton(mGamepad1, XboxController.Button.kB.value).apply {
-
+    whileHeld(TargetVision())
   }
   val mX = JoystickButton(mGamepad1, XboxController.Button.kX.value).apply {
 

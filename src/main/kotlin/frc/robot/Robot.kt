@@ -29,11 +29,24 @@ class Robot : TimedRobot() {
 
   companion object {
     var EnableAutoLoader: Boolean = false
+
+    var LastUpdate: Double = 0.0
+
+    fun getCurrentTime(): Double {
+      return System.currentTimeMillis() / 1000.0
+    }
+    fun getDeltaTime(): Double {
+      return getCurrentTime() - LastUpdate
+    }
   }
 
   override fun robotInit() {
     Drivetrain.setDefaultCommand(ArcadeDrive())
     Hopper.setDefaultCommand(HopperAutoIndex())
+  }
+
+  override fun robotPeriodic() {
+    LastUpdate = getCurrentTime();
   }
 
   override fun disabledInit() {}

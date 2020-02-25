@@ -58,6 +58,12 @@ object Constants {
       D = 0.005
       F = (1.0 / (4060.0 * (22.0 / 18.0) * 0.5))
     }
+    val VISION_TARGETING_GAINS: Gains = Gains().apply {
+      P = 0.025
+      I = 0.06
+      D = 0.07
+      F = 0.0
+    }
 
   }
 

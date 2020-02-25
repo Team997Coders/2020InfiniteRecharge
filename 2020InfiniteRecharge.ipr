@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Javac"/>
     <resourceExtensions>
       <entry name=".+\.(properties|xml|html|dtd|tld)"/>
       <entry name=".+\.(gif|png|jpeg|jpg)"/>
@@ -12,16 +11,12 @@
       <entry name="!?*.groovy"/>
       <entry name="!?*.java"/>
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true"/>
     <bytecodeTargetLevel target="11"/>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright/>
-  </component>
+  <component name="CopyrightManager" default=""/>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false"/>
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false"/>
   <component name="GradleUISettings">
     <setting name="root"/>
   </component>
@@ -29,6 +24,12 @@
     <setting name="root"/>
   </component>
   <component name="IdProvider" IDEtalkID="11DA1DB66DD62DDA1ED602B7079FE97C"/>
+  <component name="InspectionProjectProfileManager">
+    <profile version="1.0">
+      <option name="myName" value="Project Default"/>
+    </profile>
+    <version value="1.0"/>
+  </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY"/>
     <option name="OPTION_SCOPE" value="protected"/>
@@ -46,19 +47,25 @@
     <option name="LOCALE"/>
     <option name="OPEN_IN_BROWSER" value="true"/>
   </component>
+  <component name="Kotlin2JvmCompilerArguments">
+    <option name="jvmTarget" value="1.8"/>
+  </component>
+  <component name="ProjectCodeStyleConfiguration">
+    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default"/>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/2020InfiniteRecharge.iml" filepath="$PROJECT_DIR$/2020InfiniteRecharge.iml"/>
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" assert-keyword="true" jdk-15="true" project-jdk-type="JavaSDK" assert-jdk-15="true" project-jdk-name="11">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" assert-keyword="true" assert-jdk-15="true">
     <output url="file://$PROJECT_DIR$/out"/>
   </component>
   <component name="SvnBranchConfigurationManager">
     <option name="mySupportsUserInfoFilter" value="true"/>
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs=""/>
+    <mapping directory="$PROJECT_DIR$" vcs="Git"/>
   </component>
   <component name="masterDetails">
     <states>
