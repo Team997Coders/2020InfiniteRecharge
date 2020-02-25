@@ -2,10 +2,11 @@ package frc.robot;
 
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.Intake;
-import frc.robot.util.LEDManager;
+import frc.robot.subsystems.LEDManager;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
+import frc.robot.commands.vision.*;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
 
@@ -47,10 +48,7 @@ public class OI {
 
     buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
 
-    buttonA.whenPressed(
-      () -> {
-        LEDManager.getInstance().targetReticle();
-    });
+    buttonA.whileHeld(new Compass());
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper2.whileHeld(new ShooterBasic(0.66));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/

@@ -1,14 +1,22 @@
-package frc.robot.util;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.subsystems;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class LEDManager {
-
+public class LEDManager extends SubsystemBase {
+  
   private AddressableLED mLeds;
   private AddressableLEDBuffer m_buf;
   private static int delay = 0;
@@ -83,7 +91,7 @@ public class LEDManager {
       int rows = Constants.Values.LED_ROWS;
       int res = 5; // degrees per led
       int middle = (int)(Constants.Values.LED_WIDTH / 2);
-      if (LimeLight.getInstance().getDouble(LimeLight.LED_MODE, 0) == 0) {
+      if (LimeLight.getInstance().getDouble(LimeLight.LED_MODE, 0) != 3) {
         // limelight LED is off, need to turn it on to look for the target
         LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
       }
@@ -130,4 +138,9 @@ public class LEDManager {
     return instance;
   }
 
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

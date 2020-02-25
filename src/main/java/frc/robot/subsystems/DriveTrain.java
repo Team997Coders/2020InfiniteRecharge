@@ -193,8 +193,10 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/Gyro", getGyroAngle());
     SmartDashboard.putNumber("DriveTrain/Ultrasonic Distance (ft)", ultrasonic.getVoltage() / Constants.Values.VOLTAGE_TO_FEET);
 
+    SmartDashboard.putNumber("LimeLight/Target Distance (in)", (90.75 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )));
+    
     if (Robot.verbose) {
-      SmartDashboard.putNumber("LimeLight/Target Distance (in)", (98.25 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )));
+      
       SmartDashboard.putNumber("LimeLight/AngleToTarget", (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)));
           
       SmartDashboard.putNumber("Limelight/hasTarget", LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0));
