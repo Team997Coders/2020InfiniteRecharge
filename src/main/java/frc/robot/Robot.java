@@ -13,6 +13,7 @@ import frc.robot.commands.auto.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
+import frc.robot.commands.vision.Compass;
 import frc.robot.subsystems.*;
 import frc.robot.util.CRGB;
 
@@ -26,7 +27,9 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private Command mHopperCommand;
+  private Command mVisionPanelCommand;
   public static boolean autoLoadHopper = false;
+  private int visionDelay = 0;
 
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -117,6 +120,14 @@ public class Robot extends TimedRobot {
 
     Hopper.getInstance().updateBallCount();
 
+    if (OI.getInstance().gamepad1.getAButton()) {
+      LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
+      if ((visionDelay % 10) == 0) LEDManager.getInstance().target();
+      visionDelay++;
+    } else {
+      LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 1.0);
+      visionDelay = 0;
+    }
   }
 
   @Override
@@ -126,6 +137,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
   }
 
   @Override
@@ -141,6 +153,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
 
     LEDManager.getInstance().setColorToAlliance();
 

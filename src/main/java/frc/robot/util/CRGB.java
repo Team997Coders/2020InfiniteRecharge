@@ -21,7 +21,7 @@ public enum CRGB {
     GREEN(0x008000), 
     BLUE(0x0000ff), 
     LIME(0x00ff00), 
-    YELLOW(0xffff00);
+    YELLOW(0xff9900);
 
     private int value;
 

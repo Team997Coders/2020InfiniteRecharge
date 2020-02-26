@@ -22,14 +22,38 @@ public class LEDManager extends SubsystemBase {
   private AddressableLEDBuffer m_buf;
   private static int delay = 0;
 
+  private int[][] coordinateMap;
+  private int step = (54 / (Constants.Values.LED_WIDTH - 1)); // Degrees per light;
+
   private LEDManager() {
     mLeds = new AddressableLED(Constants.Ports.LEDPORT);
     m_buf = new AddressableLEDBuffer(Constants.Values.LED_COUNT);
     mLeds.setLength(m_buf.getLength());
 
+    coordinateMap = new int[Constants.Values.LED_WIDTH][Constants.Values.LED_ROWS];
+
     clear();
 
     mLeds.start();
+
+    boolean invertCount = false;
+    int currentIndex = 0;
+
+    // Set up a reference grid so we don't have to deal with linearity.
+    for (int i = 0; i < Constants.Values.LED_ROWS; i++) {
+      for (int j = 0; j < Constants.Values.LED_WIDTH; j++) {
+        coordinateMap[j][i] = currentIndex;
+        if (invertCount) currentIndex--; else currentIndex++;
+      }
+      if (invertCount) currentIndex += (Constants.Values.LED_WIDTH + 1); else currentIndex += (Constants.Values.LED_WIDTH - 1);
+      invertCount = !invertCount;
+    }
+
+    for (int i = 0; i < Constants.Values.LED_ROWS; i++) {
+      for (int j = 0; j < Constants.Values.LED_WIDTH; j++) {
+        System.out.println("Value at [" + j + ", " + i + "] = " + coordinateMap[j][i]);
+      }
+    }
   }
 
   public void clear() {
@@ -37,20 +61,29 @@ public class LEDManager extends SubsystemBase {
     for (int i = 0; i < m_buf.getLength(); i++) {
       m_buf.setRGB(i, 0, 0, 0);
     }
-
-    mLeds.setData(m_buf);
   }
 
   public void setColor(CRGB color) {
     for (int i = 0; i < m_buf.getLength(); i++) {
       m_buf.setRGB(i, color.getRed(), color.getGreen(), color.getBlue());
     }
-    mLeds.setData(m_buf);
   }
 
-  public void setColorIndex(int index, int h, int s, int v) {
-    m_buf.setHSV(index, h, s, v);
-    mLeds.setData(m_buf);
+  public void setColorIndex(int index, CRGB color) {
+    m_buf.setRGB(index, color.getRed(), color.getGreen(), color.getBlue());
+  }
+
+  public void setColorIndex(int index, int r, int g, int b) {
+    m_buf.setRGB(index, r, g, b);
+  }
+
+  public void setColorCoordinate(int x, int y, CRGB color) {
+    setColorIndex(coordinateMap[x][y], color.getRed(), color.getGreen(), color.getBlue());
+  }
+
+  public void setColorCoordinate(int x, int y, int r, int g, int b) {
+    setColorIndex(coordinateMap[x][y], r, g, b);
+    //System.out.println("Set " + coordinateMap[x][y] + " to do color");
   }
 
   public void setColorToAlliance() {
@@ -60,6 +93,39 @@ public class LEDManager extends SubsystemBase {
     } else {
       setColor(CRGB.RED); // red
     }
+  }
+
+  public void writeLeds() {
+    mLeds.setData(m_buf);
+  }
+
+  /**
+   * A janky version of the original targeting method.
+   */
+  public void target() {
+
+    if((int)LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0) == 0) {
+      setColor(CRGB.RED);
+    } else if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 100)) < 0.5) {
+      setColor(CRGB.GREEN);
+    } else {
+      setColor(CRGB.YELLOW);
+
+      double error = LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 100);
+      System.out.println(error);
+
+      int sign = (int)(Math.abs(error) / error);
+
+      //TODO replace constants with %step% and stuff
+      //setColorCoordinate((int)((error / 9.0) + 3.0), 0, 255, 0, 0);
+      setColorCoordinate((int)((error / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2)), 0, 255, 0, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 1.8) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 1, 255, 0, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 3.6) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 2, 255, 0, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 5.4) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 3, 255, 0, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 7.2) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 4, 255, 0, 0);
+    }
+
+    writeLeds();
   }
 
   /**

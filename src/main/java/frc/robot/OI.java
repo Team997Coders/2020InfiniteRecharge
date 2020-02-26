@@ -44,7 +44,8 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
-    buttonA.whileHeld(new Compass());
+    //buttonA.whileHeld(new Compass());
+    //buttonA.whileHeld(new LightTest());
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonX.whenPressed(() -> LEDManager.getInstance().setColor(CRGB.RED));
     buttonY.whenPressed(() -> LEDManager.getInstance().setColorToAlliance());
