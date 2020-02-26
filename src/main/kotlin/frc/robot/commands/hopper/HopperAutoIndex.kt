@@ -1,5 +1,6 @@
 package frc.robot.commands.hopper
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.CommandBase
 import frc.robot.Constants
 import frc.robot.Robot
@@ -13,12 +14,19 @@ class HopperAutoIndex: CommandBase() {
   private val roll: TimedTrigger = TimedTrigger(Constants.Values.HOPPER_HANDOFF_ROLL_TIME)
 
   init {
-    addRequirements(Hopper)
+    // addRequirements(Hopper)
   }
 
   override fun execute() {
+
+    SmartDashboard.putBoolean("Hopper/Detected", detected)
+    SmartDashboard.putBoolean("Hopper/Enable Hopper Loader", Robot.EnableAutoLoader)
+    SmartDashboard.putBoolean("Hopper/Handoff", handoff.get(false))
+    SmartDashboard.putBoolean("Hopper/Roll", roll.get(false))
+
     if (Robot.EnableAutoLoader) {
       if (detected) {
+        handoff.trigger()
         if (handoff.get(false)) {
           roll.trigger()
           Hopper.setSpeed(Constants.Values.HOPPER_INTAKE_SPEED)
@@ -31,15 +39,18 @@ class HopperAutoIndex: CommandBase() {
           if (roll.get(true)) {
             handoff.reset()
             detected = false
+            Hopper.setSpeed(0.0)
           }
         }
       } else {
+        // System.out.println("AAA: " + Hopper.getIntakeBall().toString())
+        Hopper.setSpeed(0.0)
         detected = Hopper.getIntakeBall()
       }
     } else {
       handoff.reset()
       roll.reset()
-      detected = false;
+      detected = false
     }
   }
 

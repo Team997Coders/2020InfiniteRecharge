@@ -7,7 +7,9 @@
 
 package frc.robot
 
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpilibj.TimedRobot
+import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.commands.drivetrain.ArcadeDrive
 import frc.robot.commands.hopper.HopperAutoIndex
@@ -32,6 +34,8 @@ class Robot : TimedRobot() {
 
     var LastUpdate: Double = 0.0
 
+    var HopperCommand: Command? = null
+
     fun getCurrentTime(): Double {
       return System.currentTimeMillis() / 1000.0
     }
@@ -42,14 +46,18 @@ class Robot : TimedRobot() {
 
   override fun robotInit() {
     Drivetrain.setDefaultCommand(ArcadeDrive())
-    Hopper.setDefaultCommand(HopperAutoIndex())
   }
 
   override fun robotPeriodic() {
-    LastUpdate = getCurrentTime();
+    LastUpdate = getCurrentTime()
   }
 
-  override fun disabledInit() {}
+  override fun disabledInit() {
+    Drivetrain.setNeutralMode(NeutralMode.Coast)
+
+    HopperCommand?.cancel()
+    HopperCommand = HopperAutoIndex()
+  }
 
   override fun disabledPeriodic() {
     CommandScheduler.getInstance().run()
@@ -57,6 +65,7 @@ class Robot : TimedRobot() {
 
   override fun autonomousInit() {
     // TODO: Add auto command
+    HopperCommand?.schedule()
   }
 
   override fun autonomousPeriodic() {
@@ -64,7 +73,9 @@ class Robot : TimedRobot() {
   }
 
   override fun teleopInit() {
+    Drivetrain.setNeutralMode(NeutralMode.Brake)
     // TODO: Cancel auto command
+    HopperCommand?.schedule()
   }
 
   override fun teleopPeriodic() {

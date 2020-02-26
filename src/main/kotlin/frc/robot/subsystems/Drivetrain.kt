@@ -38,16 +38,16 @@ object Drivetrain: Subsystem {
 
     follow(mLeft1)
 
-    config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.P, 10)
-    config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.I, 10)
-    config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.D, 10)
-    config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.F, 10)
+    // config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.P, 10)
+    // config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.I, 10)
+    // config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.D, 10)
+    // config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.F, 10)
 
     setNeutralMode(NeutralMode.Brake)
   }
   private val mRight1: TalonFX = TalonFX(Constants.Ports.DRIVETRAIN_RIGHT_1).apply {
     configFactoryDefault(10)
-    setInverted(true)
+    setInverted(false)
     configSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 40.0, 0.0, 0.0))
     configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10)
     setSelectedSensorPosition(0, 0, 10)
@@ -61,15 +61,15 @@ object Drivetrain: Subsystem {
   }
   private val mRight2: TalonFX = TalonFX(Constants.Ports.DRIVETRAIN_RIGHT_2).apply {
     configFactoryDefault(10)
-    setInverted(true)
+    setInverted(false)
     configSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 40.0, 0.0, 0.0))
 
     follow(mRight1)
 
-    config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.P, 10)
-    config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.I, 10)
-    config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.D, 10)
-    config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.F, 10)
+    // config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.P, 10)
+    // config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.I, 10)
+    // config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.D, 10)
+    // config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.F, 10)
 
     setNeutralMode(NeutralMode.Brake)
   }

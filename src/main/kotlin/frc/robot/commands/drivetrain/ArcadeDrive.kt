@@ -18,8 +18,11 @@ class ArcadeDrive: CommandBase() {
   }
 
   override fun execute() {
-    val f = Constants.deadband(-OI.mGamepad1.getRawAxis(XboxController.Axis.kLeftY.value) * 0.7, 0.05)
-    val t = Constants.deadband(OI.mGamepad1.getRawAxis(XboxController.Axis.kRightX.value) * 0.4, 0.05)
+
+    System.out.println("Uhhh: " + OI.mGamepad1.getRawAxis(1))
+
+    val f = Constants.deadband(-OI.mGamepad1.getRawAxis(1) * 0.7, 0.05)
+    val t = Constants.deadband(OI.mGamepad1.getRawAxis(4) * 0.4, 0.05)
 
     val left = f + t
     val right = f - t

@@ -33,7 +33,7 @@ object Hopper: Subsystem {
     mTop.set(ControlMode.PercentOutput, speed)
   }
 
-  public fun getIntakeBall(): Boolean { return !mShooterIR.get() }
+  public fun getIntakeBall(): Boolean { return !mIntakeIR.get() }
   public fun getOverflowBall(): Boolean { return !mOverflowIR.get() }
   public fun getShooterBall(): Boolean { return !mShooterIR.get() }
 

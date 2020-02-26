@@ -13,8 +13,12 @@ class TargetVision: CommandBase() {
 
   val mController: SpartanPID = SpartanPID(Constants.Values.VISION_TARGETING_GAINS.toPIDConstants())
 
+  override fun initialize() {
+    mController.setpoint = 0.0
+  }
+
   override fun execute() {
-    val output: Double = mController.WhatShouldIDo(getError(), Robot.getDeltaTime())
+    val output: Double = mController.WhatShouldIDo(getError(), Robot.getDeltaTime() * 1000)
     val forward: Double = Constants.deadband(-OI.mGamepad1.getRawAxis(1) * 0.7, 0.05)
 
     Drivetrain.setMotors(forward + output, forward - output)

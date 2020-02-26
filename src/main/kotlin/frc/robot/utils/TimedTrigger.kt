@@ -22,7 +22,7 @@ class TimedTrigger(val delay: Double) {
   }
 
   public fun getCurrentTime(): Double {
-    return System.currentTimeMillis() / 1000.0;
+    return System.currentTimeMillis() / 1000.0
   }
 
 }
