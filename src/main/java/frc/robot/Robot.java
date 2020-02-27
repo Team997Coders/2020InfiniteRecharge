@@ -13,10 +13,9 @@ import frc.robot.commands.auto.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
-import frc.robot.commands.vision.Compass;
 import frc.robot.subsystems.*;
 import frc.robot.util.CRGB;
-import frc.robot.util.ImageLoader;
+import frc.robot.images.ImageLoader;
 
 public class Robot extends TimedRobot {
 
@@ -28,7 +27,6 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private Command mHopperCommand;
-  private Command mVisionPanelCommand;
   public static boolean autoLoadHopper = false;
   private int visionDelay = 0;
 
@@ -37,7 +35,6 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-    ImageLoader sbeve = new ImageLoader();
 
     //CameraServer.getInstance().startAutomaticCapture(0);
 
@@ -105,6 +102,11 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
+    ImageLoader img = new ImageLoader("/home/lvuser/deploy/images/nine.bmp");
+    if (img.hasImage()) LEDManager.getInstance().setColorArray(img.getColorArray());
+    LEDManager.getInstance().writeLeds();
+
+    
     DriveTrain.getInstance().setCoast();
 
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);

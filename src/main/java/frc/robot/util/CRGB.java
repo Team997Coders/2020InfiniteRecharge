@@ -44,4 +44,5 @@ public enum CRGB {
     public int getBlue() {
         return (value & 0x0000ff);
     }
+
 }

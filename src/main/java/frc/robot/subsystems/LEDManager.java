@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.CRGB;
+import frc.robot.util.RGB;
 
 public class LEDManager extends SubsystemBase {
 
@@ -90,6 +91,22 @@ public class LEDManager extends SubsystemBase {
   public void setColorCoordinate(int x, int y, int r, int g, int b) {
     setColorIndex(coordinateMap[x][y], r, g, b);
     //System.out.println("Set " + coordinateMap[x][y] + " to do color");
+  }
+
+  public void setColorArray(RGB[][] array) {
+    setColorArray(array, 0, 0);
+  }
+
+  public void setColorArray(RGB[][] array, int xOffset, int yOffset) {
+    for (int i = (0 + yOffset); i < (Constants.Values.LED_ROWS + yOffset); i++) {
+      for (int j = (0 + xOffset); j < (Constants.Values.LED_WIDTH + xOffset); j++) {
+        if (j < array.length && i < array[0].length) {
+          setColorIndex(coordinateMap[j][i], array[j][i].getRed(), array[j][i].getGreen(), array[j][i].getBlue());
+        } else {
+          setColorIndex(coordinateMap[j][i], CRGB.BLACK);
+        } 
+      }
+    }
   }
 
   public void setColorToAlliance() {
