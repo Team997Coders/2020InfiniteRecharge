@@ -16,11 +16,20 @@ import java.awt.image.BufferedImage;
 
 public class ImageLoader {
 
-    BufferedImage image;
+    private BufferedImage image;
+    private RGB[][] imageArray;
 
     public ImageLoader(String path) {
         try {
             image = ImageIO.read(new File(path));
+            imageArray = new RGB[image.getWidth()][image.getHeight()];
+            
+            for(int i = 0; i < image.getHeight(); i++) {
+                for(int j = 0; j < image.getWidth(); j++) {
+                    imageArray[j][i] = new RGB(image.getRGB(j, i));
+                }
+            }
+
         } catch(Exception e) {
             image = null;
         }
@@ -35,13 +44,17 @@ public class ImageLoader {
     }
 
     public RGB[][] getColorArray() {
-        RGB[][] arr = new RGB[image.getWidth()][image.getHeight()];
-        for(int i = 0; i < image.getHeight(); i++) {
-            for(int j = 0; j < image.getWidth(); j++) {
-                arr[j][i] = new RGB(image.getRGB(j, i));
+        return imageArray;
+    }
+
+    public void changeBrightness(int amount) {
+        if (hasImage()) {
+            for(int i = 0; i < image.getHeight(); i++) {
+                for(int j = 0; j < image.getWidth(); j++) {
+                    imageArray[j][i].changeBrightness(amount);
+                }
             }
-        }
-        return arr;
+        }   
     }
 
 }

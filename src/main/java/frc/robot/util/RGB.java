@@ -1,31 +1,41 @@
 package frc.robot.util;
 
+import org.team997coders.spartanlib.math.MathUtils;
+
 public class RGB {
 
-    private int color;
+    private int color, red, green, blue;
 
     public RGB(int color) {
         this.color = color;
+        red = (color & 0xff0000) >> 16;
+        green = (color & 0x00ff00) >> 8;
+        blue = (color & 0x0000ff);
     }
 
     public int getRed() {
-        return (color & 0xff0000) >> 16;
+        return red;
     }
 
     public int getGreen() {
-        return (color & 0x00ff00) >> 8;
+        return green;
     }
 
     public int getBlue() {
-        return (color & 0x0000ff);
+        return blue;
     }
 
     public void changeBrightness(int amount) {
-        amount += 128;
-        if (amount > 255) amount = 255;
-        if (amount < 0) amount = 0; 
-        int hex = (amount << 16) & (amount << 8) & amount;
-        color &= hex;
+        red += amount;
+        green += amount;
+        blue += amount;
+        clampColor();
+    }
+
+    private void clampColor() {
+        MathUtils.clamp(red, 0, 255);
+        MathUtils.clamp(green, 0, 255);
+        MathUtils.clamp(blue, 0, 255);
     }
 
 }

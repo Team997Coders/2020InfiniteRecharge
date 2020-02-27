@@ -7,7 +7,7 @@ import frc.robot.util.CRGB;
 import frc.robot.commands.climber.ClimberMove;
 import frc.robot.commands.drivetrain.AutoFaceTargetAndDrive;
 import frc.robot.commands.hopper.*;
-import frc.robot.commands.vision.*;
+import frc.robot.commands.leds.*;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;

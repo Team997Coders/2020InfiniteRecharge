@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.vision;
+package frc.robot.commands.leds;
 
 import org.team997coders.spartanlib.limelight.LimeLight;
 

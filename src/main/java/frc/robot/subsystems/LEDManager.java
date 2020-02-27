@@ -37,11 +37,11 @@ public class LEDManager extends SubsystemBase {
 
     mLeds.start();
 
-    boolean invertCount = false;
-    int currentIndex = 0;
+    boolean invertCount = false; // Set to true if 1st LED in panel is on the right side.
+    int currentIndex = 0; // Set to LED_WITDTH if invertCount is true.
 
     // Set up a reference grid so we don't have to deal with linearity.
-    for (int i = 0; i < Constants.Values.LED_ROWS; i++) {
+    for (int i = Constants.Values.LED_ROWS - 1; i >= 0; i--) {
       for (int j = 0; j < Constants.Values.LED_WIDTH; j++) {
         coordinateMap[j][i] = currentIndex;
         if (invertCount) currentIndex--; else currentIndex++;
@@ -98,10 +98,10 @@ public class LEDManager extends SubsystemBase {
   }
 
   public void setColorArray(RGB[][] array, int xOffset, int yOffset) {
-    for (int i = (0 + yOffset); i < (Constants.Values.LED_ROWS + yOffset); i++) {
-      for (int j = (0 + xOffset); j < (Constants.Values.LED_WIDTH + xOffset); j++) {
-        if (j < array.length && i < array[0].length) {
-          setColorIndex(coordinateMap[j][i], array[j][i].getRed(), array[j][i].getGreen(), array[j][i].getBlue());
+    for (int i = (0); i < (Constants.Values.LED_ROWS); i++) {
+      for (int j = (0); j < (Constants.Values.LED_WIDTH); j++) {
+        if ((j - xOffset ) >= 0 && (i - yOffset) >= 0 && (j - xOffset) < array.length && (i - yOffset) < array[0].length) {
+          setColorIndex(coordinateMap[j][i], array[j - xOffset][i - yOffset].getRed(), array[j - xOffset][i - yOffset].getGreen(), array[j - xOffset][i - yOffset].getBlue());
         } else {
           setColorIndex(coordinateMap[j][i], CRGB.BLACK);
         } 

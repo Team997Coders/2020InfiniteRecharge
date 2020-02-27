@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
+import frc.robot.commands.leds.ScrollImage;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
 import frc.robot.util.CRGB;
@@ -65,7 +66,7 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
 
-    LEDManager.getInstance();
+    LEDManager.getInstance().setDefaultCommand(new ScrollImage());
 
     OI.getInstance();
 
@@ -102,7 +103,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-    ImageLoader img = new ImageLoader("/home/lvuser/deploy/images/nine.bmp");
+    ImageLoader img = new ImageLoader("/home/lvuser/deploy/images/TestImage.bmp");
     if (img.hasImage()) LEDManager.getInstance().setColorArray(img.getColorArray());
     LEDManager.getInstance().writeLeds();
 
