@@ -93,7 +93,8 @@ public final class Constants {
     public static final Gains
 
       DRIVE_VELOCITY_GAINS = new Gains(0.6, 0.012, 6.8, 1023.0 / 21500.0),
-      SHOOTER_VELOCITY_GAINS = new Gains(0.001, 0, 0.005, (1.0 / (4060.0 * (22.0 / 18.0) * 0.5)));
+      // SHOOTER_VELOCITY_GAINS = new Gains(0.000000001, /*0.0000003*/0.0, 0.014, (1.0 / (5200))); // P 0.0003, I 0.000001
+      SHOOTER_VELOCITY_GAINS = new Gains(0.000000000, /*0.0000003*/0.0, 0.0, (1.0 / (5200)));
 
     public static final int
 

@@ -48,15 +48,15 @@ public class OI {
 
     buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
 
-    buttonA.whileHeld(new Compass());
+    buttonA.whileHeld(new HopperMove(Constants.Values.HOPPER_STREAM_SPEED));
     buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper2.whileHeld(new ShooterBasic(0.66));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
 
-    buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
-    buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
-    buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
-    buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
+    buttonA2.whenPressed(new ShooterStream(2000));
+    buttonB2.whenPressed(new ShooterStream(2500));
+    buttonX2.whenPressed(new ShooterStream(1000));
+    buttonY2.whileHeld(new ShooterBasic(0.0));
     buttonStart2.whenPressed(new InstantCommand());
 
     /*

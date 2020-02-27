@@ -33,7 +33,7 @@ public class AutoStreamUntilEmpty extends CommandBase {
     DriveTrain.getInstance().setMotors(-output, output);
 
     Shooter.getInstance().setRPM(mTarget);
-    if (MathUtils.epsilon(Shooter.getInstance().getRPMs(), mTarget, 80)
+    if (MathUtils.epsilon(Shooter.getInstance().getRPMs(true), mTarget, 80)
       && Hopper.getInstance().mBallCount > 0
       && Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < 1) {
       Hopper.getInstance().setSpeed(Constants.Values.HOPPER_STREAM_SPEED);

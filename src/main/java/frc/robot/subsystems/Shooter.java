@@ -34,13 +34,14 @@ public class Shooter implements Subsystem {
     mMotor2.follow(mMotor1);
 
     mEncoder = mMotor1.getEncoder();
-    mEncoder.setVelocityConversionFactor(Constants.Values.SHOOTER_GEARING);
+    // mEncoder.setVelocityConversionFactor(Constants.Values.SHOOTER_GEARING);
 
     mController = mMotor1.getPIDController();
     mController.setP(Constants.Values.SHOOTER_VELOCITY_GAINS.kP);
     mController.setI(Constants.Values.SHOOTER_VELOCITY_GAINS.kI);
     mController.setD(Constants.Values.SHOOTER_VELOCITY_GAINS.kD);
     mController.setFF(Constants.Values.SHOOTER_VELOCITY_GAINS.kF);
+    mController.setIMaxAccum(1, 1);
 
     register();
   }
@@ -61,14 +62,18 @@ public class Shooter implements Subsystem {
   }
 
   public void updateSmartDashboard(){
-    SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
+    SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs(false));
+    SmartDashboard.putNumber("Shooter/output", mMotor1.getAppliedOutput());
+    SmartDashboard.putNumber("Shooter/current 1", mMotor1.getOutputCurrent());
+    SmartDashboard.putNumber("Shooter/current 2", mMotor2.getOutputCurrent());
     if (Robot.verbose) {
       SmartDashboard.putNumber("Shooter/Ball Ejection Speed", getBallSpeed());
     }
   }
 
-  public double getRPMs() {
-    return mEncoder.getVelocity();
+  public double getRPMs(boolean parsing) {
+    if (parsing) return mEncoder.getVelocity() * Constants.Values.SHOOTER_GEARING;
+    else return mEncoder.getVelocity();
   }
 
   public double getNeededBallVelocity(double distance) {
@@ -76,7 +81,11 @@ public class Shooter implements Subsystem {
   }
 
   public double getBallSpeed() {
-    return (getRPMs() / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
+    return (getRPMs(false) / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
+  }
+
+  public double getControllerError(double target) {
+    return target - getRPMs(false);
   }
 
   @Override

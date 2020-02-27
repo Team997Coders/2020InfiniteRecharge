@@ -1,5 +1,6 @@
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
@@ -17,16 +18,17 @@ public class ShooterStream extends CommandBase {
 
   @Override
   public void initialize() {
+    Shooter.getInstance().setRPM(mTarget);
   }
 
   @Override
   public void execute() {
-    Shooter.getInstance().setRPM(mTarget);
-    if (eps(Shooter.getInstance().getRPMs(), mTarget, 80) && Hopper.getInstance().mBallCount > 0) {
+    SmartDashboard.putNumber("Shooter/Error", Shooter.getInstance().getControllerError(mTarget));
+    /*if (eps(Shooter.getInstance().getRPMs(), mTarget, 80) && Hopper.getInstance().mBallCount > 0) {
       Hopper.getInstance().setSpeed(Constants.Values.HOPPER_STREAM_SPEED);
     } else {
       Hopper.getInstance().setSpeed(0.0);
-    }
+    }*/
   }
 
   public boolean eps(double a, double b, double eps) {
