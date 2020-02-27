@@ -69,6 +69,12 @@ public class LEDManager extends SubsystemBase {
     }
   }
 
+  public void setColor(int r, int g, int b) {
+    for (int i = 0; i < m_buf.getLength(); i++) {
+      m_buf.setRGB(i, r, g, b);
+    }
+  }
+
   public void setColorIndex(int index, CRGB color) {
     m_buf.setRGB(index, color.getRed(), color.getGreen(), color.getBlue());
   }
@@ -105,11 +111,11 @@ public class LEDManager extends SubsystemBase {
   public void target() {
 
     if((int)LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0) == 0) {
-      setColor(CRGB.RED);
+      setColor(127, 0, 0);
     } else if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 100)) < 0.5) {
-      setColor(CRGB.GREEN);
+      setColor(0, 127, 0);
     } else {
-      setColor(CRGB.YELLOW);
+      setColor(0, 0, 127);
 
       double error = LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 100);
       System.out.println(error);
@@ -118,11 +124,11 @@ public class LEDManager extends SubsystemBase {
 
       //TODO replace constants with %step% and stuff
       //setColorCoordinate((int)((error / 9.0) + 3.0), 0, 255, 0, 0);
-      setColorCoordinate((int)((error / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2)), 0, 255, 0, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 1.8) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 1, 255, 0, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 3.6) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 2, 255, 0, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 5.4) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 3, 255, 0, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 7.2) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 4, 255, 0, 0);
+      setColorCoordinate((int)((error / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2)), 0, 127, 31, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 1.8) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 1, 127, 31, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 3.6) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 2, 127, 31, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 5.4) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 3, 127, 31, 0);
+      setColorCoordinate((int)((sign * ((Math.abs(error) + 7.2) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 4, 127, 31, 0);
     }
 
     writeLeds();

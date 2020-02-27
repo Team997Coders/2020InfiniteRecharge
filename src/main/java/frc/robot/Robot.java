@@ -16,6 +16,7 @@ import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.commands.vision.Compass;
 import frc.robot.subsystems.*;
 import frc.robot.util.CRGB;
+import frc.robot.util.ImageLoader;
 
 public class Robot extends TimedRobot {
 
@@ -36,6 +37,8 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
+    ImageLoader sbeve = new ImageLoader();
+
     //CameraServer.getInstance().startAutomaticCapture(0);
 
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
