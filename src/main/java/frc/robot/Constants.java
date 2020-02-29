@@ -12,7 +12,7 @@ public final class Constants {
   public static class Ports {
 
     public static final int
-
+      HOODNEWMOTOR = 13,
       SHOOTER_MOTOR_1 = 8,
       SHOOTER_MOTOR_2 = 9,
 

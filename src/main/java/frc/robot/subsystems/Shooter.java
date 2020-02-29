@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -13,7 +16,8 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Shooter implements Subsystem {
-
+  
+  private TalonSRX hoodMotor;
   private CANSparkMax mMotor1, mMotor2;
   private CANPIDController mController;
   private CANEncoder mEncoder;
@@ -21,6 +25,8 @@ public class Shooter implements Subsystem {
   private Shooter() {
     mMotor1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
     mMotor2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
+    hoodMotor = new TalonSRX(Constants.Ports.HOODNEWMOTOR);
+    hoodMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 
     mMotor1.restoreFactoryDefaults();
     mMotor2.restoreFactoryDefaults();
@@ -79,9 +85,18 @@ public class Shooter implements Subsystem {
     return (getRPMs() / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
   }
 
+  public void hoodMotor(double perc){
+    hoodMotor.set(ControlMode.PercentOutput,perc);
+  }
+
+  public double getEncoder(){
+    return hoodMotor.getSelectedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     updateSmartDashboard();
   }
+
 
 }
