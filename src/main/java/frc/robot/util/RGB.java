@@ -33,9 +33,8 @@ public class RGB {
     }
 
     private void clampColor() {
-        MathUtils.clamp(red, 0, 255);
-        MathUtils.clamp(green, 0, 255);
-        MathUtils.clamp(blue, 0, 255);
+        red = (int)MathUtils.clamp(red, 0, 255);
+        green = (int)MathUtils.clamp(green, 0, 255);
+        blue = (int)MathUtils.clamp(blue, 0, 255);
     }
-
 }

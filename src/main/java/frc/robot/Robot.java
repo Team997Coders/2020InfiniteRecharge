@@ -103,7 +103,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-    ImageLoader img = new ImageLoader("/home/lvuser/deploy/images/TestImage.bmp");
+    ImageLoader img = new ImageLoader("/home/lvuser/deploy/images/us.bmp");
+    img.changeBrightness(-128);
     if (img.hasImage()) LEDManager.getInstance().setColorArray(img.getColorArray());
     LEDManager.getInstance().writeLeds();
 

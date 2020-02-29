@@ -49,12 +49,6 @@ public class LEDManager extends SubsystemBase {
       if (invertCount) currentIndex += (Constants.Values.LED_WIDTH + 1); else currentIndex += (Constants.Values.LED_WIDTH - 1);
       invertCount = !invertCount;
     }
-
-    for (int i = 0; i < Constants.Values.LED_ROWS; i++) {
-      for (int j = 0; j < Constants.Values.LED_WIDTH; j++) {
-        System.out.println("Value at [" + j + ", " + i + "] = " + coordinateMap[j][i]);
-      }
-    }
   }
 
   public void clear() {
