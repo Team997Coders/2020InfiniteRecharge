@@ -11,7 +11,7 @@ public class ShootBadly extends CommandBase {
 
   public ShootBadly() {
     mTrig1 = new TimedTrigger(1.5);
-    mTrig2 = new TimedTrigger(5);
+    mTrig2 = new TimedTrigger(3);
   }
 
   @Override
@@ -21,7 +21,7 @@ public class ShootBadly extends CommandBase {
 
   @Override
   public void execute() {
-    Shooter.getInstance().SetYeeterPercent(1.0);
+    Shooter.getInstance().SetYeeterPercent(0.66);
     if (mTrig1.get(false)) {
       mTrig2.trigger();
       Hopper.getInstance().setSpeed(1);

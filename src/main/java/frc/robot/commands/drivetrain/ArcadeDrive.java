@@ -35,9 +35,8 @@ public class ArcadeDrive extends CommandBase {
     turn = MathUtils.deadband(turn, 0.1);
 
     forward *= 0.7;
-    turn *= 0.4;
-
-    
+    if (turn < 0) turn = -Math.pow(turn, 2);
+    else turn = Math.pow(turn, 2);
 
     left = forward + turn;
     right = forward - turn;

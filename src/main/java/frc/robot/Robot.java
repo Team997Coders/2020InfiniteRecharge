@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     SequentialCommandGroup seq = new SequentialCommandGroup(
-      new DriveBadly(7.5),
+      new DriveDeadReckTarget(5.3), // 6.8
       new ShootBadly()
     );
 
