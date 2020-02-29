@@ -25,7 +25,7 @@ public class Shooter implements Subsystem {
   private Shooter() {
     mMotor1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
     mMotor2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
-    hoodMotor = new TalonSRX(Constants.Ports.HOODNEWMOTOR);
+    hoodMotor = new TalonSRX(Constants.Ports.HOOD_MOTOR);
     hoodMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 
     mMotor1.restoreFactoryDefaults();
