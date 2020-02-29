@@ -56,7 +56,7 @@ public class OI {
     buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
     buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
-    buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
+    buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_STREAM_SPEED));
     buttonStart2.whenPressed(new InstantCommand());
 
     /*
