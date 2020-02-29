@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -99,6 +100,15 @@ public class DriveTrain implements Subsystem {
     SmartDashboard.putNumber("DriveTrain/right speddd", rightSpeed);
   }
 
+  /**
+   * @param left in Feet
+   * @param right in Feet
+   */
+  public void setPosition(double left, double right) {
+    left /= (Constants.Values.DRIVE_VEL_2_FEET / 10);
+    right /= (Constants.Values.DRIVE_VEL_2_FEET / 10);
+  }
+
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
     frontLeft.set(ControlMode.Velocity, leftFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
     frontRight.set(ControlMode.Velocity, rightFeetPerSecond / Constants.Values.DRIVE_VEL_2_FEET);
@@ -165,6 +175,10 @@ public class DriveTrain implements Subsystem {
   public void resetEncoders() {
     frontLeft.setSelectedSensorPosition(0, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
+  }
+
+  public void selectPIDProfile(int slot) {
+
   }
 
   @Override
@@ -240,5 +254,17 @@ public class DriveTrain implements Subsystem {
       instance = new DriveTrain();
     }
     return instance;
+  }
+
+  public enum PIDSlots {
+    Position(0), Velocity(1);
+
+    int value = 0;
+
+    PIDSlots(int val) {
+      value = val;
+    }
+
+    public int getValue() { return value; }
   }
 }
