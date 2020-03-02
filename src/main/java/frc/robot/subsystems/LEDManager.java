@@ -133,13 +133,9 @@ public class LEDManager extends SubsystemBase {
 
       int sign = (int)(Math.abs(error) / error);
 
-      //TODO replace constants with %step% and stuff
-      //setColorCoordinate((int)((error / 9.0) + 3.0), 0, 255, 0, 0);
-      setColorCoordinate((int)((error / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2)), 0, 127, 31, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 1.8) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 1, 127, 31, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 3.6) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 2, 127, 31, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 5.4) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 3, 127, 31, 0);
-      setColorCoordinate((int)((sign * ((Math.abs(error) + 7.2) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), 4, 127, 31, 0);
+      for (int i = 0; i < Constants.Values.LED_ROWS; i++) {
+        setColorCoordinate((int)((sign * ((Math.abs(error) + ((9 / Constants.Values.LED_ROWS) * i)) / (54 / (Constants.Values.LED_WIDTH - 1))) + Math.floor(Constants.Values.LED_WIDTH / 2))), i, 127, 31, 0);
+      }
     }
 
     writeLeds();

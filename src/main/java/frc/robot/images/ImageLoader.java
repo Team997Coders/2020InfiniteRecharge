@@ -35,9 +35,6 @@ public class ImageLoader {
         }
     }
 
-    /**
-     * Check in case the filepath was bad.
-     */
     public boolean hasImage() {
         if (image != null) return true;
         return false; 
