@@ -60,6 +60,11 @@ public class Shooter implements Subsystem {
     mMotor1.set(0.0);
   }
 
+  public double getSpeedForRPM(double RPM) {
+    return 0.00000000381 * Math.pow(RPM, 2) +
+      0.000211 * RPM + 0.0144;
+  }
+
   public void updateSmartDashboard(){
     SmartDashboard.putNumber("Shooter/encoderspeed", getRPMs());
     if (Robot.verbose) {

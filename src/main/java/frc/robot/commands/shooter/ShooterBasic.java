@@ -7,7 +7,8 @@ public class ShooterBasic extends CommandBase {
 
   private double mSpeed = 0.0;
 
-  public ShooterBasic(double speed) {
+  public ShooterBasic(double speed, boolean convertToPercent) {
+    if (convertToPercent) speed = Shooter.getInstance().getSpeedForRPM(speed);
     mSpeed = speed;
 
     addRequirements(Shooter.getInstance());

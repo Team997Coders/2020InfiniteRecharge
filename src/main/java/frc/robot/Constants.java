@@ -75,7 +75,7 @@ public final class Constants {
         HOPPER_INTAKE_IR_DELAY = 0, // ms
         HOPPER_SHOOTER_IR_DELAY = 20, //ms
 
-        SHOOTER_GEARING = 3.0 / 4.0,
+        SHOOTER_GEARING = 18.0 / 22.0,
         SHOOTER_RPM = 3700,
         SHOOTER_CIRCUMFERENCE_CM = (10.16 * Math.PI), // cm
         SHOOTER_RELEASE_ANGLE = 80, // degrees up from horizontal
