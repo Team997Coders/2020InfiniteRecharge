@@ -150,6 +150,10 @@ public class DriveTrain implements Subsystem {
     return frontRight.getSelectedSensorPosition(0);
   }
 
+  public double getAverageEncoders() {
+    return ((frontLeft.getSelectedSensorPosition(0) + frontRight.getSelectedSensorPosition(0)) / 2);
+  }
+
   public double getGyroAngle() {
     return imu.getAngle();
   }

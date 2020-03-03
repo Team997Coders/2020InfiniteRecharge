@@ -52,12 +52,17 @@ public final class Constants {
     public static final double
         ACCELERATION = 2.5, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
+        TICKS_TO_FEET = (12 * (2048 * (9 / 70) * (5 * Math.PI))),
 
         VISION_TURNING_P = 0.025, //0.04
         VISION_TURNING_I = 0.06,
         VISION_TURNING_D = 0.07,
         VISION_TOLERANCE = 1.5,
         VISION_TIMEOUT = 2000, //in ms
+
+        DRIVE_P = 0.0001,
+        DRIVE_I = 0,
+        DRIVE_D = 0,
 
         VISION_LIMELIGHT_HEIGHT = 40, //Height (inches) up from the ground of the center of the limelight. 
         VISION_LIMELIGHT_ANGLE = 30,//Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
