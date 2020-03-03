@@ -73,7 +73,7 @@ public class DriveTrain implements Subsystem {
     frontRight.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
     frontRight.setSelectedSensorPosition(0, 0, 10);
 
-    frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
+    /*frontLeft.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
     frontLeft.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
     frontLeft.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
     frontLeft.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
@@ -81,7 +81,17 @@ public class DriveTrain implements Subsystem {
     frontRight.config_kP(0, Constants.Values.DRIVE_VELOCITY_GAINS.kP);
     frontRight.config_kI(0, Constants.Values.DRIVE_VELOCITY_GAINS.kI);
     frontRight.config_kD(0, Constants.Values.DRIVE_VELOCITY_GAINS.kD);
-    frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);
+    frontRight.config_kF(0, Constants.Values.DRIVE_VELOCITY_GAINS.kF);*/
+
+    frontLeft.config_kP(0, Constants.Values.DRIVE_POSITION_GAINS.kP);
+    frontLeft.config_kI(0, Constants.Values.DRIVE_POSITION_GAINS.kI);
+    frontLeft.config_kD(0, Constants.Values.DRIVE_POSITION_GAINS.kD);
+    frontLeft.config_kF(0, Constants.Values.DRIVE_POSITION_GAINS.kF);
+    
+    frontRight.config_kP(0, Constants.Values.DRIVE_POSITION_GAINS.kP);
+    frontRight.config_kI(0, Constants.Values.DRIVE_POSITION_GAINS.kI);
+    frontRight.config_kD(0, Constants.Values.DRIVE_POSITION_GAINS.kD);
+    frontRight.config_kF(0, Constants.Values.DRIVE_POSITION_GAINS.kF);
 
     frontLeft.setNeutralMode(NeutralMode.Brake);
     backLeft.setNeutralMode(NeutralMode.Brake);
@@ -107,6 +117,9 @@ public class DriveTrain implements Subsystem {
   public void setPosition(double left, double right) {
     left /= (Constants.Values.DRIVE_VEL_2_FEET / 10);
     right /= (Constants.Values.DRIVE_VEL_2_FEET / 10);
+
+    frontLeft.set(ControlMode.Position, left);
+    frontRight.set(ControlMode.Position, right);
   }
 
   public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) {
@@ -150,6 +163,11 @@ public class DriveTrain implements Subsystem {
     orch.addInstrument(backRight);
     orch.loadMusic("Megalovania.chrp");
     orch.play();
+  }
+
+  public void disableMotors() {
+    frontLeft.set(ControlMode.Disabled, 0);
+    frontRight.set(ControlMode.Disabled, 0);
   }
 
   public double getLeftSensor() {

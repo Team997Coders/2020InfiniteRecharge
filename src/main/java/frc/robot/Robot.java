@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
     m_chooser.addOption("Bad Auto", seq);
+    m_chooser.addOption("Auto Test", new DriveDistance(5));
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,

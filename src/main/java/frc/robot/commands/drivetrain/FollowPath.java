@@ -21,7 +21,7 @@ public class FollowPath extends CommandBase {
     this.name = name;
     this.reverse = reverse;
 
-    SmartDashboard.putNumber("Paht" + name, 0);
+    SmartDashboard.putNumber("Path" + name, 0);
 
     addRequirements(DriveTrain.getInstance());
   }
