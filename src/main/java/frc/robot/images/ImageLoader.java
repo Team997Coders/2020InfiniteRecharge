@@ -48,9 +48,7 @@ public class ImageLoader {
         if (hasImage()) {
             for(int i = 0; i < image.getHeight(); i++) {
                 for(int j = 0; j < image.getWidth(); j++) {
-                    System.out.println("Changed [" + imageArray[j][i].getRed() + " " + imageArray[j][i].getGreen() + " " + imageArray[j][i].getBlue() + "] to ");
                     imageArray[j][i].changeBrightness(amount);
-                    System.out.print("[ " + imageArray[j][i].getRed() + " " + imageArray[j][i].getGreen() + " " + imageArray[j][i].getBlue() + "]");
                 }
             }
         }   

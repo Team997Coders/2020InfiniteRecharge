@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
+import frc.robot.commands.leds.Pong;
 import frc.robot.commands.leds.ScrollImage;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
@@ -63,10 +64,10 @@ public class Robot extends TimedRobot {
     Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance();
-    DriveTrain.getInstance().setDefaultCommand(new ArcadeDrive());
+    DriveTrain.getInstance();//.setDefaultCommand(new ArcadeDrive());
     Climber.getInstance();
 
-    LEDManager.getInstance().setDefaultCommand(new ScrollImage());
+    LEDManager.getInstance().setDefaultCommand(new Pong());
 
     OI.getInstance();
 
