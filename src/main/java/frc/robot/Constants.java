@@ -80,6 +80,10 @@ public final class Constants {
         SHOOTER_RELEASE_ANGLE = 80, // degrees up from horizontal
         SHOOTER_RELEASE_HEIGHT = 1.0612121212, // meters up from ground
 
+        HOOD_P = 0,
+        HOOD_I = 0,
+        HOOD_D = 0,
+
         CLIMBER_UP = 1,
         CLIMBER_DOWN = -1,
         CLIMBER_P = 0,
