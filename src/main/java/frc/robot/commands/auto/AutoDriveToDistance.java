@@ -42,7 +42,7 @@ public class AutoDriveToDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = drivePidLoop.WhatShouldIDo(DriveTrain.getInstance().getAverageEncoders(), (Robot.getCurrentSeconds() * 1000.0));
+    double forward = 0.95 * drivePidLoop.WhatShouldIDo(DriveTrain.getInstance().getAverageEncoders(), (Robot.getCurrentSeconds() * 1000.0));
     double turn = turnPidLoop.WhatShouldIDo(DriveTrain.getInstance().getGyroAngle(), (Robot.getCurrentSeconds() * 1000));
     
     SmartDashboard.putNumber("Auto/piderror", target - DriveTrain.getInstance().getAverageEncoders());
