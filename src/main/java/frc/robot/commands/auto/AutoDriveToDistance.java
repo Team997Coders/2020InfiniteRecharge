@@ -10,6 +10,7 @@ package frc.robot.commands.auto;
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -22,15 +23,16 @@ public class AutoDriveToDistance extends CommandBase {
   double initAngle;
   long onTargetTime;
 
-  public AutoDriveToDistance(double distance) { //in feets
+  public AutoDriveToDistance(double distance) { //in oinches
     addRequirements(DriveTrain.getInstance());
-    target = distance;
+    target = distance / Constants.Values.DRIVETRAIN_TICKS_TO_INCHES;
     drivePidLoop = new SpartanPID(new PIDConstants(Constants.Values.DRIVE_P, Constants.Values.DRIVE_I, Constants.Values.CLIMBER_D));
     turnPidLoop = new SpartanPID(new PIDConstants(Constants.Values.VISION_TURNING_P, Constants.Values.VISION_TURNING_I, Constants.Values.VISION_TURNING_D));
   }
 
   @Override
   public void initialize() {
+    DriveTrain.getInstance().resetEncoders();
     DriveTrain.getInstance().setBrake();
     initAngle = DriveTrain.getInstance().getGyroAngle();
     drivePidLoop.setSetpoint(target);
@@ -40,13 +42,14 @@ public class AutoDriveToDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = drivePidLoop.WhatShouldIDo(target - (DriveTrain.getInstance().getAverageEncoders() * Constants.Values.TICKS_TO_FEET), (Robot.getCurrentSeconds() * 1000));
-    //double turn = turnPidLoop.WhatShouldIDo(initAngle - (DriveTrain.getInstance().getGyroAngle()), (Robot.getCurrentSeconds() * 1000));
+    double forward = drivePidLoop.WhatShouldIDo(DriveTrain.getInstance().getAverageEncoders(), (Robot.getCurrentSeconds() * 1000.0));
+    double turn = turnPidLoop.WhatShouldIDo(DriveTrain.getInstance().getGyroAngle(), (Robot.getCurrentSeconds() * 1000));
     
-    //DriveTrain.getInstance().setMotors(forward - turn, forward + turn);
-    DriveTrain.getInstance().setMotors(forward, forward);
+    SmartDashboard.putNumber("Auto/piderror", target - DriveTrain.getInstance().getAverageEncoders());
+    DriveTrain.getInstance().setMotors(forward + ((1 - forward) * turn), forward - ((1 - forward) * turn));
+    //DriveTrain.getInstance().simpleAccelControl(forward, forward);
 
-    if (Math.abs(target - (DriveTrain.getInstance().getAverageEncoders() * Constants.Values.TICKS_TO_FEET)) < Constants.Values.VISION_TOLERANCE) {
+    if (Math.abs(target - DriveTrain.getInstance().getAverageEncoders()) < Constants.Values.VISION_TOLERANCE) {
       onTargetTime++;
     } else {
       onTargetTime = 0;
@@ -56,6 +59,7 @@ public class AutoDriveToDistance extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    DriveTrain.getInstance().setMotors(0.0, 0.0);
   }
 
   // Returns true when the command should end.

@@ -151,7 +151,7 @@ public class DriveTrain implements Subsystem {
   }
 
   public double getAverageEncoders() {
-    return ((frontLeft.getSelectedSensorPosition(0) + frontRight.getSelectedSensorPosition(0)) / 2);
+    return ((frontLeft.getSelectedSensorPosition(0) + frontRight.getSelectedSensorPosition(0)) / 2.0);
   }
 
   public double getGyroAngle() {

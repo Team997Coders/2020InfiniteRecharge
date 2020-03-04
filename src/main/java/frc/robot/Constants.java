@@ -50,9 +50,12 @@ public final class Constants {
   public static class Values {     
 
     public static final double
-        ACCELERATION = 2.5, // Percentage / Seconds
-        VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
-        TICKS_TO_FEET = (12 * (2048 * (9 / 70) * (5 * Math.PI))),
+        ACCELERATION = 2, // Percentage / Seconds
+        VOLTAGE_TO_FEET = (12.0 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
+        TICKS_TO_FEET = (12.0 * ((1.0 / 2048.0) * (9.0 / 70.0) * (5.0 * Math.PI))),
+        DRIVETRAIN_TICKS_TO_INCHES = ((1.0 / 2048.0) * (9.0 / 70.0) * (5.0 * Math.PI)),
+
+        DRIVETRAIN_TRACKWIDTH = 2.0833333333333, // (ft) distance between the wheelsets.
 
         VISION_TURNING_P = 0.025, //0.04
         VISION_TURNING_I = 0.06,
@@ -60,12 +63,14 @@ public final class Constants {
         VISION_TOLERANCE = 1.5,
         VISION_TIMEOUT = 2000, //in ms
 
-        DRIVE_P = 0.0001,
-        DRIVE_I = 0,
-        DRIVE_D = 0,
+        //input based on ticks
+        DRIVE_P = 0.000025,
+        DRIVE_I = 0.00006,
+        DRIVE_D = 0.00003,
 
-        VISION_LIMELIGHT_HEIGHT = 40, //Height (inches) up from the ground of the center of the limelight. 
-        VISION_LIMELIGHT_ANGLE = 30,//Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
+        VISION_LIMELIGHT_INSET = 18, //TODO add width of bumpers to this
+        VISION_LIMELIGHT_HEIGHT = 40, //TODO soon to be 29" //Height (inches) up from the ground of the center of the limelight. 
+        VISION_LIMELIGHT_ANGLE = 30, //TODO soon to be 40.6 //Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
 
         INTAKE_IN = 0.6, //0.75 // percent speed to intake
         INTAKE_EJECT = -0.5, // percent speed to outtake
