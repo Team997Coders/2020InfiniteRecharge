@@ -50,10 +50,10 @@ public final class Constants {
   public static class Values {     
 
     public static final double
-        ACCELERATION = 2, // Percentage / Seconds
+        ACCELERATION = 2.5, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12.0 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
-        TICKS_TO_FEET = (12.0 * ((1.0 / 2048.0) * (9.0 / 70.0) * (5.0 * Math.PI))),
         DRIVETRAIN_TICKS_TO_INCHES = ((1.0 / 2048.0) * (9.0 / 70.0) * (5.0 * Math.PI)),
+        DRIVETRAIN_TICKS_TO_FEET = DRIVETRAIN_TICKS_TO_INCHES / 12,
 
         DRIVETRAIN_TRACKWIDTH = 2.0833333333333, // (ft) distance between the wheelsets.
 
