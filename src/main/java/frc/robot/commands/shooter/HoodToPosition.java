@@ -52,9 +52,7 @@ public class HoodToPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Shooter.getInstance().getHoodEncoder() < tolerance) {
-      return true;
-    }
-    return false;
+    return (Math.abs(Shooter.getInstance().getHoodEncoder() - targetPosition) < tolerance); 
+
   }
 }
