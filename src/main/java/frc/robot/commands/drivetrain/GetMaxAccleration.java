@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.util.Logger;
 
 public class GetMaxAccleration extends CommandBase {
   
@@ -36,6 +37,8 @@ public class GetMaxAccleration extends CommandBase {
     avgAccelLeft = 0;
     avgAccelRight = 0;
     cycles = 1;
+
+    Logger.getInstance().write("Hi mom");
   }
 
   // Measures stuff in ticks/time
