@@ -18,10 +18,12 @@ import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.hopper.*;
 import frc.robot.commands.shooter.ShootBadly;
 import frc.robot.subsystems.*;
+import frc.robot.util.Logger;
 
 public class Robot extends TimedRobot {
 
   private static double lastUpdate = 0.0;
+  private static double bootTime; // s
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
+    bootTime = getCurrentSeconds();
     //CameraServer.getInstance().startAutomaticCapture(0);
 
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
@@ -118,6 +121,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+
     CommandScheduler.getInstance().run();
 
     Hopper.getInstance().updateBallCount();
@@ -156,6 +160,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    
     CommandScheduler.getInstance().run();
   }
 
@@ -168,6 +173,8 @@ public class Robot extends TimedRobot {
   public void testPeriodic() { }
 
   public static double getDeltaT() { return getCurrentSeconds() - lastUpdate; }
+
+  public static long getTimeSinceBoot() { return Math.round((getCurrentSeconds() - bootTime) * 1000); } 
 
   public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
 
