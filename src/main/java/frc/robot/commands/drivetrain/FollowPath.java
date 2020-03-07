@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import org.team997coders.spartanlib.helpers.SwerveMixerData;
 import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 
 import frc.robot.Constants;
@@ -113,7 +114,8 @@ public class FollowPath extends CommandBase {
     else
     SmartDashboard.putString("Path '" + name + "' has finished", "");
 
-    DriveTrain.getInstance().setMotors(0.0, 0.0);
+    SwerveMixerData dat = DriveTrain.getInstance().getSwerveData(0, 0, 0, DriveTrain.getInstance().getGyroAngle());
+    DriveTrain.getInstance().setSwerveInput(dat);
   }
 
 }

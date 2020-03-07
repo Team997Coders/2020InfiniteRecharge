@@ -26,13 +26,13 @@ public class ShooterStreamAutoTarget extends CommandBase {
   @Override
   public void execute() {
     double deltaT = System.currentTimeMillis() - mLastUpdate;
-    double output = LimeLight.getInstance().getPIDOutput(deltaT);
-    DriveTrain.getInstance().setMotors(-output, output);
+    //double output = LimeLight.getInstance().getPIDOutput(deltaT);
+    //DriveTrain.getInstance().setMotors(-output, output);
 
     Shooter.getInstance().setRPM(mTarget);
     if (MathUtils.epsilon(Shooter.getInstance().getRPMs(), mTarget, 80)
       && Hopper.getInstance().mBallCount > 0
-      && Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE) {
+      && Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_ANGLE_TOLERANCE) {
       Hopper.getInstance().setSpeed(Constants.Values.HOPPER_STREAM_SPEED);
     } else {
       Hopper.getInstance().setSpeed(0.0);
@@ -48,7 +48,7 @@ public class ShooterStreamAutoTarget extends CommandBase {
   public void end(boolean interrupted) {
     Shooter.getInstance().GoodStop();
     Hopper.getInstance().setSpeed(0.0);
-    DriveTrain.getInstance().setMotors(0.0, 0.0);
+    //DriveTrain.getInstance().setMotors(0.0, 0.0);
   }
 
 }

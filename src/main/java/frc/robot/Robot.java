@@ -49,16 +49,10 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().cancelAll();
 
-    SequentialCommandGroup seq = new SequentialCommandGroup(
-      new DriveBadly(7.5),
-      new ShootBadly()
-    );
-
     m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
     m_chooser.addOption("Auto One", new FollowPath("TrenchPivot", false));
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
-    m_chooser.addOption("Bad Auto", seq);
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,

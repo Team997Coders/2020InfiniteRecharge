@@ -39,38 +39,40 @@ public class DriveTrain extends SwerveDrive {
     }
   }
 
-  public void setMotors(double leftSpeed, double rightSpeed) { }
+  public void stopOrchestra() { } //TODO
 
-  public void setVelocity(double leftFeetPerSecond, double rightFeetPerSecond) { }
-
-  public void simpleAccelControl(double left, double right) { }
-
-  public void stopOrchestra() { }
-
-  public void playOrchestra(String song) { }
-
-  public double getLeftSensor() { return 0; }
-
-  public double getRightSensor() { return 0;  }
+  public void playOrchestra(String song) { } //TODO
 
   public double getGyroAngle() { return navx.getYaw(); }
-
-  public double getLeftFeet() { return 0; }
-
-  public double getFeet(TalonFX m) { return 0; }
-
-  public void resetEncoders() { }
 
   public void resetGyro() { navx.reset(); }
 
   @Override
   public void periodic() { }
 
-  public void updateSmartDashboard() { }
+  public void updateSmartDashboard() {
+    if (Robot.verbose) {
 
-  public void setCoast() { }
+    }
+  }
 
-  public void setBrake() { }
+  public void setCoast() {
+    for (int i = 0; i < mModules.length; i++) {
+      mModules[i].setDriveBrakeMode(false);
+      SpartanRunner.LockThread();
+      Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
+      SpartanRunner.UnlockThread();
+    }
+  }
+
+  public void setBrake() {
+    for (int i = 0; i < mModules.length; i++) {
+      mModules[i].setDriveBrakeMode(true);
+      SpartanRunner.LockThread();
+      Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
+      SpartanRunner.UnlockThread();
+    }
+  }
 
   public SwerveMixerData toSwerveMixerData(SwerveModuleState[] moduleStates) {
     SwerveMixerData dat = new SwerveMixerData();

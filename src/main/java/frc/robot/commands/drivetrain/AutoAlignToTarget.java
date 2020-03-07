@@ -17,8 +17,9 @@ import frc.robot.Constants;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
+import org.team997coders.spartanlib.helpers.SwerveMixerData;
 
-public class AutoTurnTowardsVision extends CommandBase {
+public class AutoAlignToTarget extends CommandBase {
   
   private SpartanPID pid;
   private PIDConstants pidConstants;
@@ -28,15 +29,15 @@ public class AutoTurnTowardsVision extends CommandBase {
   private long targetLossTimeout;
   private long onTargetTime;
 
-  public AutoTurnTowardsVision() {
+  public AutoAlignToTarget() {
     addRequirements(DriveTrain.getInstance());
     LimeLight.getInstance().setDouble(LimeLight.LED_MODE, 3.0);
   }
 
   @Override
   public void initialize() {
-    pidConstants = new PIDConstants(Constants.Values.VISION_TURNING_P,
-      Constants.Values.VISION_TURNING_I, Constants.Values.VISION_TURNING_D);
+    pidConstants = new PIDConstants(Constants.Values.VISION_DRIVE_P,
+      Constants.Values.VISION_DRIVE_I, Constants.Values.VISION_DRIVE_D);
     pid = new SpartanPID(pidConstants);
     pid.setSetpoint(0);
 
@@ -48,16 +49,17 @@ public class AutoTurnTowardsVision extends CommandBase {
     currentTime = System.currentTimeMillis();
     double deltaT = currentTime - oldTime;
     double output = pid.WhatShouldIDo(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0), Math.abs(deltaT));
-    DriveTrain.getInstance().setMotors(-output, output);
+    SwerveMixerData input = DriveTrain.getInstance().getSwerveData(0.0, output, 0.0, DriveTrain.getInstance().getGyroAngle());
+    DriveTrain.getInstance().setSwerveInput(input);
 
-    if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE) {
+    if (Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_ANGLE_TOLERANCE) {
       onTargetTime += deltaT;
     } else {
       onTargetTime = 0;
     }
 
-    SmartDashboard.putNumber("Shooter/PidError", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
-    SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_TOLERANCE);
+    //SmartDashboard.putNumber("Shooter/PidError", LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0));
+    //SmartDashboard.putBoolean("Shooter/onTarget", Math.abs(LimeLight.getInstance().getDouble(LimeLight.TARGET_X, 0)) < Constants.Values.VISION_ANGLE_TOLERANCE);
 
     targetLossTimeout = (LimeLight.getInstance().getDouble(LimeLight.TARGET_VISIBLE, 0) == 0 ? targetLossTimeout += deltaT : 0);
     oldTime = currentTime;

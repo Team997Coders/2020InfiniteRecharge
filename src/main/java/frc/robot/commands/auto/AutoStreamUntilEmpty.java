@@ -6,7 +6,6 @@ import org.team997coders.spartanlib.math.MathUtils;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
@@ -29,8 +28,6 @@ public class AutoStreamUntilEmpty extends CommandBase {
   @Override
   public void execute() {
     double deltaT = System.currentTimeMillis() - mLastUpdate;
-    double output = LimeLight.getInstance().getPIDOutput(deltaT);
-    DriveTrain.getInstance().setMotors(-output, output);
 
     Shooter.getInstance().setRPM(mTarget);
     if (MathUtils.epsilon(Shooter.getInstance().getRPMs(), mTarget, 80)
@@ -54,7 +51,6 @@ public class AutoStreamUntilEmpty extends CommandBase {
   public void end(boolean interrupted) {
     Shooter.getInstance().GoodStop();
     Hopper.getInstance().setSpeed(0.0);
-    DriveTrain.getInstance().setMotors(0.0, 0.0);
   }
 
 }
