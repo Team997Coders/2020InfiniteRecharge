@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.math.Vector2;
@@ -12,7 +13,9 @@ import org.team997coders.spartanlib.swerve.module.SwerveModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Gains;
 
-public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
+public class TeslaModule extends SwerveModule<SpartanPID, VictorSPX, TalonFX> {
+
+  public boolean enabled = true;
 
 // Milliseconds until I start complaining
   private final double ALIGNMENT_TOLERANCE = 2.5; // Tolerance in degrees
@@ -23,7 +26,7 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
   public TeslaModule(int pID, int pAziID, int pDriID, int pEncoderID, double pEncoderZero, Gains pAziConsts, Gains pDriConsts) {
     super(pID, pEncoderID, pEncoderZero);
 
-    mAzimuth = new TalonSRX(pAziID);
+    mAzimuth = new VictorSPX(pAziID);
     mDrive = new TalonFX(pDriID);
 
     mAzimuth.configFactoryDefault(10);
@@ -32,12 +35,14 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
   @Override
   protected void setAzimuthSpeed(double pSpeed) {
-    mAzimuth.set(ControlMode.PercentOutput, pSpeed);
+    if (enabled) mAzimuth.set(ControlMode.PercentOutput, pSpeed);
+    else mAzimuth.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
   protected void setDriveSpeed(double pSpeed) {
-    mDrive.set(ControlMode.PercentOutput, pSpeed);
+    if (enabled) mDrive.set(ControlMode.PercentOutput, pSpeed);
+    else mDrive.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
@@ -64,6 +69,9 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
   @Override
   public void update() {
+
+    mAzimuthController.setSetpoint(mTargetAngle);
+
     double deltaT = 0.0;
     double now = System.currentTimeMillis();
     if (Double.isFinite(mLastUpdate)) deltaT = (now - mLastUpdate) * 1000;
@@ -108,7 +116,5 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
     double y = speed * Math.cos((getAngle() * Math.PI) / 180);
     return new Vector2(x, y);
   }
-
-
 
 }

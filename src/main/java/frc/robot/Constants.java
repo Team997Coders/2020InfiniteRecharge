@@ -124,10 +124,10 @@ public final class Constants {
       },
 
       AZIMUTH_GAINS = {
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0)
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0)
       };
 
   }
