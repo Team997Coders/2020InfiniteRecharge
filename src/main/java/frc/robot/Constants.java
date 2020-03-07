@@ -44,11 +44,11 @@ public final class Constants {
     public static final int[]
 
       AZIMUTH_PORTS = {
-        1, 3, 5, 7
+        12, 13, 14, 15
       },
 
       DRIVE_PORTS = {
-        2, 4, 6, 8
+        1, 2, 3, 4
       },
 
       MODULE_ENCODERS = {
@@ -60,10 +60,10 @@ public final class Constants {
 
     public static final double
 
-        WHEEL_BASE = 22,
-        TRACK_WIDTH = 12,
+        WHEEL_BASE = 22.0,
+        TRACK_WIDTH = 12.0,
 
-        ACCELERATION = 2, // Percentage / Seconds
+        ACCELERATION = 2.0, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
 
         VISION_TURNING_P = 0.04,
@@ -128,10 +128,10 @@ public final class Constants {
       },
 
       AZIMUTH_GAINS = {
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0)
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0),
+        new Gains(0.01, 0.0, 0.0, 0.0)
       };
 
   }

@@ -2,6 +2,8 @@ package frc.robot.swerve.module;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -13,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Gains;
 
 public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
+
+  public boolean enabled = true;
 
 // Milliseconds until I start complaining
   private final double ALIGNMENT_TOLERANCE = 2.5; // Tolerance in degrees
@@ -28,16 +32,29 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
     mAzimuth.configFactoryDefault(10);
     mDrive.configFactoryDefault(10);
+
+    mAzimuth.setInverted(true); // Just do it
+
+    mDrive.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    mDrive.setSelectedSensorPosition(0, 0, 10);
+
+    SupplyCurrentLimitConfiguration driLims = new SupplyCurrentLimitConfiguration(true, 45, 60, 750);
+    SupplyCurrentLimitConfiguration aziLims = new SupplyCurrentLimitConfiguration(true, 30, 40, 375);
+
+    mDrive.configSupplyCurrentLimit(driLims, 10);
+    mAzimuth.configSupplyCurrentLimit(aziLims, 10);
   }
 
   @Override
   protected void setAzimuthSpeed(double pSpeed) {
-    mAzimuth.set(ControlMode.PercentOutput, pSpeed);
+    if (enabled) mAzimuth.set(ControlMode.PercentOutput, pSpeed);
+    else mAzimuth.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
   protected void setDriveSpeed(double pSpeed) {
-    mDrive.set(ControlMode.PercentOutput, pSpeed);
+    if (enabled) mDrive.set(ControlMode.PercentOutput, pSpeed);
+    else mDrive.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
@@ -64,29 +81,32 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
   @Override
   public void update() {
+
+    mAzimuthController.setSetpoint(mTargetAngle);
+
     double deltaT = 0.0;
     double now = System.currentTimeMillis();
     if (Double.isFinite(mLastUpdate)) deltaT = (now - mLastUpdate) * 1000;
     mLastUpdate = now;
-    System.out.println("DeltaT: " + deltaT);
+    // System.out.println("DeltaT: " + deltaT);
 
     double adjustedTheta = getAngle();
     while (adjustedTheta < mTargetAngle - 180) adjustedTheta += 360;
     while (adjustedTheta >= mTargetAngle + 180) adjustedTheta -= 360;
 
     double error = mTargetAngle - adjustedTheta;
-    SmartDashboard.putNumber("[" + mID + "] Module Error", error);
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Module Error", error);
     
     double output = mAzimuthController.WhatShouldIDo(adjustedTheta, deltaT);
-    SmartDashboard.putNumber("[" + mID + "] Module Spin Speed", output);
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Module Spin Speed", output);
     setAzimuthSpeed(output);
     setDriveSpeed(getTargetSpeed() * mMaxSpeed);
   }
 
   @Override
   public void updateSmartDashboard() {
-    // TODO Auto-generated method stub
-
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Azimuth Current", mAzimuth.getSupplyCurrent());
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Drive Current", mDrive.getSupplyCurrent());
   }
 
   @Override
@@ -98,7 +118,7 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
   @Override
   public double getDriveSpeed() {
-    return mTargetSpeed;
+    return mDrive.getSelectedSensorPosition();
   }
 
   @Override
@@ -108,7 +128,5 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
     double y = speed * Math.cos((getAngle() * Math.PI) / 180);
     return new Vector2(x, y);
   }
-
-
 
 }
