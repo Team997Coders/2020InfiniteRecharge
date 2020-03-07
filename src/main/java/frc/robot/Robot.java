@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.Set;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.helpers.PIDConstants;
@@ -13,6 +14,9 @@ import org.team997coders.spartanlib.limelight.LimeLight;
 import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -66,6 +70,8 @@ public class Robot extends TimedRobot {
     DriveTrain.getInstance().setDefaultCommand(new SwerveMixer());
     Climber.getInstance();
 
+    LEDManager.getInstance();
+
     OI.getInstance();
 
     commandList = new ArrayList<String>();
@@ -94,6 +100,8 @@ public class Robot extends TimedRobot {
     cycles++;
 
     lastUpdate = getCurrentSeconds();
+
+    OI.getInstance().update();
   }
 
   @Override
@@ -106,6 +114,9 @@ public class Robot extends TimedRobot {
 
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
+
+    LEDManager.getInstance().setColor(1, 0, 100);
+
   }
 
   @Override
@@ -138,6 +149,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    LEDManager.getInstance().setColorToAlliance();
 
     mHopperCommand.schedule();
   }

@@ -9,6 +9,8 @@ public class ShooterBasic extends CommandBase {
 
   public ShooterBasic(double speed) {
     mSpeed = speed;
+
+    addRequirements(Shooter.getInstance());
   }
 
   @Override

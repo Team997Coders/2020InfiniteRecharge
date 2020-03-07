@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 /**
  * @deprecated This path manager is limited to 1 thread and I don't like it as much
@@ -33,11 +32,9 @@ public class PathManager {
     trajectories = new HashMap<String, Trajectory>();
 
     runner = new Thread(() -> {
-      double completed = 0;
       for (String path : Constants.PathFollower.PATHS) {
         Trajectory t = loadPath(path);
         addPath(path, t);
-        completed++;
       }
     });
     System.out.println("Started Loading Paths");

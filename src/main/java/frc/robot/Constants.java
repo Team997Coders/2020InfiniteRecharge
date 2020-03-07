@@ -39,7 +39,13 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 2;
+      climberPistonPort = 2,
+
+      //LEDs
+      LEDPORT = 9,
+      LEDCOUNT = 35,
+
+      __end_of_ports__ = 0;
       
     public static final int[]
 
@@ -63,21 +69,24 @@ public final class Constants {
         WHEEL_BASE = 22.0,
         TRACK_WIDTH = 12.0,
 
-        ACCELERATION = 2.0, // Percentage / Seconds
         VOLTAGE_TO_FEET = (12 * 0.0098), //9.8mV per inch with a 5V input. For ultrasonic.
 
-        VISION_TURNING_P = 0.04,
-        VISION_TURNING_I = 0.03,
-        VISION_TURNING_D = 0.06,
         VISION_ANGLE_TOLERANCE = 1.5,
-        VISION_TIMEOUT = 2000, //in ms
 
         VISION_DRIVE_P = 0.000025,
         VISION_DRIVE_I = 0.00006,
         VISION_DRIVE_D = 0.00003,
 
-        VISION_LIMELIGHT_HEIGHT = 6, //Height (inches) up from the ground of the center of the limelight. 
-        VISION_LIMELIGHT_ANGLE = Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
+        ACCELERATION = 2.5, // Percentage / Seconds
+
+        VISION_TURNING_P = 0.025, //0.04
+        VISION_TURNING_I = 0.06,
+        VISION_TURNING_D = 0.07,
+        VISION_TOLERANCE = 1.5,
+        VISION_TIMEOUT = 2000, //in ms
+
+        VISION_LIMELIGHT_HEIGHT = 40, //Height (inches) up from the ground of the center of the limelight. 
+        VISION_LIMELIGHT_ANGLE = 30,//Math.atan(2.5/1.75) * (180 / Math.PI), //angle the limelight is tilted at. In degrees up from the floor.
 
         INTAKE_IN = 0.6, //0.75 // percent speed to intake
         INTAKE_EJECT = -0.5, // percent speed to outtake
@@ -133,6 +142,12 @@ public final class Constants {
         new Gains(0.01, 0.0, 0.0, 0.0),
         new Gains(0.01, 0.0, 0.0, 0.0)
       };
+      
+    public static final int
+
+      LED_COUNT = 35,
+      LED_WIDTH = 7,
+      LED_ROWS = 5;
 
   }
 
