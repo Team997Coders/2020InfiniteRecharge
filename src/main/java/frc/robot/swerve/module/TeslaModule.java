@@ -2,9 +2,10 @@ package frc.robot.swerve.module;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.math.Vector2;
@@ -13,7 +14,7 @@ import org.team997coders.spartanlib.swerve.module.SwerveModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Gains;
 
-public class TeslaModule extends SwerveModule<SpartanPID, VictorSPX, TalonFX> {
+public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
   public boolean enabled = true;
 
@@ -26,11 +27,22 @@ public class TeslaModule extends SwerveModule<SpartanPID, VictorSPX, TalonFX> {
   public TeslaModule(int pID, int pAziID, int pDriID, int pEncoderID, double pEncoderZero, Gains pAziConsts, Gains pDriConsts) {
     super(pID, pEncoderID, pEncoderZero);
 
-    mAzimuth = new VictorSPX(pAziID);
+    mAzimuth = new TalonSRX(pAziID);
     mDrive = new TalonFX(pDriID);
 
     mAzimuth.configFactoryDefault(10);
     mDrive.configFactoryDefault(10);
+
+    mAzimuth.setInverted(true); // Just do it
+
+    mDrive.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    mDrive.setSelectedSensorPosition(0, 0, 10);
+
+    SupplyCurrentLimitConfiguration driLims = new SupplyCurrentLimitConfiguration(true, 45, 60, 750);
+    SupplyCurrentLimitConfiguration aziLims = new SupplyCurrentLimitConfiguration(true, 30, 40, 375);
+
+    mDrive.configSupplyCurrentLimit(driLims, 10);
+    mAzimuth.configSupplyCurrentLimit(aziLims, 10);
   }
 
   @Override
@@ -76,25 +88,25 @@ public class TeslaModule extends SwerveModule<SpartanPID, VictorSPX, TalonFX> {
     double now = System.currentTimeMillis();
     if (Double.isFinite(mLastUpdate)) deltaT = (now - mLastUpdate) * 1000;
     mLastUpdate = now;
-    System.out.println("DeltaT: " + deltaT);
+    // System.out.println("DeltaT: " + deltaT);
 
     double adjustedTheta = getAngle();
     while (adjustedTheta < mTargetAngle - 180) adjustedTheta += 360;
     while (adjustedTheta >= mTargetAngle + 180) adjustedTheta -= 360;
 
     double error = mTargetAngle - adjustedTheta;
-    SmartDashboard.putNumber("[" + mID + "] Module Error", error);
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Module Error", error);
     
     double output = mAzimuthController.WhatShouldIDo(adjustedTheta, deltaT);
-    SmartDashboard.putNumber("[" + mID + "] Module Spin Speed", output);
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Module Spin Speed", output);
     setAzimuthSpeed(output);
     setDriveSpeed(getTargetSpeed() * mMaxSpeed);
   }
 
   @Override
   public void updateSmartDashboard() {
-    // TODO Auto-generated method stub
-
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Azimuth Current", mAzimuth.getSupplyCurrent());
+    SmartDashboard.putNumber("Swerve/[" + mID + "]/Drive Current", mDrive.getSupplyCurrent());
   }
 
   @Override
@@ -106,7 +118,7 @@ public class TeslaModule extends SwerveModule<SpartanPID, VictorSPX, TalonFX> {
 
   @Override
   public double getDriveSpeed() {
-    return mTargetSpeed;
+    return mDrive.getSelectedSensorPosition();
   }
 
   @Override
