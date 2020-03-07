@@ -17,7 +17,7 @@ import frc.robot.Robot;
 
 public class Shooter implements Subsystem {
   
-  private TalonSRX hoodMotor;
+  private CANSparkMax hoodMotor;
   private CANSparkMax mMotor1, mMotor2;
   private CANPIDController mController;
   private CANEncoder mEncoder;
@@ -25,8 +25,8 @@ public class Shooter implements Subsystem {
   private Shooter() {
     mMotor1 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_1, MotorType.kBrushless);
     mMotor2 = new CANSparkMax(Constants.Ports.SHOOTER_MOTOR_2, MotorType.kBrushless);
-    hoodMotor = new TalonSRX(Constants.Ports.HOOD_MOTOR);
-    hoodMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+    hoodMotor = new CANSparkMax(Constants.Ports.HOOD_MOTOR, MotorType.kBrushless);
+    hoodMotor.setSmartCurrentLimit(50); // TODO: current limit may need changing
 
     mMotor1.restoreFactoryDefaults();
     mMotor2.restoreFactoryDefaults();
@@ -85,12 +85,12 @@ public class Shooter implements Subsystem {
     return (getRPMs() / 60) * (Constants.Values.SHOOTER_CIRCUMFERENCE_CM / 100);
   }
 
-  public void hoodMotor(double perc){
-    hoodMotor.set(ControlMode.PercentOutput,perc);
+  public void setHoodMotor(double perc) {
+    hoodMotor.set(perc);
   }
 
-  public double getEncoder(){
-    return hoodMotor.getSelectedSensorPosition();
+  public double getHoodEncoder() {
+    return hoodMotor.get();
   }
 
   @Override
