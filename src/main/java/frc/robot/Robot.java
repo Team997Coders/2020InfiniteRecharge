@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   public static SpartanRunner mRunner = new SpartanRunner(20);
 
   private static double lastUpdate = 0.0;
+  public static double initAngle = 0.0;
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
@@ -77,6 +78,7 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putData(m_chooser);
+    SmartDashboard.putNumber("Driver/Set Initial Angle"); // set the init angle of the robot in disabled with this. 0 is straight forwards.
 
     mHopperCommand = new HopperAutoIndex();
   }
@@ -114,7 +116,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     Hopper.getInstance().updateBallCount();
-
+    initAngle = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("Driver/Set Init Angle").getDouble(0.0);
   }
 
   @Override
