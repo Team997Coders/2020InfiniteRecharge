@@ -6,12 +6,14 @@ import com.kauailabs.navx.frc.AHRS;
 import org.team997coders.spartanlib.commands.UpdateModule;
 import org.team997coders.spartanlib.helpers.SwerveMixerData;
 import org.team997coders.spartanlib.helpers.threading.SpartanRunner;
+import org.team997coders.spartanlib.limelight.LimeLight;
 import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 import org.team997coders.spartanlib.swerve.SwerveDrive;
 import org.team997coders.spartanlib.swerve.module.SwerveModule;
 
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.swerve.module.TeslaModule;
@@ -47,10 +49,15 @@ public class DriveTrain extends SwerveDrive {
 
   public void resetGyro() { navx.reset(); }
 
+  public double getDistanceToTarget() { return (90.75 - Constants.Values.VISION_LIMELIGHT_HEIGHT) / (Math.tan( (Constants.Values.VISION_LIMELIGHT_ANGLE + LimeLight.getInstance().getDouble(LimeLight.TARGET_Y, 0)) * (Math.PI / 180) )); }
+
   @Override
   public void periodic() { }
 
   public void updateSmartDashboard() {
+    
+    SmartDashboard.putNumber("LimeLight/Target Distance (in)", getDistanceToTarget());
+
     if (Robot.verbose) {
 
     }
