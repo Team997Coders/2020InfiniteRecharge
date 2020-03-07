@@ -59,18 +59,12 @@ public class DriveTrain extends SwerveDrive {
   public void setCoast() {
     for (int i = 0; i < mModules.length; i++) {
       mModules[i].setDriveBrakeMode(false);
-      SpartanRunner.LockThread();
-      Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
-      SpartanRunner.UnlockThread();
     }
   }
 
   public void setBrake() {
     for (int i = 0; i < mModules.length; i++) {
       mModules[i].setDriveBrakeMode(true);
-      SpartanRunner.LockThread();
-      Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
-      SpartanRunner.UnlockThread();
     }
   }
 
