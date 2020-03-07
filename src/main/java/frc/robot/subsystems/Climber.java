@@ -22,15 +22,17 @@ public class Climber extends SubsystemBase {
   private Solenoid climberPiston;
   private CANSparkMax climberMotor;
   private CANEncoder climberEncoder;
+  private CANSparkMax crawlerMotor;
 
   private Climber() {
     climberMotor = new CANSparkMax(Constants.Ports.climberMotorPort, MotorType.kBrushless);
     climberPiston = new Solenoid(Constants.Ports.climberPistonPort);
-
+    crawlerMotor = new CANSparkMax(Constants.Ports.crawlerMotorPort, MotorType.kBrushed); //TODO: I am assuming it is brussed but this still needs to be checked (3/6/202)
     climberEncoder = climberMotor.getEncoder();
 
     climberMotor.setSmartCurrentLimit(70);
     climberMotor.setIdleMode(IdleMode.kBrake);
+    crawlerMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void ExtendPiston(){
@@ -57,6 +59,13 @@ public class Climber extends SubsystemBase {
     return climberEncoder.getPosition();
   }
 
+  public void setCrawlerSpeed(double speed){
+    crawlerMotor.set(speed);
+  }
+
+  public void setCrawlerBrake() {
+    crawlerMotor.setIdleMode(IdleMode.kBrake);
+  }
   @Override
   public void periodic() {
     updateSmartDashboard();

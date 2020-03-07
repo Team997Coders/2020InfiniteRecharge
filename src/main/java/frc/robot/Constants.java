@@ -39,8 +39,8 @@ public final class Constants {
 
       //climber things
       climberMotorPort = 10,
-      climberPistonPort = 2;
-      
+      climberPistonPort = 2,
+      crawlerMotorPort = 8; //TODO: this is not an accurate port number as of 3/6/2020
     public static final int[]
 
       AZIMUTH_PORTS = {

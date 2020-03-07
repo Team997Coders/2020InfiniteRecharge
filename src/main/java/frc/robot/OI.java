@@ -48,6 +48,7 @@ public class OI {
     buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));
     buttonStart.whenPressed(new toggleIntakePiston());
 
+    //TODO: Put a button in for the crawler
     /*
     buttonA.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonB.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
