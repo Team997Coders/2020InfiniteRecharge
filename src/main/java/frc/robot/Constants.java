@@ -35,7 +35,7 @@ public final class Constants {
       OVERFLOW_IR = 2,
 
       //Drivetrain things
-      ultrasonicChannel = 0,
+      ultrasonicChannel = 4,
 
       //climber things
       climberMotorPort = 10,

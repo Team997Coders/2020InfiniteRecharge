@@ -29,8 +29,8 @@ public class DriveTrain extends SwerveDrive {
 
     mModules = new SwerveModule[4];
     for (int i = 0; i < 4; i++) {
-      mModules[0] = new TeslaModule(0, Constants.Ports.AZIMUTH_PORTS[0], Constants.Ports.DRIVE_PORTS[0], Constants.Ports.MODULE_ENCODERS[0],
-        Constants.Values.MODULE_ZEROS[0], Constants.Values.AZIMUTH_GAINS[0], Constants.Values.DRIVE_GAINS[0]);
+      mModules[i] = new TeslaModule(i, Constants.Ports.AZIMUTH_PORTS[i], Constants.Ports.DRIVE_PORTS[i], Constants.Ports.MODULE_ENCODERS[i],
+        Constants.Values.MODULE_ZEROS[i], Constants.Values.AZIMUTH_GAINS[i], Constants.Values.DRIVE_GAINS[i]);
     }
 
     for (int i = 0; i < mModules.length; i++) {
