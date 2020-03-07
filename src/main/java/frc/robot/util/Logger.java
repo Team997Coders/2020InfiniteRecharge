@@ -1,28 +1,19 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.util;
 
 import java.io.BufferedWriter;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 
 import frc.robot.Robot;
 
 public class Logger {
 
-    private final String fileExtension = ".txt";
+    private String fileExtension = ".txt";
     private final String folderPath = "/home/lvuser/logfiles/";
-    private String filePath = folderPath + "mostRecent" + fileExtension;
+    private String fileName = "mostRecent";
+    private String filePath = folderPath + fileName + fileExtension;
 
     private BufferedWriter writer = null;
-    private BufferedReader reader = null;
 
     private Logger() {
         setFileName("mostRecent");
@@ -31,14 +22,30 @@ public class Logger {
 
     /**
      * Change the name of the file to write to. Defaults to mostRecent.
+     * File extensions are specified with the setFileExtension method.
      * @param name
      */
     public void setFileName(String name) {
+        fileName = name;
+        reloadFile();
+    }
+
+    /**
+     * If you really want a csv or something I guess this is an option.
+     * You don't need to add the "." before the extension.
+     * @param extension
+     */
+    public void setFileExtension(String extension) {
+        fileExtension = "." + extension;
+        reloadFile();
+    }
+
+    private void reloadFile() {
         if (writer != null) {
             closeFileStream();
-            filePath = folderPath + name + fileExtension;
+            filePath = folderPath + fileName + fileExtension;
             openFileStream();
-        } else { filePath = folderPath + name + fileExtension; }
+        } else { filePath = folderPath + fileName + fileExtension; }
     }
 
     /**
@@ -52,12 +59,12 @@ public class Logger {
                     File file = new File(filePath);
                     if (!file.exists()) file.createNewFile();
                     writer = new BufferedWriter(new FileWriter(file, true));
-                    writer.write("T: " + Robot.getTimeSinceBoot() + "ms | cycle: " + Robot.cycles + " | " + data + "\n");
+                    writer.write("T: " + "0000000000".substring(("" + Robot.getTimeSinceBoot()).length()) + Robot.getTimeSinceBoot() + "ms | cycle: " + "0000000000".substring(("" + Robot.cycles).length()) + Robot.cycles + " | " + data + "\n");
                     writer.flush();
                     writer.close();
                     writer = null;
                 } else {
-                    writer.write("T: " + Robot.getTimeSinceBoot() + "ms | cycle: " + Robot.cycles + " | " + data + "\n");
+                    writer.write("T: " + "0000000000".substring(("" + Robot.getTimeSinceBoot()).length()) + Robot.getTimeSinceBoot() + "ms | cycle: " + "0000000000".substring(("" + Robot.cycles).length()) + Robot.cycles + " | " + data + "\n");
                     writer.flush();
                 }
             } catch(Exception e) {
@@ -100,6 +107,7 @@ public class Logger {
 
     /**
      * Use if you want to write a lot of stuff to the log file in quick succession.
+     * Make sure to run closeFileStream() at some point if you use this.
      */
     public void openFileStream() {
         if (writer == null) {
