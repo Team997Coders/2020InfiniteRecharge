@@ -13,6 +13,7 @@ import org.team997coders.spartanlib.limelight.LimeLight;
 import org.team997coders.spartanlib.motion.pathfollower.PathManager;
 import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -78,7 +79,7 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putData(m_chooser);
-    SmartDashboard.putNumber("Driver/Set Initial Angle"); // set the init angle of the robot in disabled with this. 0 is straight forwards.
+    SmartDashboard.putNumber("Driver/Set Initial Angle", 0.0); // set the init angle of the robot in disabled with this. 0 is straight forwards.
 
     mHopperCommand = new HopperAutoIndex();
   }
