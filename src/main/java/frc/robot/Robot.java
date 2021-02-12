@@ -1,184 +1,155 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.Set;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import org.team997coders.spartanlib.controllers.SpartanPID;
-import org.team997coders.spartanlib.helpers.PIDConstants;
-import org.team997coders.spartanlib.helpers.SwerveMixerData;
-import org.team997coders.spartanlib.helpers.threading.SpartanRunner;
-import org.team997coders.spartanlib.limelight.LimeLight;
-import org.team997coders.spartanlib.motion.pathfollower.PathManager;
-import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj.smartdashboard.*;
-import frc.robot.commands.auto.*;
-import frc.robot.commands.drivetrain.*;
-import frc.robot.commands.hopper.*;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.shooter.ShootBadly;
-import frc.robot.subsystems.*;
-
+/**
+ * The VM is configured to automatically run this class, and to call the functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the name of this class or
+ * the package after creating this project, you must also update the build.gradle file in the
+ * project.
+ */
 public class Robot extends TimedRobot {
+  private static final String kDefaultAuto = "Default";
+  private static final String kCustomAuto = "My Auto";
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  public static SpartanRunner mRunner = new SpartanRunner(20);
+  XboxController controller;
 
-  private static double lastUpdate = 0.0;
-  public static double initAngle = 0.0;
-  private ArrayList<String> commandList;
+  TalonSRX azimuth;
+  TalonFX drive;
 
-  public static long cycles = 0;
-  public static final boolean verbose = false; //debug variable, set to true for command logging in the console and non-essential smartdashboard bits.
 
-  private Command m_autonomousCommand;
-  private Command mHopperCommand;
-  public static boolean autoLoadHopper = false;
+  private double getAxis(int axisPort)
+  {
+    if (Math.abs(controller.getRawAxis(axisPort)) >= Constants.DEADBAND) return controller.getRawAxis(axisPort);
+    else return 0;
 
-  Command autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-  
+  }
+
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
   @Override
   public void robotInit() {
-
-    // CameraServer.getInstance().startAutomaticCapture(0);
-    requestPaths();
-
-    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
-
-    CommandScheduler.getInstance().cancelAll();
-
-    m_chooser.setDefaultOption("Do Nothing", new AutoDoNothing());
-    m_chooser.addOption("Auto One", new FollowPath("TrenchPivot", false));
-    m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
-    m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
-
-    LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
-      Constants.Values.VISION_TURNING_P,
-      Constants.Values.VISION_TURNING_I,
-      Constants.Values.VISION_TURNING_D
-    ));
-
-    Shooter.getInstance();
-    Hopper.getInstance();
-    DriveTrain.getInstance();
-    DriveTrain.getInstance().setDefaultCommand(new SwerveMixer());
-    Climber.getInstance();
-
-    LEDManager.getInstance();
-
-    OI.getInstance();
-
-    commandList = new ArrayList<String>();
-    if (verbose) {
-      CommandScheduler.getInstance().onCommandExecute(command -> {
-        commandList.add(command.getName());
-      });
-    }
-
-    SmartDashboard.putData(m_chooser);
-    SmartDashboard.putNumber("Driver/Set Initial Angle", 0.0); // set the init angle of the robot in disabled with this. 0 is straight forwards.
-
-    mHopperCommand = new HopperAutoIndex();
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("My Auto", kCustomAuto);
+    SmartDashboard.putData("Auto choices", m_chooser);
   }
 
+  /**
+   * This function is called every robot packet, no matter the mode. Use this for items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * SmartDashboard integrated updating.
+   */
   @Override
-  public void robotPeriodic() {
-    
-    if (verbose) {
-      if (commandList.size() > 0) {
-        for (String cmdName : commandList) {
-          System.out.println("Ran " + cmdName + " on cycle " + cycles);
-        }
-      }
-    }
-    commandList.clear();
-    cycles++;
+  public void robotPeriodic() {}
 
-    lastUpdate = getCurrentSeconds();
-
-    OI.getInstance().update();
-  }
-
-  @Override
-  public void disabledInit() {
-
-    DriveTrain.getInstance().setCoast();
-
-    LimeLight.getInstance().setDouble(LimeLight.LED_MODE, LimeLight.LEDState.ForceOff);
-    Intake.getInstance().setPiston(false);
-
-    if (mHopperCommand != null) mHopperCommand.cancel();
-    mHopperCommand = new HopperAutoIndex();
-
-    LEDManager.getInstance().setColor(1, 0, 100);
-
-  }
-
-  @Override
-  public void disabledPeriodic() {
-    CommandScheduler.getInstance().run();
-
-    Hopper.getInstance().updateBallCount();
-    initAngle = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("Driver/Set Init Angle").getDouble(0.0);
-  }
-
+  /**
+   * This autonomous (along with the chooser code above) shows how to select between different
+   * autonomous modes using the dashboard. The sendable chooser code works with the Java
+   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the chooser code and
+   * uncomment the getString line to get the auto name from the text box below the Gyro
+   *
+   * <p>You can add additional auto modes by adding additional comparisons to the switch structure
+   * below with additional strings. If using the SendableChooser make sure to add them to the
+   * chooser code above as well.
+   */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    m_autoSelected = m_chooser.getSelected();
+    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    System.out.println("Auto selected: " + m_autoSelected);
+  }
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+  /** This function is called periodically during autonomous. */
+  @Override
+  public void autonomousPeriodic() {
+    switch (m_autoSelected) {
+      case kCustomAuto:
+        // Put custom auto code here
+        break;
+      case kDefaultAuto:
+      default:
+        // Put default auto code here
+        break;
     }
   }
 
-  @Override
-  public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
-  }
-
+  /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
 
-    DriveTrain.getInstance().setBrake();
+    controller = new XboxController(Constants.CONTROLLER_PORT);
+    
+    azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[0]);
+    drive = new TalonFX(Constants.DRIVE_PORTS[0]);
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    azimuth.configFactoryDefault(10);
+    drive.configFactoryDefault(10);
 
-    LEDManager.getInstance().setColorToAlliance();
+    SupplyCurrentLimitConfiguration driLims = new SupplyCurrentLimitConfiguration(true, 45, 60, 750);
+    SupplyCurrentLimitConfiguration aziLims = new SupplyCurrentLimitConfiguration(true, 30, 40, 375);
 
-    mHopperCommand.schedule();
+    drive.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 10);
+    drive.setSelectedSensorPosition(0, 0, 10);
+
+    drive.configSupplyCurrentLimit(driLims, 10);
+    azimuth.configSupplyCurrentLimit(aziLims, 10);
+
+    drive.setInverted(true);
+
+    drive.setNeutralMode(NeutralMode.Coast);
+    azimuth.setNeutralMode(NeutralMode.Coast);
+
+
   }
 
+  /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    CommandScheduler.getInstance().run();
+
+    drive.set(ControlMode.PercentOutput, getAxis(Constants.Y_AXIS_PORT));
+    azimuth.set(ControlMode.PercentOutput, getAxis(Constants.Z_AXIS_PORT));
+
+    SmartDashboard.putNumber("Drive input", getAxis(Constants.Y_AXIS_PORT));
+    SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
+
+    SmartDashboard.putNumber("Drive output", drive.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Azimuth output", azimuth.getSelectedSensorPosition());
+
   }
 
+  /** This function is called once when the robot is disabled. */
   @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
+  public void disabledInit() {}
 
-  public void requestPaths() {
-    for (Map.Entry<String, PathData> entry : Constants.PathFollower.PATH_DATA.entrySet()) {
-      PathManager.getInstance().queueData(entry.getValue());
-    }
-  }
-
+  /** This function is called periodically when disabled. */
   @Override
-  public void testPeriodic() { }
+  public void disabledPeriodic() {}
 
-  public static double getDeltaT() { return getCurrentSeconds() - lastUpdate; }
+  /** This function is called once when test mode is enabled. */
+  @Override
+  public void testInit() {}
 
-  public static double getCurrentSeconds() { return System.currentTimeMillis() / 1000.0; }
-
+  /** This function is called periodically during test mode. */
+  @Override
+  public void testPeriodic() {}
 }
