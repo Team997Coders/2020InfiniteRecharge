@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -32,7 +33,7 @@ public class Robot extends TimedRobot {
 
   TalonSRX azimuth;
   TalonFX drive;
-
+  AnalogInput rotationPos;
 
   private double getAxis(int axisPort)
   {
@@ -101,6 +102,7 @@ public class Robot extends TimedRobot {
     
     azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[0]);
     drive = new TalonFX(Constants.DRIVE_PORTS[0]);
+    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[0]);
 
     azimuth.configFactoryDefault(10);
     drive.configFactoryDefault(10);
@@ -133,7 +135,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
 
     SmartDashboard.putNumber("Drive output", drive.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Azimuth output", azimuth.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Azimuth output", rotationPos.getVoltage());
 
   }
 

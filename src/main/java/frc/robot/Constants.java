@@ -12,12 +12,12 @@ public class Constants {
         CONTROLLER_PORT = 0,
 
         Y_AXIS_PORT = 1,
-        Z_AXIS_PORT = 2;
+        Z_AXIS_PORT = 4;
 
     public static final int[]
 
-        AZIMUTH_PORTS = { 12, 13, 14, 15 },
-        DRIVE_PORTS = { 1, 2, 3, 4 },
+        AZIMUTH_PORTS = { 12, 2, 3, 4 },
+        DRIVE_PORTS = { 13, 14, 15, 16 },
 
         MODULE_ENCODERS = { 0, 1, 2, 3 };
 
