@@ -50,11 +50,11 @@ public final class Constants {
     public static final int[]
 
       AZIMUTH_PORTS = {
-        12, 13, 14, 15
+        12, 2, 3, 4
       },
 
       DRIVE_PORTS = {
-        1, 2, 3, 4
+        13, 14, 15, 16
       },
 
       MODULE_ENCODERS = {
