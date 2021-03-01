@@ -114,7 +114,12 @@ public final class Constants {
 
         // To Seconds, To RPM Motorside, To RPM Wheelside, To Circumference, To Feet
         DRIVE_VEL_2_FEET = 10 * (1.0 / 2048.0)
-          * (9.0 / 70.0) * (4.875 * Math.PI) * (1.0 / 12.0);
+          * (9.0 / 70.0) * (4.875 * Math.PI) * (1.0 / 12.0),
+
+        //PathWeaver Stuff (meters)
+        MAX_VEL = 3.048, // m/sec
+        MAX_ACCEL = 1.2192, // m/sec^2
+        W_BASE = 0.64; // m
 
     public static final double[]
 
@@ -161,7 +166,8 @@ public final class Constants {
       "GoToPickup",
       "GoToShootPos",
       "Pickup3",
-      "TrenchPivot"
+      "TrenchPivot",
+      "Slalom"
     };
 
     public static final HashMap<String, PathData> PATH_DATA = new HashMap<String, PathData>() {{
@@ -172,6 +178,8 @@ public final class Constants {
       put("Pickup3", new PathSwervePreloadedData("Pickup3",
         new Rotation2d(0.0), new Rotation2d(0.0)));
       put("TrenchPivot", new PathSwervePreloadedData("TrenchPivot",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+        put("Slalom", new PathSwervePreloadedData("Slalom",
         new Rotation2d(0.0), new Rotation2d(0.0)));
     }};
 

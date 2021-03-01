@@ -1,8 +1,9 @@
 {
   "lengthUnit": "Meter",
+  "exportUnit": "Same as Project",
   "maxVelocity": 3.048,
   "maxAcceleration": 1.2192,
   "wheelBase": 0.64,
-  "gameName": "Infinite Recharge",
+  "gameName": "Slalom Path",
   "outputDir": "../src/main/deploy/paths"
 }
