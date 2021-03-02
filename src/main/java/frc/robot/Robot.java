@@ -59,7 +59,10 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("Auto One", new FollowPath("TrenchPivot", false));
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
+    m_chooser.addOption("Drive Forward", new FollowPath("DriveForward", false));
+    m_chooser.addOption("AutoNav One", new FollowPath("BarrelRacing", false));
     m_chooser.addOption("AutoNav Two", new FollowPath("Slalom", false));
+    m_chooser.addOption("AutoNav Three", new FollowPath("Bounce", false));
 
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,

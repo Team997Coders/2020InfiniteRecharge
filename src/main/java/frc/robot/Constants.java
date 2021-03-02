@@ -179,7 +179,13 @@ public final class Constants {
         new Rotation2d(0.0), new Rotation2d(0.0)));
       put("TrenchPivot", new PathSwervePreloadedData("TrenchPivot",
         new Rotation2d(0.0), new Rotation2d(0.0)));
-        put("Slalom", new PathSwervePreloadedData("Slalom",
+      put("DriveForward", new PathSwervePreloadedData("DriveForward",
+        new Rotation2d(0.0), new Rotation2d(0.0)));  
+      put("BarrelRacing", new PathSwervePreloadedData("BarrelRacing",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+      put("Slalom", new PathSwervePreloadedData("Slalom",
+        new Rotation2d(0.0), new Rotation2d(0.0)));
+      put("Bounce", new PathSwervePreloadedData("Bounce",
         new Rotation2d(0.0), new Rotation2d(0.0)));
     }};
 
