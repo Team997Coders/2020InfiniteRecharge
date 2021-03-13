@@ -100,9 +100,9 @@ public class Robot extends TimedRobot {
 
     controller = new XboxController(Constants.CONTROLLER_PORT);
     
-    azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[0]);
-    drive = new TalonFX(Constants.DRIVE_PORTS[0]);
-    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[0]);
+    azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[2]);
+    drive = new TalonFX(Constants.DRIVE_PORTS[2]);
+    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[2]);
 
     azimuth.configFactoryDefault(10);
     drive.configFactoryDefault(10);
