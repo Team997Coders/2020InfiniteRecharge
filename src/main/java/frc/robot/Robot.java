@@ -60,19 +60,21 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("s1ck0 m0d3", new AutoSickoMode());
     m_chooser.addOption("Shoot Balls", new AutoStreamUntilEmpty(Constants.Values.SHOOTER_RPM, true));
 
+    /*
     LimeLight.getInstance().mController = new SpartanPID(new PIDConstants(
       Constants.Values.VISION_TURNING_P,
       Constants.Values.VISION_TURNING_I,
       Constants.Values.VISION_TURNING_D
     ));
+    */
 
     Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new SwerveMixer());
-    Climber.getInstance();
+    //Climber.getInstance();
 
-    LEDManager.getInstance();
+    //LEDManager.getInstance();
 
     OI.getInstance();
 
@@ -118,7 +120,7 @@ public class Robot extends TimedRobot {
     if (mHopperCommand != null) mHopperCommand.cancel();
     mHopperCommand = new HopperAutoIndex();
 
-    LEDManager.getInstance().setColor(1, 0, 100);
+    //LEDManager.getInstance().setColor(1, 0, 100);
 
   }
 
@@ -153,7 +155,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    LEDManager.getInstance().setColorToAlliance();
+    //LEDManager.getInstance().setColorToAlliance();
 
     mHopperCommand.schedule();
   }
