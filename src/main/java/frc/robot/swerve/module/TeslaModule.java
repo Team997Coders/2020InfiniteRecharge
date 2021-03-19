@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.controllers.SpartanPID;
 import org.team997coders.spartanlib.math.Vector2;
 import org.team997coders.spartanlib.swerve.module.SwerveModule;
@@ -24,7 +25,7 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
   private double mLastUpdate = Double.NaN;
   private double mLastGoodAlignment;
 
-  public TeslaModule(int pID, int pAziID, int pDriID, int pEncoderID, double pEncoderZero, Gains pAziConsts, Gains pDriConsts) {
+  public TeslaModule(int pID, int pAziID, int pDriID, int pEncoderID, double pEncoderZero, PIDConstants pAziConsts, PIDConstants pDriConsts) {
     super(pID, pEncoderID, pEncoderZero);
 
     mAzimuth = new TalonSRX(pAziID);
@@ -43,6 +44,11 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
 
     mDrive.configSupplyCurrentLimit(driLims, 10);
     mAzimuth.configSupplyCurrentLimit(aziLims, 10);
+
+    mAzimuthController = new SpartanPID(pAziConsts);
+    mAzimuthController.setMinOutput(-1);
+    mAzimuthController.setMaxOutput(1);
+
   }
 
   @Override

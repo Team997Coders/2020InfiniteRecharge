@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import org.team997coders.spartanlib.controllers.SpartanPID;
+import org.team997coders.spartanlib.helpers.PIDConstants;
 import org.team997coders.spartanlib.motion.pathfollower.data.PathData;
 import org.team997coders.spartanlib.motion.pathfollower.data.PathSwervePreloadedData;
 
@@ -141,6 +143,22 @@ public final class Constants {
         new Gains(0.01, 0.0, 0.0, 0.0),
         new Gains(0.01, 0.0, 0.0, 0.0),
         new Gains(0.01, 0.0, 0.0, 0.0)
+      };
+
+    public static final PIDConstants[]
+
+      DRIVE_PID = {
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0)
+      },
+
+      AZIMUTH_PID = {
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0),
+        new PIDConstants(0.0, 0.0, 0.0)
       };
       
     public static final int
