@@ -25,23 +25,18 @@ public class Hopper implements Subsystem {
   public int mBallCount = 3;
 
   private DigitalInput mIntakeIR, mOverflowIR, mShooterIR;
-  private VictorSPX mMotor1, mMotor2;
+  private VictorSPX mMotor1;
   
   private Hopper() {
-    mMotor2 = new VictorSPX(Constants.Ports.HOPPER_MOTOR_TOP);
     mMotor1 = new VictorSPX(Constants.Ports.HOPPER_MOTOR_BOTTOM);
     mIntakeIR = new DigitalInput(Constants.Ports.INTAKE_IR);
     mShooterIR = new DigitalInput(Constants.Ports.SHOOTER_IR);
     mOverflowIR = new DigitalInput(Constants.Ports.OVERFLOW_IR);
     mMotor1.configFactoryDefault(10);
-    mMotor2.configFactoryDefault(10);
 
     mMotor1.setNeutralMode(NeutralMode.Brake);
-    mMotor2.setNeutralMode(NeutralMode.Brake);
 
     mMotor1.setInverted(true);
-    mMotor2.setInverted(true);
-    mMotor2.follow(mMotor1);
  
     SmartDashboard.putNumber("Driver/Set Ball Count", mBallCount); //Driver tab is stuff for drive team specifically to edit.
     register();
