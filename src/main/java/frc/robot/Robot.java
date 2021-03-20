@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   XboxController controller;
+  Solenoid solenoid;
 
   TalonSRX azimuth;
   TalonFX drive;
@@ -97,15 +99,21 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    int test_module = 2;
+
+    solenoid = new Solenoid(0);
+
+
 
     controller = new XboxController(Constants.CONTROLLER_PORT);
     
-    azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[2]);
-    drive = new TalonFX(Constants.DRIVE_PORTS[2]);
-    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[2]);
+    azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[test_module]);
+    drive = new TalonFX(Constants.DRIVE_PORTS[test_module]);
+    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[test_module]);
 
     azimuth.configFactoryDefault(10);
     drive.configFactoryDefault(10);
+
 
     SupplyCurrentLimitConfiguration driLims = new SupplyCurrentLimitConfiguration(true, 45, 60, 750);
     SupplyCurrentLimitConfiguration aziLims = new SupplyCurrentLimitConfiguration(true, 30, 40, 375);
@@ -131,8 +139,8 @@ public class Robot extends TimedRobot {
     drive.set(ControlMode.PercentOutput, getAxis(Constants.Y_AXIS_PORT));
     azimuth.set(ControlMode.PercentOutput, getAxis(Constants.Z_AXIS_PORT));
 
-    SmartDashboard.putNumber("Drive input", getAxis(Constants.Y_AXIS_PORT));
-    SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
+    //SmartDashboard.putNumber("Drive input", getAxis(Constants.Y_AXIS_PORT));
+    //SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
 
     SmartDashboard.putNumber("Drive output", drive.getSelectedSensorPosition());
     SmartDashboard.putNumber("Azimuth output", rotationPos.getVoltage());
