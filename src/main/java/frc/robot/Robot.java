@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    int test_module = 2;
+    int test_module = 0;
 
     solenoid = new Solenoid(0);
 
