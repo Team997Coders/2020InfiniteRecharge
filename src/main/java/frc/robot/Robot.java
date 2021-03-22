@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
     Shooter.getInstance();
     Hopper.getInstance();
     DriveTrain.getInstance();
+    Intake.getInstance();
     DriveTrain.getInstance().setDefaultCommand(new SwerveMixer());
     //Climber.getInstance();
 

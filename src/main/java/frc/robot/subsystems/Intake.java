@@ -21,18 +21,18 @@ import frc.robot.Robot;
 public class Intake extends SubsystemBase {
 
   private Solenoid intakePiston;
-  private CANSparkMax mLeader, mFollower;
+  private CANSparkMax mLeader;
   private CANEncoder encoder;
 
   private Intake() {
     mLeader = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_1, MotorType.kBrushless);
-    mFollower = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_2, MotorType.kBrushless);
+    //mFollower = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_1, MotorType.kBrushless);
     intakePiston = new Solenoid(Constants.Ports.INTAKE_SOLENOID);
 
     mLeader.restoreFactoryDefaults();
-    mFollower.restoreFactoryDefaults();
+    //mFollower.restoreFactoryDefaults();
 
-    mFollower.follow(mLeader, true);
+    //mFollower.follow(mLeader, true);
 
     encoder = mLeader.getEncoder();
 
@@ -40,8 +40,8 @@ public class Intake extends SubsystemBase {
 
     mLeader.setSmartCurrentLimit(50);
     mLeader.setIdleMode(IdleMode.kCoast);
-    mFollower.setSmartCurrentLimit(50);
-    mFollower.setIdleMode(IdleMode.kCoast);
+    //mFollower.setSmartCurrentLimit(50);
+    //mFollower.setIdleMode(IdleMode.kCoast);
 
     register();
   }
