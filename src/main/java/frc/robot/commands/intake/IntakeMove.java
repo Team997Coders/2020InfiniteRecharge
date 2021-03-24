@@ -29,7 +29,7 @@ public class IntakeMove extends CommandBase {
   public void initialize() {
     mIntakeTrigger.reset();
     mIntakeTrigger.trigger();
-    Intake.getInstance().setPiston(true);
+    //Intake.getInstance().setPiston(true);
   }
 
   @Override
@@ -54,7 +54,7 @@ public class IntakeMove extends CommandBase {
   public void end(boolean interrupted) {
     Intake.getInstance().setPercent(0.0);
     Robot.autoLoadHopper = false;
-    Intake.getInstance().setPiston(false);
+    //Intake.getInstance().setPiston(false);
   }
 
 }

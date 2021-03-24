@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   private ArrayList<String> commandList;
 
   public static long cycles = 0;
-  public static final boolean verbose = false; //debug variable, set to true for command logging in the console and non-essential smartdashboard bits.
+  public static final boolean verbose = true; //debug variable, set to true for command logging in the console and non-essential smartdashboard bits.
 
   private Command m_autonomousCommand;
   private Command mHopperCommand;
@@ -106,8 +106,6 @@ public class Robot extends TimedRobot {
     cycles++;
 
     lastUpdate = getCurrentSeconds();
-
-    OI.getInstance().update();
   }
 
   @Override

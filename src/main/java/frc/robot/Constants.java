@@ -120,29 +120,13 @@ public final class Constants {
     public static final double[]
 
       MODULE_ZEROS = {
-        0.0, 0.0, 0.0, 0.0
+        1.0, 1.0, 1.2, 4.2
       };
 
     public static final Gains
 
       DRIVE_VELOCITY_GAINS = new Gains(0.6, 0.012, 6.8, 1023.0 / 21500.0),
       SHOOTER_VELOCITY_GAINS = new Gains(0.001, 0, 0.005, (1.0 / (4060.0 * (22.0 / 18.0) * 0.5)));
-
-    public static final Gains[]
-
-      DRIVE_GAINS = {
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0),
-        new Gains(0.0, 0.0, 0.0, 0.0)
-      },
-
-      AZIMUTH_GAINS = {
-        new Gains(0.01, 0.0, 0.0, 0.0),
-        new Gains(0.01, 0.0, 0.0, 0.0),
-        new Gains(0.01, 0.0, 0.0, 0.0),
-        new Gains(0.01, 0.0, 0.0, 0.0)
-      };
 
     public static final PIDConstants[]
 
@@ -154,10 +138,10 @@ public final class Constants {
       },
 
       AZIMUTH_PID = {
-        new PIDConstants(0.0, 0.0, 0.0),
-        new PIDConstants(0.0, 0.0, 0.0),
-        new PIDConstants(0.0, 0.0, 0.0),
-        new PIDConstants(0.0, 0.0, 0.0)
+        new PIDConstants(0.01, 0.0, 0.0),
+        new PIDConstants(0.01, 0.0, 0.0),
+        new PIDConstants(0.01, 0.0, 0.0),
+        new PIDConstants(0.01, 0.0, 0.0)
       };
       
     public static final int

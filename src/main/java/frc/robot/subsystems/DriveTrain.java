@@ -56,11 +56,8 @@ public class DriveTrain extends SwerveDrive {
 
   public void updateSmartDashboard() {
     
-    SmartDashboard.putNumber("LimeLight/Target Distance (in)", getDistanceToTarget());
+    //SmartDashboard.putNumber("LimeLight/Target Distance (in)", getDistanceToTarget());
 
-    if (Robot.verbose) {
-
-    }
   }
 
   public void setCoast() {

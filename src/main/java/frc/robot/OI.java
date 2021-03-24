@@ -35,9 +35,6 @@ public class OI {
     buttonLeftBumper = new JoystickButton(gamepad1, XboxController.Button.kBumperLeft.value);
     buttonStart = new JoystickButton(gamepad1, XboxController.Button.kStart.value);
 
-    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
-    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
-
     buttonA2 = new JoystickButton(gamepad2, XboxController.Button.kA.value);
     buttonB2 = new JoystickButton(gamepad2, XboxController.Button.kB.value);
     buttonX2 = new JoystickButton(gamepad2, XboxController.Button.kX.value);
@@ -46,15 +43,17 @@ public class OI {
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
 
+    buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
+    buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
     buttonStart.whenPressed(() -> Intake.getInstance().togglePiston());
 
-    buttonA.whileHeld(new Compass());
-    buttonB.whileHeld(new AutoFaceTargetAndDrive());
+    //buttonA.whileHeld(new Compass());
+    //buttonB.whileHeld(new AutoFaceTargetAndDrive());
     buttonRightBumper2.whileHeld(new ShooterBasic(1)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper2.whileHeld(new ShooterBasic(0.66));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
 
-    buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
-    buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
+    //buttonA2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_UP));
+    //buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
     buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
     buttonStart2.whenPressed(new InstantCommand());
@@ -87,15 +86,6 @@ public class OI {
       axisPos = 0;
     }
     return axisPos;
-  }
-
-  public void update() {
-    if (gamepad1.getXButtonPressed()) {
-      LEDManager.getInstance().setColor(120, 255, 255);
-    }
-    if (gamepad1.getYButtonPressed()) {
-      LEDManager.getInstance().setColor(0, 255, 255);
-    }
   }
 
   private static OI instance;

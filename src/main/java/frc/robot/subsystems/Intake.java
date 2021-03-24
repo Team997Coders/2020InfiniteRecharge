@@ -26,23 +26,17 @@ public class Intake extends SubsystemBase {
 
   private Intake() {
     mLeader = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_1, MotorType.kBrushless);
-    //mFollower = new CANSparkMax(Constants.Ports.INTAKE_MOTOR_1, MotorType.kBrushless);
     intakePiston = new Solenoid(Constants.Ports.INTAKE_SOLENOID);
 
     mLeader.restoreFactoryDefaults();
-    //mFollower.restoreFactoryDefaults();
-
-    //mFollower.follow(mLeader, true);
-
+    
     encoder = mLeader.getEncoder();
 
     intakePiston.set(false);
 
     mLeader.setSmartCurrentLimit(50);
     mLeader.setIdleMode(IdleMode.kCoast);
-    //mFollower.setSmartCurrentLimit(50);
-    //mFollower.setIdleMode(IdleMode.kCoast);
-
+    
     register();
   }
 
