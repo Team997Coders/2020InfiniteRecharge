@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
 
   TalonSRX azimuth;
   TalonFX drive;
-  AnalogInput rotationPos;
+  AnalogInput rotationPos[];
 
   private double getAxis(int axisPort)
   {
@@ -101,19 +101,20 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     int test_module = 0;
 
-    solenoid = new Solenoid(0);
-
-
+    solenoid = new Solenoid(0); // trigger the conpressor
 
     controller = new XboxController(Constants.CONTROLLER_PORT);
     
     azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[test_module]);
     drive = new TalonFX(Constants.DRIVE_PORTS[test_module]);
-    rotationPos = new AnalogInput(Constants.MODULE_ENCODERS[test_module]);
+
+    rotationPos[0] = new AnalogInput(Constants.MODULE_ENCODERS[0]);
+    rotationPos[1] = new AnalogInput(Constants.MODULE_ENCODERS[1]);
+    rotationPos[2] = new AnalogInput(Constants.MODULE_ENCODERS[2]);
+    rotationPos[3] = new AnalogInput(Constants.MODULE_ENCODERS[3]);
 
     azimuth.configFactoryDefault(10);
     drive.configFactoryDefault(10);
-
 
     SupplyCurrentLimitConfiguration driLims = new SupplyCurrentLimitConfiguration(true, 45, 60, 750);
     SupplyCurrentLimitConfiguration aziLims = new SupplyCurrentLimitConfiguration(true, 30, 40, 375);
@@ -128,8 +129,6 @@ public class Robot extends TimedRobot {
 
     drive.setNeutralMode(NeutralMode.Coast);
     azimuth.setNeutralMode(NeutralMode.Coast);
-
-
   }
 
   /** This function is called periodically during operator control. */
@@ -143,7 +142,11 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
 
     SmartDashboard.putNumber("Drive output", drive.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Azimuth output", rotationPos.getVoltage());
+    
+    SmartDashboard.putNumber("Azimuth output", rotationPos[0].getVoltage());    
+    SmartDashboard.putNumber("Azimuth output", rotationPos[1].getVoltage());
+    SmartDashboard.putNumber("Azimuth output", rotationPos[2].getVoltage());
+    SmartDashboard.putNumber("Azimuth output", rotationPos[3].getVoltage());
 
   }
 
