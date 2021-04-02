@@ -42,6 +42,8 @@ public class Robot extends TimedRobot {
   private Command mHopperCommand;
   public static boolean autoLoadHopper = false;
 
+  public double[] moduleZeroes;
+
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -90,6 +92,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Driver/Set Initial Angle", 0.0); // set the init angle of the robot in disabled with this. 0 is straight forwards.
 
     mHopperCommand = new HopperAutoIndex();
+
+    moduleZeroes = Constants.Values.MODULE_ZEROS;
   }
 
   @Override

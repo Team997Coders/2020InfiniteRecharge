@@ -120,7 +120,7 @@ public final class Constants {
     public static final double[]
 
       MODULE_ZEROS = {
-        3.51, 0.95, 1.22, 4.31
+        3.51, 0.56, 1.22, 4.31
       };
 
     public static final Gains

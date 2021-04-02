@@ -34,7 +34,7 @@ public class IntakeMove extends CommandBase {
 
   @Override
   public void execute() {
-
+    /*
     if (mIntakeTrigger.get(false)) {
       Robot.autoLoadHopper = mEnableAutoLoader;
       if (mEnableAutoLoader) {
@@ -48,6 +48,8 @@ public class IntakeMove extends CommandBase {
     } else {
       Intake.getInstance().setPercent(0.0);
     }
+    */
+    Intake.getInstance().setPercent(mSpeed);
   }
 
   @Override
