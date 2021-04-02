@@ -91,7 +91,6 @@ public class Robot extends TimedRobot {
 
     mHopperCommand = new HopperAutoIndex();
 
-    moduleZeroes = Constants.Values.MODULE_ZEROS;
   }
 
   @Override
