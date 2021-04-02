@@ -42,8 +42,6 @@ public class Robot extends TimedRobot {
   private Command mHopperCommand;
   public static boolean autoLoadHopper = false;
 
-  public double[] moduleZeroes;
-
   Command autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   

@@ -1,5 +1,11 @@
 package frc.robot.subsystems;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -17,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.swerve.module.TeslaModule;
+import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 
 public class DriveTrain extends SwerveDrive {
 
@@ -39,6 +46,58 @@ public class DriveTrain extends SwerveDrive {
       Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
       SpartanRunner.UnlockThread();
     }
+  }
+
+  public double[] getModuleZeroes() {
+    double[] zeroes = Constants.Values.MODULE_ZEROS;
+    String data = new String();
+
+    try {
+      File file = new File(Constants.Values.RELATIVE_ZEROES_PATH);
+      Scanner mReader = new Scanner(file);
+      data = mReader.nextLine();
+      mReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("Error: File not found!");
+      e.printStackTrace();
+    }
+
+    String[] strValues = data.split(" ");
+    for (int i = 0; i < strValues.length; i++) {
+      zeroes[i] = Double.parseDouble(strValues[i]);    
+    }
+
+    return zeroes;
+  }
+
+  public void zeroModules(Double[] zeroes) {
+
+    try {
+      File file = new File(Constants.Values.RELATIVE_ZEROES_PATH);
+      if (file.createNewFile()) {
+        System.out.println("File created: " + file.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      System.out.println("Error: Could not access file!");
+      e.printStackTrace();
+    }
+
+    if (zeroes.length != 4) {
+      System.out.println("Invalid number of modules");
+    } else {
+      try {
+        FileWriter mWriter = new FileWriter(Constants.Values.RELATIVE_ZEROES_PATH);
+        mWriter.write(zeroes[0].toString() + " " + zeroes[1].toString() + " " + zeroes[2].toString() + " " + zeroes[3].toString());
+        mWriter.close();
+        System.out.println("File Written.");
+      } catch (Exception e) {
+        System.out.println("Error: Could not write to file!");
+        e.printStackTrace();
+      }
+    }
+
   }
 
   public void stopOrchestra() { } //TODO

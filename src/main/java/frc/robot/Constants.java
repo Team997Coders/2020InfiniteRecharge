@@ -150,6 +150,8 @@ public final class Constants {
       LED_WIDTH = 7,
       LED_ROWS = 5;
 
+      public static final String RELATIVE_ZEROES_PATH = "data/zeroes.txt";
+      
   }
 
   public static class PathFollower {
