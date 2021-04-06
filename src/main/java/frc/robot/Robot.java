@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,13 +28,14 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private static int counter = 0;
 
-  XboxController controller;
-  Solenoid solenoid;
+  private XboxController controller;
 
-  TalonSRX azimuth;
-  TalonFX drive;
-  AnalogInput rotationPos[];
+
+  private TalonSRX azimuth;
+  private TalonFX drive;
+  private AnalogInput rotationPos[];
 
   private double getAxis(int axisPort)
   {
@@ -53,6 +53,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    rotationPos[0] = new AnalogInput(Constants.MODULE_ENCODERS[0]);
+    rotationPos[1] = new AnalogInput(Constants.MODULE_ENCODERS[1]);
+    rotationPos[2] = new AnalogInput(Constants.MODULE_ENCODERS[2]);
+    rotationPos[3] = new AnalogInput(Constants.MODULE_ENCODERS[3]);
   }
 
   /**
@@ -63,7 +68,18 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    if (counter % 5 == 0) {
+      SmartDashboard.putNumber("Azimuth output", rotationPos[0].getVoltage());
+      SmartDashboard.putNumber("Azimuth output", rotationPos[1].getVoltage());
+      SmartDashboard.putNumber("Azimuth output", rotationPos[2].getVoltage());
+      SmartDashboard.putNumber("Azimuth output", rotationPos[3].getVoltage());
+    }
+    if (counter >= 100) {
+      counter = 0;
+    }
+    ++counter;
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -101,17 +117,10 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     int test_module = 0;
 
-    solenoid = new Solenoid(0); // trigger the conpressor
-
     controller = new XboxController(Constants.CONTROLLER_PORT);
     
     azimuth = new TalonSRX(Constants.AZIMUTH_PORTS[test_module]);
     drive = new TalonFX(Constants.DRIVE_PORTS[test_module]);
-
-    rotationPos[0] = new AnalogInput(Constants.MODULE_ENCODERS[0]);
-    rotationPos[1] = new AnalogInput(Constants.MODULE_ENCODERS[1]);
-    rotationPos[2] = new AnalogInput(Constants.MODULE_ENCODERS[2]);
-    rotationPos[3] = new AnalogInput(Constants.MODULE_ENCODERS[3]);
 
     azimuth.configFactoryDefault(10);
     drive.configFactoryDefault(10);
@@ -138,15 +147,9 @@ public class Robot extends TimedRobot {
     drive.set(ControlMode.PercentOutput, getAxis(Constants.Y_AXIS_PORT));
     azimuth.set(ControlMode.PercentOutput, getAxis(Constants.Z_AXIS_PORT));
 
-    //SmartDashboard.putNumber("Drive input", getAxis(Constants.Y_AXIS_PORT));
-    //SmartDashboard.putNumber("Azimuth input", getAxis(Constants.Z_AXIS_PORT));
 
     SmartDashboard.putNumber("Drive output", drive.getSelectedSensorPosition());
-    
-    SmartDashboard.putNumber("Azimuth output", rotationPos[0].getVoltage());    
-    SmartDashboard.putNumber("Azimuth output", rotationPos[1].getVoltage());
-    SmartDashboard.putNumber("Azimuth output", rotationPos[2].getVoltage());
-    SmartDashboard.putNumber("Azimuth output", rotationPos[3].getVoltage());
+
 
   }
 
