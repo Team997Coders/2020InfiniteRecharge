@@ -120,7 +120,7 @@ public final class Constants {
     public static final double[]
 
       MODULE_ZEROS = {
-        1.0, 0.56, 1.22, 4.31
+        1.0, 0.56, 1.22, 4.51
       };
 
     public static final Gains
@@ -138,10 +138,10 @@ public final class Constants {
       },
 
       AZIMUTH_PID = {
-        new PIDConstants(0.02, 0.0001, 0.001),
-        new PIDConstants(0.02, 0.0001, 0.001),
-        new PIDConstants(0.02, 0.0001, 0.001),
-        new PIDConstants(0.02, 0.0001, 0.001)
+        new PIDConstants(0.02, 0.000, 0.001),
+        new PIDConstants(0.02, 0.000, 0.001),
+        new PIDConstants(0.02, 0.000, 0.001),
+        new PIDConstants(0.02, 0.000, 0.001)
       };
       
     public static final int

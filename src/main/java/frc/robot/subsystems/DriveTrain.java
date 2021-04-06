@@ -29,11 +29,18 @@ import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 public class DriveTrain extends SwerveDrive {
 
   private AHRS navx;
+  private Double[] moduleZeroes;
 
   private DriveTrain() {
     super(Constants.Values.WHEEL_BASE, Constants.Values.TRACK_WIDTH);
 
     navx = new AHRS(Port.kUSB);
+
+    double[] arr = {0.0, 0.0, 0.0, 0.0};
+    arr = getModuleZeroes();
+    for (int i = 0; i < arr.length; i++) {
+      moduleZeroes[i] = arr[i];
+    }
 
     mModules = new SwerveModule[4];
     for (int i = 0; i < 4; i++) {

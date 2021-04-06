@@ -48,6 +48,7 @@ public class TeslaModule extends SwerveModule<SpartanPID, TalonSRX, TalonFX> {
     mAzimuthController = new SpartanPID(pAziConsts);
     mAzimuthController.setMinOutput(-1);
     mAzimuthController.setMaxOutput(1);
+    mAzimuthController.setIntegralRange(-1); //because its wrong in SpartanPID
 
   }
 

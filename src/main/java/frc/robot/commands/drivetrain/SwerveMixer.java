@@ -21,7 +21,7 @@ public class SwerveMixer extends CommandBase {
   public void execute() {
     double f = -OI.getInstance().getGamepad1Axis(1);
     double s = OI.getInstance().getGamepad1Axis(0);
-    double r = OI.getInstance().getGamepad1Axis(4);
+    double r = 0.5 * OI.getInstance().getGamepad1Axis(4);
 
     double theta = 0; //-DriveTrain.getInstance().getGyroAngle();
     while (theta < 0) theta += 360;
