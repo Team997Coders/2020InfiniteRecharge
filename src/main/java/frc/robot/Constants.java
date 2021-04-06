@@ -120,7 +120,7 @@ public final class Constants {
     public static final double[]
 
       MODULE_ZEROS = {
-        3.51, 0.56, 1.22, 4.31
+        1.0, 0.56, 1.22, 4.31
       };
 
     public static final Gains
@@ -150,7 +150,7 @@ public final class Constants {
       LED_WIDTH = 7,
       LED_ROWS = 5;
 
-      public static final String RELATIVE_ZEROES_PATH = "data/zeroes.txt";
+      public static final String RELATIVE_ZEROES_PATH = "zeroes.txt";
       
   }
 

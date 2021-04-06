@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -46,6 +47,15 @@ public class DriveTrain extends SwerveDrive {
       Robot.mRunner.AddAction(new UpdateModule(mModules[i], this));
       SpartanRunner.UnlockThread();
     }
+  }
+
+  public void fullZero() {
+    Double[] zeroes = {0.0, 0.0, 0.0, 0.0};
+    double[] arr = getModuleZeroes();
+    for (int i = 0; i < arr.length; i++) {
+      zeroes[i]= arr[i];
+    }
+    zeroModules(zeroes);
   }
 
   public double[] getModuleZeroes() {

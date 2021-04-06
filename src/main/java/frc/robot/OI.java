@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.shooter.*;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDManager;
 import frc.robot.commands.climber.ClimberMove;
@@ -21,7 +22,7 @@ public class OI {
   public XboxController gamepad1, gamepad2;
   private JoystickButton buttonA, buttonB, buttonX, buttonY, buttonStart,
     buttonA2, buttonB2, buttonX2, buttonY2, buttonRightBumper, buttonLeftBumper, 
-    buttonRightBumper2, buttonLeftBumper2, buttonStart2;
+    buttonRightBumper2, buttonLeftBumper2, buttonStart2, buttonBack2;
 
   private OI() {
     gamepad1 = new XboxController(0);
@@ -42,6 +43,7 @@ public class OI {
     buttonRightBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperRight.value);
     buttonLeftBumper2 = new JoystickButton(gamepad2, XboxController.Button.kBumperLeft.value);
     buttonStart2 = new JoystickButton(gamepad2, XboxController.Button.kStart.value);
+    buttonBack2 = new JoystickButton(gamepad2, XboxController.Button.kBack.value);
 
     buttonRightBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_IN, true)/*new ShooterStream(Constants.Values.SHOOTER_RPM)*/);
     buttonLeftBumper.whileHeld(new IntakeMove(Constants.Values.INTAKE_EJECT, false));//7.5 /*new ShooterStreamAutoTarget(Constants.Values.SHOOTER_RPM)*/
@@ -56,7 +58,8 @@ public class OI {
     //buttonB2.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
     buttonX2.whileHeld(new HopperMove(Constants.Values.HOPPER_EJECT_SPEED));
     buttonY2.whileHeld(new HopperMove(Constants.Values.HOPPER_INTAKE_SPEED));
-    buttonStart2.whenPressed(new InstantCommand());
+    buttonStart2.whenPressed(() -> DriveTrain.getInstance().fullZero());
+    //buttonBack2.whenPressed(() -> DriveTrain.getInstance().zeroModules(zeroes);)
 
     /*
     buttonA.whileHeld(new ClimberMove(Constants.Values.CLIMBER_DOWN));
@@ -75,13 +78,13 @@ public class OI {
   public double getGamepad1Axis(int portNum) {
     axisPos = gamepad1.getRawAxis(portNum);
     if (Math.abs(axisPos) < 0.05) {
-      axisPos = 0;
+      return axisPos = 0;
     }
-    return axisPos;
+    return -axisPos;
   }
 
   public double getGamepad2Axis(int portNum) {
-    axisPos = gamepad2.getRawAxis(portNum);
+    axisPos = Math.pow(gamepad2.getRawAxis(portNum), 3);
     if (Math.abs(axisPos) < 0.05) {
       axisPos = 0;
     }
